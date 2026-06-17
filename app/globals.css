@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030712;
-  --foreground: #f1f5f9;
+  /* Canvas */
+  --background: #050608;
+  --surface: #0b0e14;
+  --surface-2: #0f131c;
+  --foreground: #f4f6fb;
+  --muted: #8a93a6;
+
+  /* Signature accents — lime-emerald + cyan */
+  --accent-lime: #a3e635;
+  --accent-emerald: #34d399;
+  --accent-cyan: #22d3ee;
+  --accent-amber: #f5a524;
 }
 
 @theme inline {
@@ -12,50 +22,134 @@
   --font-mono: var(--font-geist-mono);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+html {
   scroll-behavior: smooth;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(28px);
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Background layers ─────────────────────────────────────────────────────── */
+
+/* Faint dotted mesh */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.bg-grid-tight {
+  background-image:
+    linear-gradient(rgba(52, 211, 153, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 211, 153, 0.06) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+/* Film grain via fractal noise — cheap, GPU-friendly, single layer */
+.bg-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Slow drifting aurora glows */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+  animation: drift 18s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
   }
+  50% {
+    transform: translate3d(4%, -6%, 0) scale(1.08);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.pulse-soft {
+  animation: pulse-soft 4s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
   to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: rotate(360deg);
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+.spin-slow {
+  animation: spin-slow 8s linear infinite;
 }
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50%       { opacity: 0.7; }
+@keyframes scroll-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
 }
 
-.anim-fade-in-up {
-  animation: fadeInUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+.scroll-bob {
+  animation: scroll-bob 2s ease-in-out infinite;
 }
 
-.anim-delay-1 { animation-delay: 0.15s; }
-.anim-delay-2 { animation-delay: 0.3s; }
-.anim-delay-3 { animation-delay: 0.45s; }
-
-.pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+/* ── Reduced motion: kill all ambient/scroll-linked motion ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .aurora,
+  .pulse-soft,
+  .spin-slow,
+  .scroll-bob {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar        { width: 5px; }
-::-webkit-scrollbar-track  { background: #030712; }
-::-webkit-scrollbar-thumb  { background: #4f46e5; border-radius: 999px; }
+/* ── Custom scrollbar — emerald ────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: #1f6f54;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2f9e6f;
+}

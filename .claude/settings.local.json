@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(Start-Process -FilePath \"npm\" -ArgumentList \"run\",\"dev\" -WorkingDirectory \"C:\\\\Users\\\\User\\\\riswan-portfolio\" -WindowStyle Normal)"
+      "PowerShell(Start-Process -FilePath \"npm\" -ArgumentList \"run\",\"dev\" -WorkingDirectory \"C:\\\\Users\\\\User\\\\riswan-portfolio\" -WindowStyle Normal)",
+      "PowerShell(npm run *)"
     ]
   }
 }
