@@ -447,4 +447,22 @@ export const CONTACTS: ContactLink[] = [
     href: "https://linkedin.com/in/riswan-hamua",
     icon: "💼",
   },
+  {
+    label: "Instagram",
+    display: "@_kcng",
+    href: "https://www.instagram.com/_kcng/",
+    icon: "📸",
+  },
+  {
+    label: "YouTube",
+    display: "@tutung10",
+    href: "https://youtube.com/@tutung10",
+    icon: "▶️",
+  },
+  {
+    label: "TikTok",
+    display: "@_hiroyes",
+    href: "https://www.tiktok.com/@_hiroyes",
+    icon: "🎵",
+  },
 ];

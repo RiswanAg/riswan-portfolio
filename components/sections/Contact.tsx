@@ -20,7 +20,7 @@ export function Contact() {
           </p>
         </Reveal>
 
-        <div className="mb-10 grid gap-5 sm:grid-cols-3">
+        <div className="mb-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {CONTACTS.map((c, i) => (
             <Reveal key={c.label} delay={i * 100}>
               <a
