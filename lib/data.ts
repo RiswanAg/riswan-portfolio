@@ -188,6 +188,23 @@ export const PROJECTS: Project[] = [
     demo: "#",
   },
   {
+    title: "Reyclash",
+    description:
+      "A game developed for the MYVERSE Competition — Malaysia Creative Tech Competition 2026. Reyclash teaches children how to sort and use recycling bins correctly through fast-paced, interactive gameplay.",
+    tech: ["Unity", "C#", "Game Design", "Education"],
+    contribution:
+      "Programmer in a team of 4 — built the core gameplay systems and recycling mechanics.",
+    status: { label: "Completed", tone: "done" },
+    image: "/projects/reyclash/thumbnail.png",
+    gallery: [
+      { type: "image", src: "/projects/reyclash/thumbnail.png" },
+    ],
+    fallbackIcon: "♻️",
+    fallbackGradient: "from-green-800/50 via-teal-900/30 to-emerald-900/50",
+    github: "https://github.com/RiswanAg",
+    demo: "#",
+  },
+  {
     title: "SafetyFirst 3D",
     description:
       "A web-based 3D educational game that transforms mandatory construction safety training for TVET students into an engaging, interactive experience. Built with Three.js, it runs directly in the browser with no installation required. Three gameplay modes cover real-time PPE selection, a 3D hazard hunt, and a fast-paced obstacle runner, all grounded in Malaysian DOSH and OSHA compliance standards.",

@@ -57,6 +57,20 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Riswan Hamua",
+  url: BASE_URL,
+  jobTitle: "Game Technology Student & Unity Developer",
+  alumniOf: "Universiti Teknikal Malaysia Melaka (UTeM)",
+  sameAs: [
+    "https://github.com/riswan-hamua",
+    "https://linkedin.com/in/riswan-hamua",
+  ],
+  knowsAbout: ["Unity", "C#", "C++", "Game Development", "Interactive Simulation"],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -65,6 +79,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="bg-grain min-h-full flex flex-col bg-[#050608]">
         {children}
       </body>
