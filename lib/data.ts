@@ -46,10 +46,10 @@ export const STATS: Stat[] = [
 export const BUILDING = {
   status: "In Active Development",
   version: "v0.1",
-  title: "Smart Farming Simulation",
+  title: "Agrileap",
   kicker: "Currently Building",
   pitch:
-    "A Unity-based interactive simulation that teaches modern oil-palm nursery management — blending IoT soil data, drone scouting, and AI disease detection into a hands-on learning experience.",
+    "A cozy smart-farming sim that teaches modern oil-palm nursery management — blending IoT soil data, drone scouting, and AI disease detection into a hands-on learning experience. Grow smart. Farm better. Live green.",
   image: "/smart-farming-showcase.png", // graceful styled fallback if missing
   hud: ["SOIL 62%", "DRONE ONLINE", "NURSERY · BLOCK A", "AI SCAN: READY"],
   features: [
@@ -114,9 +114,9 @@ export type Project = {
 export const PROJECTS: Project[] = [
   {
     slug: "smart-farming",
-    title: "Smart Farming Simulation Game",
+    title: "Agrileap",
     description:
-      "A Unity-based smart agriculture simulation set in an oil-palm nursery — featuring IoT soil monitoring, drone scouting, and AI disease detection as interactive gameplay.",
+      "A cozy smart-farming sim set in an oil-palm nursery — grow smart, farm better, live green. Features IoT soil monitoring, drone scouting, AI disease detection, and a hands-on harvest loop as interactive gameplay.",
     tech: ["Unity", "C#", "IoT", "AI", "Simulation"],
     contribution:
       "Designing the simulation systems, sensor-driven gameplay loop, and interactive learning mechanics.",
