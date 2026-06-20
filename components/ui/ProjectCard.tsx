@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import type { Project } from "@/lib/data";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { TechBadge, StatusBadge } from "@/components/ui/Badges";
@@ -223,7 +224,7 @@ function ExpandedPanel({
 
 // ── Card ──────────────────────────────────────────────────────────────────────
 
-export function ProjectCard({ project, featured }: { project: Project; featured?: boolean }) {
+export function ProjectCard({ project, featured, href }: { project: Project; featured?: boolean; href?: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoVisible, setVideoVisible] = useState(false);
@@ -246,17 +247,88 @@ export function ProjectCard({ project, featured }: { project: Project; featured?
   };
 
   const handleClick = () => {
+    if (href) return; // Let Link handle it
     if (cardRef.current) setOriginRect(cardRef.current.getBoundingClientRect());
     setExpanded(true);
   };
+
+  const cardContent = (
+    <>
+      {/* Visual */}
+      <div className={`relative overflow-hidden ${featured ? "h-56 lg:h-auto lg:w-1/2" : "h-52"}`}>
+        <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+          <SmartImage
+            src={project.image}
+            alt={project.title}
+            sizes={featured ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw"}
+            fallback={
+              <div className={`relative h-full w-full bg-gradient-to-br ${project.fallbackGradient}`}>
+                <div className="absolute inset-0 bg-grid-tight opacity-40" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-6xl opacity-90 drop-shadow-[0_0_24px_rgba(255,255,255,0.18)]">{project.fallbackIcon}</span>
+                </div>
+              </div>
+            }
+          />
+        </div>
+
+        {project.previewVideo && (
+          <video
+            ref={videoRef}
+            src={project.previewVideo}
+            muted loop playsInline preload="none"
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoVisible ? "opacity-100" : "opacity-0"}`}
+          />
+        )}
+
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b0e14] via-transparent to-transparent" />
+        <div className="absolute left-4 top-4"><StatusBadge status={project.status} /></div>
+        <div className="absolute inset-0 flex items-end justify-center pb-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="rounded-full border border-white/20 bg-black/60 px-4 py-1.5 text-xs font-medium tracking-wide text-white backdrop-blur-sm">
+            {href ? "View project" : "Click to explore"}
+          </span>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className={`flex flex-1 flex-col gap-4 p-6 ${featured ? "lg:w-1/2 lg:p-8" : ""}`}>
+        <div className="flex flex-wrap gap-2">
+          {project.tech.map((t) => <TechBadge key={t}>{t}</TechBadge>)}
+        </div>
+        <h3 className={`font-black leading-snug text-white transition-colors group-hover:text-emerald-300 ${featured ? "text-2xl" : "text-xl"}`}>
+          {project.title}
+        </h3>
+        <p className="line-clamp-3 text-sm leading-relaxed text-slate-400">{project.description}</p>
+        <div className="mt-auto">
+          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/80">My Contribution</p>
+          <p className="line-clamp-2 text-sm leading-relaxed text-slate-500">{project.contribution}</p>
+        </div>
+      </div>
+    </>
+  );
+
+  const cardClass = `group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#0b0e14] transition-[border-color,box-shadow] duration-300 hover:border-emerald-400/25 hover:shadow-2xl hover:shadow-emerald-950/40 ${featured ? "lg:flex-row" : ""}`;
+
+  if (href) {
+    return (
+      <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.25 }}>
+        <Link
+          href={href}
+          className={cardClass}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {cardContent}
+        </Link>
+      </motion.div>
+    );
+  }
 
   return (
     <>
       <motion.div
         ref={cardRef}
-        className={`group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#0b0e14] transition-[border-color,box-shadow] duration-300 hover:border-emerald-400/25 hover:shadow-2xl hover:shadow-emerald-950/40 ${
-          featured ? "lg:flex-row" : ""
-        }`}
+        className={cardClass}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
@@ -264,56 +336,7 @@ export function ProjectCard({ project, featured }: { project: Project; featured?
         animate={{ opacity: expanded ? 0.4 : 1 }}
         transition={{ duration: 0.25 }}
       >
-        {/* Visual */}
-        <div className={`relative overflow-hidden ${featured ? "h-56 lg:h-auto lg:w-1/2" : "h-52"}`}>
-          <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-            <SmartImage
-              src={project.image}
-              alt={project.title}
-              sizes={featured ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw"}
-              fallback={
-                <div className={`relative h-full w-full bg-gradient-to-br ${project.fallbackGradient}`}>
-                  <div className="absolute inset-0 bg-grid-tight opacity-40" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-6xl opacity-90 drop-shadow-[0_0_24px_rgba(255,255,255,0.18)]">{project.fallbackIcon}</span>
-                  </div>
-                </div>
-              }
-            />
-          </div>
-
-          {project.previewVideo && (
-            <video
-              ref={videoRef}
-              src={project.previewVideo}
-              muted loop playsInline preload="none"
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoVisible ? "opacity-100" : "opacity-0"}`}
-            />
-          )}
-
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b0e14] via-transparent to-transparent" />
-          <div className="absolute left-4 top-4"><StatusBadge status={project.status} /></div>
-          <div className="absolute inset-0 flex items-end justify-center pb-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <span className="rounded-full border border-white/20 bg-black/60 px-4 py-1.5 text-xs font-medium tracking-wide text-white backdrop-blur-sm">
-              Click to explore
-            </span>
-          </div>
-        </div>
-
-        {/* Body */}
-        <div className={`flex flex-1 flex-col gap-4 p-6 ${featured ? "lg:w-1/2 lg:p-8" : ""}`}>
-          <div className="flex flex-wrap gap-2">
-            {project.tech.map((t) => <TechBadge key={t}>{t}</TechBadge>)}
-          </div>
-          <h3 className={`font-black leading-snug text-white transition-colors group-hover:text-emerald-300 ${featured ? "text-2xl" : "text-xl"}`}>
-            {project.title}
-          </h3>
-          <p className="line-clamp-3 text-sm leading-relaxed text-slate-400">{project.description}</p>
-          <div className="mt-auto">
-            <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/80">My Contribution</p>
-            <p className="line-clamp-2 text-sm leading-relaxed text-slate-500">{project.contribution}</p>
-          </div>
-        </div>
+        {cardContent}
       </motion.div>
 
       <AnimatePresence>

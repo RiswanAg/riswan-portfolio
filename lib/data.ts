@@ -18,11 +18,9 @@ export const PROFILE = {
 
 export const NAV_LINKS = [
   { id: "building", label: "Building" },
-  { id: "projects", label: "Projects" },
+  { id: "projects", label: "Projects", href: "/projects" },
   { id: "skills", label: "Skills" },
-  { id: "experience", label: "Experience" },
-  { id: "education", label: "Education" },
-  { id: "achievements", label: "Achievements" },
+  { id: "about", label: "About", href: "/about" },
   { id: "contact", label: "Contact" },
 ] as const;
 
@@ -97,6 +95,7 @@ export type MediaItem = {
 };
 
 export type Project = {
+  slug: string;
   title: string;
   description: string;
   tech: string[];
@@ -114,6 +113,7 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    slug: "smart-farming",
     title: "Smart Farming Simulation Game",
     description:
       "A Unity-based smart agriculture simulation set in an oil-palm nursery — featuring IoT soil monitoring, drone scouting, and AI disease detection as interactive gameplay.",
@@ -133,6 +133,7 @@ export const PROJECTS: Project[] = [
     featured: true,
   },
   {
+    slug: "library-management",
     title: "Library Management System",
     description:
       "A full-featured library management system with CRUD operations, user authentication, and a persistent relational database.",
@@ -151,6 +152,7 @@ export const PROJECTS: Project[] = [
     demo: "#",
   },
   {
+    slug: "rabbit-racing",
     title: "Rabbit Invasion Racing",
     description:
       "A 3D racing game built with OpenGL featuring custom GLSL shaders, real-time physics, and dynamic obstacle spawning.",
@@ -169,6 +171,7 @@ export const PROJECTS: Project[] = [
     demo: "#",
   },
   {
+    slug: "sneak-out",
     title: "Sneak Out",
     description:
       "An online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture. Players take on the role of students sneaking out of the dormitory at night, outwitting prefects and wardens in a cat-and-mouse chase built around shared cultural memory. Winner of 2nd Place at the FTMK Innovation Competition.",
@@ -188,6 +191,7 @@ export const PROJECTS: Project[] = [
     demo: "#",
   },
   {
+    slug: "reyclash",
     title: "Reyclash",
     description:
       "A game developed for the MYVERSE Competition — Malaysia Creative Tech Competition 2026. Reyclash teaches children how to sort and use recycling bins correctly through fast-paced, interactive gameplay.",
@@ -205,6 +209,7 @@ export const PROJECTS: Project[] = [
     demo: "#",
   },
   {
+    slug: "safety-first",
     title: "SafetyFirst 3D",
     description:
       "A web-based 3D educational game that transforms mandatory construction safety training for TVET students into an engaging, interactive experience. Built with Three.js, it runs directly in the browser with no installation required. Three gameplay modes cover real-time PPE selection, a 3D hazard hunt, and a fast-paced obstacle runner, all grounded in Malaysian DOSH and OSHA compliance standards.",
@@ -373,6 +378,8 @@ export type Education = {
   qualification: string;
   grade?: string;
   description: string;
+  logo: string;
+  logoInitials: string;
 };
 
 export const EDUCATION: Education[] = [
@@ -384,6 +391,8 @@ export const EDUCATION: Education[] = [
     grade: "CGPA 3.80",
     description:
       "Currently pursuing a degree in Game Technology at the Faculty of Information and Communication Technology. Dean's List recognition across all six semesters reflects consistent academic performance alongside active involvement in research, international exhibitions, and game development competitions.",
+    logo: "/education/utem.png",
+    logoInitials: "UTeM",
   },
   {
     period: "2022 – 2023",
@@ -392,6 +401,8 @@ export const EDUCATION: Education[] = [
     grade: "CGPA 3.67",
     description:
       "Completed an engineering-track matriculation programme with a CGPA of 3.67. The rigorous curriculum in calculus, physics, and engineering principles sharpened analytical thinking and built the academic discipline carried forward into university.",
+    logo: "/education/kmkj.png",
+    logoInitials: "KMKJ",
   },
   {
     period: "Until 2021",
@@ -400,6 +411,8 @@ export const EDUCATION: Education[] = [
     grade: "6A 2B 1C",
     description:
       "Completed secondary education in the Science stream with a strong SPM result of 6A 2B 1C. Built a solid foundation in mathematics and the sciences that continues to inform a systems-thinking approach to development.",
+    logo: "/education/smk-madai.png",
+    logoInitials: "SMK",
   },
 ];
 
