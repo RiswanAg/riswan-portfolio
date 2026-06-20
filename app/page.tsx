@@ -5,6 +5,8 @@ import { Stats } from "@/components/sections/Stats";
 import { CurrentlyBuilding } from "@/components/sections/CurrentlyBuilding";
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
 import { Skills } from "@/components/sections/Skills";
+import { Experience } from "@/components/sections/Experience";
+import { Education } from "@/components/sections/Education";
 import { Achievements } from "@/components/sections/Achievements";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
@@ -20,6 +22,8 @@ export default function Portfolio() {
         <CurrentlyBuilding />
         <FeaturedProjects />
         <Skills />
+        <Experience />
+        <Education />
         <Achievements />
         <Contact />
       </main>
