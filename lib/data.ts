@@ -426,6 +426,7 @@ export type ContactLink = {
   display: string;
   href: string;
   icon: string;
+  logo?: string;
 };
 
 export const CONTACTS: ContactLink[] = [
@@ -440,29 +441,34 @@ export const CONTACTS: ContactLink[] = [
     display: "github.com/riswan-hamua",
     href: "https://github.com/riswan-hamua",
     icon: "🐙",
+    logo: "/socials/github.png",
   },
   {
     label: "LinkedIn",
     display: "linkedin.com/in/riswan-hamua",
     href: "https://linkedin.com/in/riswan-hamua",
     icon: "💼",
+    logo: "/socials/linkedin.png",
   },
   {
     label: "Instagram",
     display: "@_kcng",
     href: "https://www.instagram.com/_kcng/",
     icon: "📸",
+    logo: "/socials/instagram.webp",
   },
   {
     label: "YouTube",
     display: "@tutung10",
     href: "https://youtube.com/@tutung10",
     icon: "▶️",
+    logo: "/socials/youtube.png",
   },
   {
     label: "TikTok",
     display: "@_hiroyes",
     href: "https://www.tiktok.com/@_hiroyes",
     icon: "🎵",
+    logo: "/socials/tiktok.png",
   },
 ];
