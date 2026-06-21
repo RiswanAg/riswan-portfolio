@@ -52,25 +52,25 @@ export function Hero() {
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050608]/40 via-transparent to-[#050608]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#07152e]/40 via-transparent to-[#07152e]" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col-reverse items-center justify-between gap-12 py-16 md:flex-row">
         {/* Text column */}
         <div className="flex-1 text-center md:text-left">
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-emerald-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 pulse-soft" />
+          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#4988C4]/30 bg-[#4988C4]/10 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#BDE8F5]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#4988C4] pulse-soft" />
             {PROFILE.availability}
           </div>
 
           <h1 className="mb-6 text-6xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
-            <span className="bg-gradient-to-r from-lime-300 via-emerald-300 to-cyan-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#BDE8F5] via-[#4988C4] to-[#1C4D8D] bg-clip-text text-transparent">
               Riswan
             </span>
             <br />
             <span className="text-white">Hamua</span>
           </h1>
 
-          <p className="mb-5 font-mono text-sm tracking-wide text-cyan-300/90 sm:text-base">
+          <p className="mb-5 font-mono text-sm tracking-wide text-[#BDE8F5]/90 sm:text-base">
             {PROFILE.roles.join("  ·  ")}
           </p>
 
@@ -81,14 +81,14 @@ export function Hero() {
           <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
             <button
               onClick={() => go("projects")}
-              className="rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 px-7 py-3.5 font-bold text-[#04130c] transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-emerald-500/25 active:scale-[0.97]"
+              className="rounded-xl bg-gradient-to-r from-[#4988C4] to-[#BDE8F5] px-7 py-3.5 font-bold text-[#0F2854] transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-[#4988C4]/25 active:scale-[0.97]"
             >
               View Projects
             </button>
             <a
               href={PROFILE.cv}
               download
-              className="rounded-xl border border-emerald-400/40 px-7 py-3.5 font-bold text-emerald-200 transition-all hover:scale-[1.03] hover:border-emerald-300/60 hover:bg-emerald-400/10 active:scale-[0.97]"
+              className="rounded-xl border border-[#4988C4]/40 px-7 py-3.5 font-bold text-[#BDE8F5] transition-all hover:scale-[1.03] hover:border-[#4988C4]/60 hover:bg-[#4988C4]/10 active:scale-[0.97]"
             >
               Download CV
             </a>
@@ -109,11 +109,11 @@ export function Hero() {
               className="absolute -inset-1 rounded-[2rem] opacity-70 blur-[6px] transition-opacity duration-500 group-hover:opacity-100"
               style={{
                 background:
-                  "conic-gradient(from 0deg, #a3e635, #34d399, #22d3ee, #a3e635)",
+                  "conic-gradient(from 0deg, #BDE8F5, #4988C4, #1C4D8D, #BDE8F5)",
               }}
             />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0b0e14] p-[3px]">
-              <div className="relative h-72 w-60 overflow-hidden rounded-[1.8rem] bg-[#0f131c] sm:h-80 sm:w-64 lg:h-96 lg:w-80">
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F2854] p-[3px]">
+              <div className="relative h-72 w-60 overflow-hidden rounded-[1.8rem] bg-[#0c2248] sm:h-80 sm:w-64 lg:h-96 lg:w-80">
                 <Image
                   src={imgSrc}
                   alt="Riswan Hamua"
@@ -123,12 +123,12 @@ export function Hero() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   onError={() => setImgSrc(PROFILE.imageFallback)}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050608]/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#07152e]/60 via-transparent to-transparent" />
                 {/* HUD corner brackets — game framing */}
-                <span className="absolute left-3 top-3 h-4 w-4 border-l-2 border-t-2 border-emerald-400/70" />
-                <span className="absolute right-3 top-3 h-4 w-4 border-r-2 border-t-2 border-cyan-400/70" />
-                <span className="absolute bottom-3 left-3 h-4 w-4 border-b-2 border-l-2 border-cyan-400/70" />
-                <span className="absolute bottom-3 right-3 h-4 w-4 border-b-2 border-r-2 border-emerald-400/70" />
+                <span className="absolute left-3 top-3 h-4 w-4 border-l-2 border-t-2 border-[#4988C4]/70" />
+                <span className="absolute right-3 top-3 h-4 w-4 border-r-2 border-t-2 border-[#BDE8F5]/70" />
+                <span className="absolute bottom-3 left-3 h-4 w-4 border-b-2 border-l-2 border-[#BDE8F5]/70" />
+                <span className="absolute bottom-3 right-3 h-4 w-4 border-b-2 border-r-2 border-[#4988C4]/70" />
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@ export function Hero() {
         <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
           Scroll
         </span>
-        <span className="scroll-bob text-emerald-400/80">↓</span>
+        <span className="scroll-bob text-[#4988C4]/80">↓</span>
       </div>
     </section>
   );

@@ -32,16 +32,16 @@ export function Education() {
         <div className="flex flex-col gap-6">
           {EDUCATION.map((e, i) => (
             <Reveal key={e.institution} delay={i * 100}>
-              <div className="group rounded-2xl border border-white/8 bg-[#0b0e14] p-6 transition-all duration-300 hover:border-emerald-400/25">
+              <div className="group rounded-2xl border border-white/8 bg-[#0F2854] p-6 transition-all duration-300 hover:border-[#4988C4]/25">
                 <div className="flex flex-wrap items-start gap-5">
                   <InstitutionLogo logo={e.logo} initials={e.logoInitials} />
 
                   <div className="flex flex-1 flex-wrap items-start justify-between gap-3">
                     <div className="flex-1">
-                      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-emerald-400">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#4988C4]">
                         {e.period}
                       </span>
-                      <h3 className="mt-1.5 text-base font-bold text-white transition-all duration-300 group-hover:text-lg group-hover:text-emerald-300">
+                      <h3 className="mt-1.5 text-base font-bold text-white transition-all duration-300 group-hover:text-lg group-hover:text-[#BDE8F5]">
                         {e.institution}
                       </h3>
                       <p className="mt-0.5 text-sm font-medium text-slate-400">
@@ -50,7 +50,7 @@ export function Education() {
                     </div>
 
                     {e.grade && (
-                      <span className="shrink-0 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-3 py-1 font-mono text-xs text-emerald-400">
+                      <span className="shrink-0 rounded-full border border-[#4988C4]/20 bg-[#4988C4]/5 px-3 py-1 font-mono text-xs text-[#4988C4]">
                         {e.grade}
                       </span>
                     )}

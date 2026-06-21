@@ -80,7 +80,7 @@ export default async function ProjectPage({
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#050608]">
+      <main className="min-h-screen bg-[#07152e]">
         <div className="mx-auto max-w-6xl px-6 pb-28 pt-28">
           {/* Back nav */}
           <Reveal>
@@ -129,7 +129,7 @@ export default async function ProjectPage({
 
               <Reveal delay={180}>
                 <div className="rounded-2xl border border-white/6 bg-white/3 p-5">
-                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/80">
+                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#4988C4]/80">
                     My Contribution
                   </p>
                   <p className="text-sm leading-relaxed text-slate-400">
@@ -156,7 +156,7 @@ export default async function ProjectPage({
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 py-3 text-sm font-semibold text-[#04130c] transition-all hover:shadow-lg hover:shadow-emerald-500/25"
+                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#4988C4] to-[#BDE8F5] py-3 text-sm font-semibold text-[#0F2854] transition-all hover:shadow-lg hover:shadow-[#4988C4]/25"
                     >
                       <ExternalIcon /> Live Demo
                     </a>

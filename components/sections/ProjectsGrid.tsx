@@ -44,7 +44,7 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
               onClick={() => setActive(f)}
               className={`rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-all duration-200 ${
                 active === f
-                  ? "border-emerald-400/50 bg-emerald-400/15 text-emerald-300"
+                  ? "border-[#4988C4]/50 bg-[#4988C4]/15 text-[#BDE8F5]"
                   : "border-white/8 bg-white/3 text-slate-400 hover:border-white/20 hover:text-slate-200"
               }`}
             >

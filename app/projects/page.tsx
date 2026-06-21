@@ -20,20 +20,20 @@ export default function ProjectsPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#050608]">
+      <main className="min-h-screen bg-[#07152e]">
         {/* Hero */}
         <section className="relative overflow-hidden px-6 pb-16 pt-32">
-          <div className="aurora absolute -left-32 top-0 h-72 w-72 bg-emerald-500/10" />
-          <div className="aurora absolute -right-24 top-20 h-64 w-64 bg-lime-400/8" />
+          <div className="aurora absolute -left-32 top-0 h-72 w-72 bg-[#1C4D8D]/15" />
+          <div className="aurora absolute -right-24 top-20 h-64 w-64 bg-[#4988C4]/10" />
           <div className="relative mx-auto max-w-6xl">
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-emerald-400/70">
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[#4988C4]/70">
               What I&apos;ve built
             </p>
             <div className="flex flex-wrap items-end gap-4">
               <h1 className="text-5xl font-black leading-none text-white md:text-6xl">
                 Projects
               </h1>
-              <span className="mb-1 rounded-full border border-emerald-400/20 bg-emerald-400/8 px-3 py-1 font-mono text-sm text-emerald-300">
+              <span className="mb-1 rounded-full border border-[#4988C4]/20 bg-[#4988C4]/8 px-3 py-1 font-mono text-sm text-[#BDE8F5]">
                 {PROJECTS.length} built
               </span>
             </div>

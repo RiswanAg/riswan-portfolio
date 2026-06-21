@@ -127,7 +127,7 @@ export const PROJECTS: Project[] = [
       { type: "image", src: "/projects/smart-farming/thumbnail.png" },
     ],
     fallbackIcon: "🌴",
-    fallbackGradient: "from-emerald-800/50 via-lime-900/30 to-teal-900/50",
+    fallbackGradient: "from-[#1C4D8D]/50 via-[#0F2854]/30 to-[#0c2248]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
     featured: true,
@@ -147,7 +147,7 @@ export const PROJECTS: Project[] = [
       { type: "image", src: "/projects/library/thumbnail.png" },
     ],
     fallbackIcon: "📚",
-    fallbackGradient: "from-cyan-800/50 via-sky-900/30 to-blue-900/50",
+    fallbackGradient: "from-[#4988C4]/50 via-[#1C4D8D]/30 to-[#0F2854]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
   },
@@ -166,7 +166,7 @@ export const PROJECTS: Project[] = [
       { type: "image", src: "/projects/rabbit-racing/thumbnail.png" },
     ],
     fallbackIcon: "🐇",
-    fallbackGradient: "from-amber-800/50 via-orange-900/30 to-red-900/50",
+    fallbackGradient: "from-[#0F2854]/60 via-[#1C4D8D]/40 to-[#4988C4]/30",
     github: "https://github.com/RiswanAg",
     demo: "#",
   },
@@ -204,7 +204,7 @@ export const PROJECTS: Project[] = [
       { type: "image", src: "/projects/reyclash/thumbnail.png" },
     ],
     fallbackIcon: "♻️",
-    fallbackGradient: "from-green-800/50 via-teal-900/30 to-emerald-900/50",
+    fallbackGradient: "from-[#4988C4]/40 via-[#0F2854]/50 to-[#1C4D8D]/40",
     github: "https://github.com/RiswanAg",
     demo: "#",
   },
@@ -223,7 +223,7 @@ export const PROJECTS: Project[] = [
       { type: "image", src: "/projects/safety-first/thumbnail.png" },
     ],
     fallbackIcon: "🦺",
-    fallbackGradient: "from-yellow-800/50 via-orange-900/30 to-amber-900/50",
+    fallbackGradient: "from-[#BDE8F5]/20 via-[#4988C4]/30 to-[#1C4D8D]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
   },
@@ -341,6 +341,7 @@ export type Experience = {
   organisation: string;
   description: string;
   tags: string[];
+  bgImages?: { left: string; right: string };
 };
 
 export const EXPERIENCES: Experience[] = [
@@ -351,6 +352,10 @@ export const EXPERIENCES: Experience[] = [
     description:
       "Collaborated with a supervising lecturer to design and implement AI behaviour systems for a Tilt 5 holographic game, exhibited at the International Invention, Innovation and Technology Exhibition (ITEX) 2026. The project earned a Silver Award in international competition.",
     tags: ["Unity", "Tilt 5", "AI Behaviour", "Research"],
+    bgImages: {
+      left: "/profile.jpg",
+      right: "/projects/smart-farming/thumbnail.png",
+    },
   },
   {
     period: "2025",
@@ -359,6 +364,10 @@ export const EXPERIENCES: Experience[] = [
     description:
       "Mentored high school students in game development as part of the Next Gen Digital Ninja 2025 programme. Led hands-on sessions covering GDevelop for 2D game creation and Unity on the Tilt 5 holographic platform, making spatial and immersive development accessible to young learners.",
     tags: ["GDevelop", "Unity", "Tilt 5", "Mentoring"],
+    bgImages: {
+      left: "/projects/sneak-out/thumbnail.png",
+      right: "/projects/reyclash/thumbnail.png",
+    },
   },
   {
     period: "2024 – 2025",
@@ -367,6 +376,10 @@ export const EXPERIENCES: Experience[] = [
     description:
       "Competed in multiple game jams filling both the designer and developer roles. Produced complete, polished game experiences under tight deadlines and earned awards at several events, demonstrating creative problem-solving and the ability to ship under pressure.",
     tags: ["Game Design", "Unity", "GDevelop", "Rapid Prototyping"],
+    bgImages: {
+      left: "/projects/rabbit-racing/thumbnail.png",
+      right: "/projects/reyclash/thumbnail.png",
+    },
   },
 ];
 

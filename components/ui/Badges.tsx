@@ -14,19 +14,19 @@ const STATUS_STYLES: Record<
   { ring: string; dot: string; text: string }
 > = {
   live: {
-    ring: "border-emerald-400/40 bg-emerald-400/10",
-    dot: "bg-emerald-400",
-    text: "text-emerald-300",
+    ring: "border-[#4988C4]/40 bg-[#4988C4]/10",
+    dot: "bg-[#4988C4]",
+    text: "text-[#BDE8F5]",
   },
   done: {
-    ring: "border-cyan-400/30 bg-cyan-400/10",
-    dot: "bg-cyan-400",
-    text: "text-cyan-300",
+    ring: "border-[#BDE8F5]/30 bg-[#BDE8F5]/10",
+    dot: "bg-[#BDE8F5]",
+    text: "text-[#BDE8F5]",
   },
   proto: {
-    ring: "border-amber-400/30 bg-amber-400/10",
-    dot: "bg-amber-400",
-    text: "text-amber-300",
+    ring: "border-[#1C4D8D]/50 bg-[#1C4D8D]/20",
+    dot: "bg-[#1C4D8D]",
+    text: "text-[#4988C4]",
   },
 };
 

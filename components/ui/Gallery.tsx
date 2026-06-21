@@ -103,7 +103,7 @@ export function Gallery({ project, media }: { project: Project; media: MediaItem
               onClick={() => setActiveIndex(i)}
               className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${
                 i === activeIndex
-                  ? "border-emerald-400"
+                  ? "border-[#4988C4]"
                   : "border-white/10 opacity-40 hover:opacity-70"
               }`}
             >

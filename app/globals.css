@@ -2,17 +2,17 @@
 
 :root {
   /* Canvas */
-  --background: #050608;
-  --surface: #0b0e14;
-  --surface-2: #0f131c;
+  --background: #07152e;
+  --surface: #0F2854;
+  --surface-2: #0c2248;
   --foreground: #f4f6fb;
-  --muted: #8a93a6;
+  --muted: #7aa3c4;
 
-  /* Signature accents — lime-emerald + cyan */
-  --accent-lime: #a3e635;
-  --accent-emerald: #34d399;
-  --accent-cyan: #22d3ee;
-  --accent-amber: #f5a524;
+  /* Signature accents — navy blue palette */
+  --accent-primary: #4988C4;
+  --accent-light: #BDE8F5;
+  --accent-mid: #1C4D8D;
+  --accent-dark: #0F2854;
 }
 
 @theme inline {
@@ -45,8 +45,8 @@ body {
 
 .bg-grid-tight {
   background-image:
-    linear-gradient(rgba(52, 211, 153, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(52, 211, 153, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(73, 136, 196, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(73, 136, 196, 0.08) 1px, transparent 1px);
   background-size: 34px 34px;
 }
 
@@ -139,7 +139,7 @@ body {
   }
 }
 
-/* ── Custom scrollbar — emerald ────────────────────────────────────────────── */
+/* ── Custom scrollbar ──────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -147,9 +147,9 @@ body {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f6f54;
+  background: #1C4D8D;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2f9e6f;
+  background: #4988C4;
 }

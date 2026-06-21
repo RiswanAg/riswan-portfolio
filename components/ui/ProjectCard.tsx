@@ -106,7 +106,7 @@ function ExpandedPanel({
 
       {/* Panel — starts at card rect, expands to full screen */}
       <motion.div
-        className="fixed z-50 flex flex-col overflow-hidden border border-white/10 bg-[#0b0e14] shadow-2xl shadow-black/70 lg:flex-row"
+        className="fixed z-50 flex flex-col overflow-hidden border border-white/10 bg-[#0F2854] shadow-2xl shadow-black/70 lg:flex-row"
         initial={{
           left: originRect.left,
           top: originRect.top,
@@ -164,7 +164,7 @@ function ExpandedPanel({
                 <button
                   key={i}
                   onClick={() => setActiveIndex(i)}
-                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${i === activeIndex ? "border-emerald-400" : "border-white/10 opacity-40 hover:opacity-70"}`}
+                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${i === activeIndex ? "border-[#4988C4]" : "border-white/10 opacity-40 hover:opacity-70"}`}
                 >
                   {m.type === "youtube" ? (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-red-950/60 text-slate-300">
@@ -200,7 +200,7 @@ function ExpandedPanel({
           <p className="text-sm leading-relaxed text-slate-400">{project.description}</p>
 
           <div className="rounded-2xl border border-white/6 bg-white/3 p-4">
-            <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/80">My Contribution</p>
+            <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#4988C4]/80">My Contribution</p>
             <p className="text-sm leading-relaxed text-slate-500">{project.contribution}</p>
           </div>
 
@@ -211,7 +211,7 @@ function ExpandedPanel({
               </a>
             )}
             {project.demo !== "#" && (
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-400 py-2.5 text-sm font-semibold text-[#04130c] transition-all hover:shadow-lg hover:shadow-emerald-500/25">
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#4988C4] to-[#BDE8F5] py-2.5 text-sm font-semibold text-[#0F2854] transition-all hover:shadow-lg hover:shadow-[#4988C4]/25">
                 <ExternalIcon />Live Demo
               </a>
             )}
@@ -281,7 +281,7 @@ export function ProjectCard({ project, featured, href }: { project: Project; fea
           />
         )}
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b0e14] via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F2854] via-transparent to-transparent" />
         <div className="absolute left-4 top-4"><StatusBadge status={project.status} /></div>
         <div className="absolute inset-0 flex items-end justify-center pb-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <span className="rounded-full border border-white/20 bg-black/60 px-4 py-1.5 text-xs font-medium tracking-wide text-white backdrop-blur-sm">
@@ -295,19 +295,19 @@ export function ProjectCard({ project, featured, href }: { project: Project; fea
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t) => <TechBadge key={t}>{t}</TechBadge>)}
         </div>
-        <h3 className={`font-black leading-snug text-white transition-colors group-hover:text-emerald-300 ${featured ? "text-2xl" : "text-xl"}`}>
+        <h3 className={`font-black leading-snug text-white transition-colors group-hover:text-[#BDE8F5] ${featured ? "text-2xl" : "text-xl"}`}>
           {project.title}
         </h3>
         <p className="line-clamp-3 text-sm leading-relaxed text-slate-400">{project.description}</p>
         <div className="mt-auto">
-          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-400/80">My Contribution</p>
+          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#4988C4]/80">My Contribution</p>
           <p className="line-clamp-2 text-sm leading-relaxed text-slate-500">{project.contribution}</p>
         </div>
       </div>
     </>
   );
 
-  const cardClass = `group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#0b0e14] transition-[border-color,box-shadow] duration-300 hover:border-emerald-400/25 hover:shadow-2xl hover:shadow-emerald-950/40 ${featured ? "lg:flex-row" : ""}`;
+  const cardClass = `group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#0F2854] transition-[border-color,box-shadow] duration-300 hover:border-[#4988C4]/25 hover:shadow-2xl hover:shadow-[#0F2854]/60 ${featured ? "lg:flex-row" : ""}`;
 
   if (href) {
     return (
