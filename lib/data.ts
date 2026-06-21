@@ -353,8 +353,8 @@ export const EXPERIENCES: Experience[] = [
       "Collaborated with a supervising lecturer to design and implement AI behaviour systems for a Tilt 5 holographic game, exhibited at the International Invention, Innovation and Technology Exhibition (ITEX) 2026. The project earned a Silver Award in international competition.",
     tags: ["Unity", "Tilt 5", "AI Behaviour", "Research"],
     bgImages: {
-      left: "/profile.jpg",
-      right: "/projects/smart-farming/thumbnail.png",
+      left: "/about/Experience/Research Collaborator/WhatsApp Image 2026-06-20 at 5.39.50 PM.jpeg",
+      right: "/about/Experience/Research Collaborator/WhatsApp Image 2026-06-20 at 5.39.51 PM.jpeg",
     },
   },
   {
