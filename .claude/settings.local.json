@@ -2,7 +2,17 @@
   "permissions": {
     "allow": [
       "PowerShell(Start-Process -FilePath \"npm\" -ArgumentList \"run\",\"dev\" -WorkingDirectory \"C:\\\\Users\\\\User\\\\riswan-portfolio\" -WindowStyle Normal)",
-      "PowerShell(npm run *)"
+      "PowerShell(npm run *)",
+      "WebSearch",
+      "Bash(npm install *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(git reset *)",
+      "Bash(git commit *)",
+      "Bash(gh repo *)"
     ]
   }
 }

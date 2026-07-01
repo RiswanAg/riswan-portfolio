@@ -5,24 +5,24 @@ import Image from "next/image";
 
 const ACCENT: Record<string, { text: string; bar: string; hover: string }> = {
   emerald: {
-    text: "text-[#4988C4]",
-    bar: "from-[#4988C4] to-[#BDE8F5]",
-    hover: "group-hover:border-[#4988C4]/40 group-hover:bg-[#4988C4]/8",
+    text: "text-[#DF2531]",
+    bar: "from-[#DF2531] to-[#FFFFFF]",
+    hover: "group-hover:border-[#DF2531]/40 group-hover:bg-[#DF2531]/8",
   },
   lime: {
-    text: "text-[#BDE8F5]",
-    bar: "from-[#BDE8F5] to-[#4988C4]",
-    hover: "group-hover:border-[#BDE8F5]/40 group-hover:bg-[#BDE8F5]/8",
+    text: "text-white",
+    bar: "from-[#FFFFFF] to-[#DF2531]",
+    hover: "group-hover:border-white/40 group-hover:bg-white/8",
   },
   cyan: {
-    text: "text-[#4988C4]",
-    bar: "from-[#1C4D8D] to-[#4988C4]",
-    hover: "group-hover:border-[#4988C4]/40 group-hover:bg-[#4988C4]/8",
+    text: "text-[#DF2531]",
+    bar: "from-[#7A1018] to-[#DF2531]",
+    hover: "group-hover:border-[#DF2531]/40 group-hover:bg-[#DF2531]/8",
   },
   sky: {
-    text: "text-[#BDE8F5]",
-    bar: "from-[#4988C4] to-[#BDE8F5]",
-    hover: "group-hover:border-[#BDE8F5]/40 group-hover:bg-[#BDE8F5]/8",
+    text: "text-white",
+    bar: "from-[#DF2531] to-[#FFFFFF]",
+    hover: "group-hover:border-white/40 group-hover:bg-white/8",
   },
 };
 
@@ -37,7 +37,7 @@ export function Skills() {
             const a = ACCENT[group.accent] ?? ACCENT.emerald;
             return (
               <Reveal key={group.category} delay={i * 90}>
-                <div className="flex h-full flex-col rounded-3xl border border-white/8 bg-[#0F2854] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
+                <div className="flex h-full flex-col rounded-3xl border border-white/8 bg-[#111111] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#DF2531]/20">
                   <div className={`mb-2 h-1 w-10 rounded-full bg-gradient-to-r ${a.bar}`} />
                   <h3 className={`mb-6 text-sm font-bold uppercase tracking-wider ${a.text}`}>
                     {group.category}
@@ -57,7 +57,7 @@ export function Skills() {
                             className="h-full w-full object-contain"
                           />
                         </div>
-                        <span className="whitespace-nowrap text-[10px] font-medium text-slate-400">
+                        <span className="whitespace-nowrap text-[10px] font-medium text-[#A3A3A3]">
                           {s.name}
                         </span>
                       </div>

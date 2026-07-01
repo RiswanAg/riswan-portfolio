@@ -37,16 +37,17 @@ export function Navbar() {
     <nav
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-white/5 bg-[#07152e]/80 backdrop-blur-md"
+          ? "border-b border-white/10 bg-black/80 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="bg-gradient-to-r from-[#BDE8F5] to-[#4988C4] bg-clip-text text-xl font-black tracking-tight text-transparent"
+          aria-label="Riswan Hamua home"
+          className="bg-gradient-to-r from-[#DF2531] to-[#FFFFFF] bg-clip-text text-xl font-black tracking-tight text-transparent"
         >
-          RH.
+          RH
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -55,10 +56,10 @@ export function Navbar() {
               <Link
                 key={l.id}
                 href={l.href}
-                className={`text-sm tracking-wide transition-colors hover:text-[#BDE8F5] ${
+                className={`text-sm tracking-wide transition-colors hover:text-white ${
                   pathname.startsWith(l.href)
-                    ? "text-[#BDE8F5]"
-                    : "text-slate-400"
+                    ? "text-white"
+                    : "text-[#A3A3A3]"
                 }`}
               >
                 {l.label}
@@ -67,7 +68,7 @@ export function Navbar() {
               <button
                 key={l.id}
                 onClick={() => handleSectionLink(l.id)}
-                className="text-sm tracking-wide text-slate-400 transition-colors hover:text-[#BDE8F5]"
+                className="text-sm tracking-wide text-[#A3A3A3] transition-colors hover:text-white"
               >
                 {l.label}
               </button>
@@ -75,7 +76,7 @@ export function Navbar() {
           )}
           <button
             onClick={() => handleSectionLink("contact")}
-            className="rounded-lg bg-gradient-to-r from-[#4988C4] to-[#BDE8F5] px-4 py-2 text-sm font-semibold text-[#0F2854] transition-all hover:shadow-lg hover:shadow-[#4988C4]/20"
+            className="rounded-lg bg-gradient-to-r from-[#DF2531] to-[#7A1018] px-4 py-2 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-[#DF2531]/30 hover:brightness-110"
           >
             Open to Internships
           </button>
@@ -101,15 +102,15 @@ export function Navbar() {
       <div
         className={`overflow-hidden transition-all duration-300 md:hidden ${menuOpen ? "max-h-72" : "max-h-0"}`}
       >
-        <div className="flex flex-col gap-4 border-t border-white/5 bg-[#07152e]/95 px-6 pb-6 pt-4">
+        <div className="flex flex-col gap-4 border-t border-white/10 bg-black/95 px-6 pb-6 pt-4">
           {NAV_LINKS.map((l) =>
             "href" in l && l.href ? (
               <Link
                 key={l.id}
                 href={l.href}
                 onClick={() => setMenuOpen(false)}
-                className={`text-left text-sm transition-colors hover:text-[#BDE8F5] ${
-                  pathname.startsWith(l.href) ? "text-[#BDE8F5]" : "text-slate-400"
+                className={`text-left text-sm transition-colors hover:text-white ${
+                  pathname.startsWith(l.href) ? "text-white" : "text-[#A3A3A3]"
                 }`}
               >
                 {l.label}
@@ -118,7 +119,7 @@ export function Navbar() {
               <button
                 key={l.id}
                 onClick={() => handleSectionLink(l.id)}
-                className="text-left text-sm text-slate-400 transition-colors hover:text-[#BDE8F5]"
+                className="text-left text-sm text-[#A3A3A3] transition-colors hover:text-white"
               >
                 {l.label}
               </button>

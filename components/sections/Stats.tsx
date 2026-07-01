@@ -12,7 +12,7 @@ export function Stats() {
             delay={i * 80}
             className="flex flex-col items-center text-center"
           >
-            <div className="bg-gradient-to-r from-[#BDE8F5] to-[#4988C4] bg-clip-text text-3xl font-black text-transparent md:text-4xl">
+            <div className="bg-gradient-to-r from-[#FFFFFF] to-[#DF2531] bg-clip-text text-3xl font-black text-transparent md:text-4xl">
               {typeof s.value === "number" ? (
                 <Counter value={s.value} suffix={s.suffix} />
               ) : (

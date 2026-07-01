@@ -32,7 +32,7 @@ export function Experience() {
                   priority={i === 0}
                 />
                 {/* Fade toward center */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#07152e]" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black" />
               </div>
               {/* Right image */}
               <div className="absolute inset-y-0 right-0 w-1/2">
@@ -44,7 +44,7 @@ export function Experience() {
                   className="object-cover opacity-50"
                 />
                 {/* Fade toward center */}
-                <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#07152e]" />
+                <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black" />
               </div>
             </div>
           ) : null
@@ -58,13 +58,13 @@ export function Experience() {
           {EXPERIENCES.map((e, i) => (
             <Reveal key={e.role + e.organisation} delay={i * 100}>
               <div
-                className="rounded-2xl border border-white/8 bg-[#0F2854]/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-[#4988C4]/25"
+                className="rounded-2xl border border-white/8 bg-[#111111]/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-[#DF2531]/25"
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#4988C4]">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#DF2531]">
                       {e.period}
                     </span>
                     <h3 className="mt-1.5 font-bold text-white">{e.role}</h3>

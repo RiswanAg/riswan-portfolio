@@ -52,49 +52,49 @@ export function Hero() {
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#07152e]/40 via-transparent to-[#07152e]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col-reverse items-center justify-between gap-12 py-16 md:flex-row">
         {/* Text column */}
         <div className="flex-1 text-center md:text-left">
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#4988C4]/30 bg-[#4988C4]/10 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#BDE8F5]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#4988C4] pulse-soft" />
+          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#DF2531]/30 bg-[#DF2531]/10 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#DF2531]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#DF2531] pulse-soft" />
             {PROFILE.availability}
           </div>
 
           <h1 className="mb-6 text-6xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
-            <span className="bg-gradient-to-r from-[#BDE8F5] via-[#4988C4] to-[#1C4D8D] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FFFFFF] via-[#DF2531] to-[#7A1018] bg-clip-text text-transparent">
               Riswan
             </span>
             <br />
             <span className="text-white">Hamua</span>
           </h1>
 
-          <p className="mb-5 font-mono text-sm tracking-wide text-[#BDE8F5]/90 sm:text-base">
+          <p className="mb-5 font-mono text-sm tracking-wide text-[#DF2531]/90 sm:text-base">
             {PROFILE.roles.join("  ·  ")}
           </p>
 
-          <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-slate-400 md:mx-0">
+          <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-[#A3A3A3] md:mx-0">
             {PROFILE.tagline}
           </p>
 
           <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
             <button
               onClick={() => go("projects")}
-              className="rounded-xl bg-gradient-to-r from-[#4988C4] to-[#BDE8F5] px-7 py-3.5 font-bold text-[#0F2854] transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-[#4988C4]/25 active:scale-[0.97]"
+              className="rounded-xl bg-gradient-to-r from-[#DF2531] to-[#7A1018] px-7 py-3.5 font-bold text-white transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-[#DF2531]/30 active:scale-[0.97]"
             >
               View Projects
             </button>
             <a
               href={PROFILE.cv}
               download
-              className="rounded-xl border border-[#4988C4]/40 px-7 py-3.5 font-bold text-[#BDE8F5] transition-all hover:scale-[1.03] hover:border-[#4988C4]/60 hover:bg-[#4988C4]/10 active:scale-[0.97]"
+              className="rounded-xl border border-[#DF2531]/40 px-7 py-3.5 font-bold text-white transition-all hover:scale-[1.03] hover:border-[#DF2531]/60 hover:bg-[#DF2531]/10 active:scale-[0.97]"
             >
               Download CV
             </a>
             <button
               onClick={() => go("contact")}
-              className="rounded-xl border border-white/10 px-7 py-3.5 font-bold text-slate-300 transition-all hover:scale-[1.03] hover:border-white/25 hover:bg-white/5 active:scale-[0.97]"
+              className="rounded-xl border border-white/10 px-7 py-3.5 font-bold text-[#A3A3A3] transition-all hover:scale-[1.03] hover:border-white/25 hover:bg-white/5 active:scale-[0.97]"
             >
               Contact Me
             </button>
@@ -109,11 +109,11 @@ export function Hero() {
               className="absolute -inset-1 rounded-[2rem] opacity-70 blur-[6px] transition-opacity duration-500 group-hover:opacity-100"
               style={{
                 background:
-                  "conic-gradient(from 0deg, #BDE8F5, #4988C4, #1C4D8D, #BDE8F5)",
+                  "conic-gradient(from 0deg, #DF2531, #7A1018, #000000, #DF2531)",
               }}
             />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0F2854] p-[3px]">
-              <div className="relative h-72 w-60 overflow-hidden rounded-[1.8rem] bg-[#0c2248] sm:h-80 sm:w-64 lg:h-96 lg:w-80">
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#111111] p-[3px]">
+              <div className="relative h-72 w-60 overflow-hidden rounded-[1.8rem] bg-[#090909] sm:h-80 sm:w-64 lg:h-96 lg:w-80">
                 <Image
                   src={imgSrc}
                   alt="Riswan Hamua"
@@ -123,12 +123,12 @@ export function Hero() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   onError={() => setImgSrc(PROFILE.imageFallback)}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07152e]/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 {/* HUD corner brackets — game framing */}
-                <span className="absolute left-3 top-3 h-4 w-4 border-l-2 border-t-2 border-[#4988C4]/70" />
-                <span className="absolute right-3 top-3 h-4 w-4 border-r-2 border-t-2 border-[#BDE8F5]/70" />
-                <span className="absolute bottom-3 left-3 h-4 w-4 border-b-2 border-l-2 border-[#BDE8F5]/70" />
-                <span className="absolute bottom-3 right-3 h-4 w-4 border-b-2 border-r-2 border-[#4988C4]/70" />
+                <span className="absolute left-3 top-3 h-4 w-4 border-l-2 border-t-2 border-[#DF2531]/70" />
+                <span className="absolute right-3 top-3 h-4 w-4 border-r-2 border-t-2 border-white/70" />
+                <span className="absolute bottom-3 left-3 h-4 w-4 border-b-2 border-l-2 border-white/70" />
+                <span className="absolute bottom-3 right-3 h-4 w-4 border-b-2 border-r-2 border-[#DF2531]/70" />
               </div>
             </div>
           </div>
@@ -136,11 +136,11 @@ export function Hero() {
       </div>
 
       {/* Scroll cue */}
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-slate-600">
+      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-[#A3A3A3]/60">
         <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
           Scroll
         </span>
-        <span className="scroll-bob text-[#4988C4]/80">↓</span>
+        <span className="scroll-bob text-[#DF2531]/80">↓</span>
       </div>
     </section>
   );
