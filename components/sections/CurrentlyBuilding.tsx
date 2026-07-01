@@ -1,6 +1,24 @@
 import { BUILDING } from "@/lib/data";
 import { Reveal } from "@/components/ui/Reveal";
 import { SmartImage } from "@/components/ui/SmartImage";
+import {
+  Gamepad2,
+  Sprout,
+  RadioTower,
+  ScanEye,
+  Microscope,
+  GraduationCap,
+  LucideIcon,
+} from "lucide-react";
+
+const FEATURE_ICONS: Record<string, LucideIcon> = {
+  gamepad: Gamepad2,
+  sprout: Sprout,
+  "radio-tower": RadioTower,
+  "scan-eye": ScanEye,
+  microscope: Microscope,
+  "graduation-cap": GraduationCap,
+};
 
 export function CurrentlyBuilding() {
   return (
@@ -25,9 +43,7 @@ export function CurrentlyBuilding() {
                     <div className="relative h-full w-full bg-gradient-to-br from-[#7A1018]/60 via-black to-[#111111]/50">
                       <div className="absolute inset-0 bg-grid-tight opacity-60" />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-7xl opacity-90 drop-shadow-[0_0_30px_rgba(223,37,49,0.4)]">
-                          🌴
-                        </span>
+                        <Sprout size={80} className="text-[#DF2531]/60 drop-shadow-[0_0_30px_rgba(223,37,49,0.4)]" strokeWidth={1} />
                       </div>
                       <p className="absolute bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.25em] text-[#DF2531]/70">
                         Key art — generate with Nano Banana
@@ -86,21 +102,26 @@ export function CurrentlyBuilding() {
             </Reveal>
 
             <div className="flex flex-col gap-3">
-              {BUILDING.features.map((f, i) => (
-                <Reveal key={f.label} delay={i * 70}>
-                  <div className="group flex items-start gap-4 rounded-2xl border border-white/8 bg-white/[0.02] p-5 transition-all duration-300 hover:border-[#DF2531]/30 hover:bg-[#DF2531]/[0.04]">
-                    <span className="text-2xl">{f.icon}</span>
-                    <div>
-                      <h3 className="font-semibold text-white transition-colors group-hover:text-[#DF2531]">
-                        {f.label}
-                      </h3>
-                      <p className="mt-1 text-sm leading-relaxed text-[#A3A3A3]/70">
-                        {f.desc}
-                      </p>
+              {BUILDING.features.map((f, i) => {
+                const Icon = FEATURE_ICONS[f.icon] ?? Sprout;
+                return (
+                  <Reveal key={f.label} delay={i * 70}>
+                    <div className="group flex items-start gap-4 rounded-2xl border border-white/8 bg-white/[0.02] p-5 transition-all duration-300 hover:border-[#DF2531]/30 hover:bg-[#DF2531]/[0.04]">
+                      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#DF2531]/20 bg-[#DF2531]/10 text-[#DF2531] transition-colors group-hover:border-[#DF2531]/40 group-hover:bg-[#DF2531]/20">
+                        <Icon size={16} strokeWidth={2} />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-white transition-colors group-hover:text-[#DF2531]">
+                          {f.label}
+                        </h3>
+                        <p className="mt-1 text-sm leading-relaxed text-[#A3A3A3]/70">
+                          {f.desc}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </Reveal>
-              ))}
+                  </Reveal>
+                );
+              })}
             </div>
           </div>
         </div>

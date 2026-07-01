@@ -7,6 +7,26 @@ import Link from "next/link";
 import type { Project } from "@/lib/data";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { TechBadge, StatusBadge } from "@/components/ui/Badges";
+import {
+  Sprout,
+  BookOpen,
+  Rabbit,
+  School,
+  Recycle,
+  ShieldCheck,
+  Gamepad2,
+  LucideIcon,
+} from "lucide-react";
+
+const PROJECT_FALLBACK_ICONS: Record<string, LucideIcon> = {
+  sprout: Sprout,
+  "book-open": BookOpen,
+  rabbit: Rabbit,
+  school: School,
+  recycle: Recycle,
+  "shield-check": ShieldCheck,
+  gamepad: Gamepad2,
+};
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 
@@ -252,6 +272,8 @@ export function ProjectCard({ project, featured, href }: { project: Project; fea
     setExpanded(true);
   };
 
+  const FallbackIcon = PROJECT_FALLBACK_ICONS[project.fallbackIcon] ?? Gamepad2;
+
   const cardContent = (
     <>
       {/* Visual */}
@@ -265,7 +287,7 @@ export function ProjectCard({ project, featured, href }: { project: Project; fea
               <div className={`relative h-full w-full bg-gradient-to-br ${project.fallbackGradient}`}>
                 <div className="absolute inset-0 bg-grid-tight opacity-40" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-6xl opacity-90 drop-shadow-[0_0_24px_rgba(255,255,255,0.18)]">{project.fallbackIcon}</span>
+                  <FallbackIcon size={72} strokeWidth={1} className="opacity-60 drop-shadow-[0_0_24px_rgba(255,255,255,0.18)] text-white" />
                 </div>
               </div>
             }

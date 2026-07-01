@@ -54,32 +54,32 @@ export const BUILDING = {
   hud: ["SOIL 62%", "DRONE ONLINE", "NURSERY · BLOCK A", "AI SCAN: READY"],
   features: [
     {
-      icon: "🎮",
+      icon: "gamepad",
       label: "Unity Simulation",
       desc: "Built as a real-time, interactive 3D smart-farming simulation.",
     },
     {
-      icon: "🌴",
+      icon: "sprout",
       label: "Oil Palm Nursery",
       desc: "An authentic nursery environment and crop lifecycle to manage.",
     },
     {
-      icon: "📡",
+      icon: "radio-tower",
       label: "IoT Soil Monitoring",
       desc: "Live soil & moisture sensor data feeds the gameplay loop.",
     },
     {
-      icon: "🚁",
+      icon: "scan-eye",
       label: "Drone Monitoring",
       desc: "Aerial scouting system for field overview and inspection.",
     },
     {
-      icon: "🔬",
+      icon: "microscope",
       label: "Disease Detection",
       desc: "AI-assisted plant disease identification mechanics.",
     },
     {
-      icon: "📚",
+      icon: "graduation-cap",
       label: "Interactive Learning",
       desc: "A gamified, hands-on educational loop for real agronomy skills.",
     },
@@ -126,7 +126,7 @@ export const PROJECTS: Project[] = [
     gallery: [
       { type: "image", src: "/projects/smart-farming/thumbnail.png" },
     ],
-    fallbackIcon: "🌴",
+    fallbackIcon: "sprout",
     fallbackGradient: "from-[#1C4D8D]/50 via-[#0F2854]/30 to-[#0c2248]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
@@ -146,7 +146,7 @@ export const PROJECTS: Project[] = [
     gallery: [
       { type: "image", src: "/projects/library/thumbnail.png" },
     ],
-    fallbackIcon: "📚",
+    fallbackIcon: "book-open",
     fallbackGradient: "from-[#4988C4]/50 via-[#1C4D8D]/30 to-[#0F2854]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
@@ -165,7 +165,7 @@ export const PROJECTS: Project[] = [
     gallery: [
       { type: "image", src: "/projects/rabbit-racing/thumbnail.png" },
     ],
-    fallbackIcon: "🐇",
+    fallbackIcon: "rabbit",
     fallbackGradient: "from-[#0F2854]/60 via-[#1C4D8D]/40 to-[#4988C4]/30",
     github: "https://github.com/RiswanAg",
     demo: "#",
@@ -185,7 +185,7 @@ export const PROJECTS: Project[] = [
       { type: "image", src: "/projects/sneak-out/thumbnail.png" },
       { type: "youtube", src: "QZSrrUhhF-s", caption: "Sneak Out gameplay trailer" },
     ],
-    fallbackIcon: "🏫",
+    fallbackIcon: "school",
     fallbackGradient: "from-indigo-800/50 via-purple-900/30 to-violet-900/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
@@ -203,7 +203,7 @@ export const PROJECTS: Project[] = [
     gallery: [
       { type: "image", src: "/projects/reyclash/thumbnail.png" },
     ],
-    fallbackIcon: "♻️",
+    fallbackIcon: "recycle",
     fallbackGradient: "from-[#4988C4]/40 via-[#0F2854]/50 to-[#1C4D8D]/40",
     github: "https://github.com/RiswanAg",
     demo: "#",
@@ -222,7 +222,7 @@ export const PROJECTS: Project[] = [
     gallery: [
       { type: "image", src: "/projects/safety-first/thumbnail.png" },
     ],
-    fallbackIcon: "🦺",
+    fallbackIcon: "shield-check",
     fallbackGradient: "from-[#BDE8F5]/20 via-[#4988C4]/30 to-[#1C4D8D]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
@@ -294,42 +294,42 @@ export const ACHIEVEMENTS: Achievement[] = [
     title: "Silver Award — ITEX 2026",
     description:
       "Contributed to a Silver Award-winning exhibit at the International Invention, Innovation & Technology Exhibition (ITEX 2026) — collaborating directly with a supervisor to engineer AI behaviour systems for a holographic game built on the Tilt 5 platform.",
-    icon: "🥈",
+    icon: "award",
   },
   {
     year: "2025",
     title: "2nd Place — FTMK Innovation Competition",
     description:
       "Secured 2nd Place at Workshop 2 of the FTMK Innovation Competition by designing and developing an online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture — blending real-time networking, game design, and local storytelling.",
-    icon: "🏅",
+    icon: "trophy",
   },
   {
     year: "2024 – 2025",
     title: "Multiple Game Jam Awards — Game Designer & Developer",
     description:
       "Recognised across several game jams as both Game Designer and Developer — consistently delivering creative, polished game concepts under tight time constraints and competitive judging.",
-    icon: "🎮",
+    icon: "gamepad",
   },
   {
     year: "2023 – 2026",
     title: "Dean's List — All 6 Semesters",
     description:
       "Placed on the Dean's List every semester from Semester 1 through Semester 6 — a full-degree record of academic excellence maintained without interruption.",
-    icon: "🏆",
+    icon: "star",
   },
   {
     year: "2022",
     title: "National Football Participation",
     description:
       "Selected to compete at the national level in football — demonstrating the same teamwork, discipline, and composure under pressure that drives my work in collaborative development.",
-    icon: "⚽",
+    icon: "zap",
   },
   {
     year: "2020",
     title: "3rd Place — Sabah COVID-19 Infographic Competition",
     description:
       "Awarded 3rd Place for outstanding visual communication and creative design under a public-health brief — an early signal of the design sensibility that now shapes my game and UI work.",
-    icon: "🥉",
+    icon: "pen-tool",
   },
 ];
 

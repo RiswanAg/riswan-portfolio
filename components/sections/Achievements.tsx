@@ -1,6 +1,24 @@
 import { ACHIEVEMENTS } from "@/lib/data";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import {
+  Award,
+  Trophy,
+  Gamepad2,
+  Star,
+  Zap,
+  PenTool,
+  LucideIcon,
+} from "lucide-react";
+
+const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
+  award: Award,
+  trophy: Trophy,
+  gamepad: Gamepad2,
+  star: Star,
+  zap: Zap,
+  "pen-tool": PenTool,
+};
 
 export function Achievements() {
   return (
@@ -23,15 +41,20 @@ export function Achievements() {
                   }`}
                 >
                   {/* Node */}
-                  <div
-                    className={`absolute top-1 z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-[#DF2531]/40 bg-[#111111] text-sm shadow-lg shadow-black/50 ${
-                      i % 2 === 0
-                        ? "left-0 md:-left-4"
-                        : "left-0 md:-right-4 md:left-auto"
-                    }`}
-                  >
-                    {a.icon}
-                  </div>
+                  {(() => {
+                    const Icon = ACHIEVEMENT_ICONS[a.icon] ?? Award;
+                    return (
+                      <div
+                        className={`absolute top-1 z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-[#DF2531]/40 bg-[#111111] text-[#DF2531] shadow-lg shadow-black/50 ${
+                          i % 2 === 0
+                            ? "left-0 md:-left-4"
+                            : "left-0 md:-right-4 md:left-auto"
+                        }`}
+                      >
+                        <Icon size={14} strokeWidth={2} />
+                      </div>
+                    );
+                  })()}
 
                   <div className="ml-12 rounded-2xl border border-white/8 bg-[#111111] p-6 transition-all duration-300 hover:border-[#DF2531]/25 md:ml-0">
                     <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#DF2531]">

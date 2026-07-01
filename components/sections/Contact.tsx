@@ -2,6 +2,7 @@ import Image from "next/image";
 import { CONTACTS, CONTACT_INTRO, PROFILE } from "@/lib/data";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Download, Mail } from "lucide-react";
 
 export function Contact() {
   return (
@@ -41,8 +42,8 @@ export function Contact() {
                     />
                   </div>
                 ) : (
-                  <span className="text-3xl transition-transform duration-300 group-hover:scale-110 inline-block">
-                    {c.icon}
+                  <span className="flex h-8 w-8 items-center justify-center text-[#A3A3A3] transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
+                    <Mail size={24} strokeWidth={1.5} />
                   </span>
                 )}
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A3A3A3]/60">
@@ -62,7 +63,8 @@ export function Contact() {
             download
             className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#DF2531] to-[#7A1018] px-8 py-4 font-bold text-white transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-[#DF2531]/30 active:scale-[0.97]"
           >
-            ↓ Download CV
+            <Download size={16} strokeWidth={2} />
+            Download CV
           </a>
         </Reveal>
       </div>

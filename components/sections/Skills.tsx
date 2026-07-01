@@ -37,8 +37,8 @@ export function Skills() {
             const a = ACCENT[group.accent] ?? ACCENT.emerald;
             return (
               <Reveal key={group.category} delay={i * 90}>
-                <div className="flex h-full flex-col rounded-3xl border border-white/8 bg-[#111111] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#DF2531]/20">
-                  <div className={`mb-2 h-1 w-10 rounded-full bg-gradient-to-r ${a.bar}`} />
+                <div className="group/card flex h-full flex-col rounded-3xl border border-white/8 bg-[#111111] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#DF2531]/25 hover:shadow-lg hover:shadow-[#DF2531]/5">
+                  <div className={`mb-2 h-1 w-10 rounded-full bg-gradient-to-r ${a.bar} transition-all duration-300 group-hover/card:w-14`} />
                   <h3 className={`mb-6 text-sm font-bold uppercase tracking-wider ${a.text}`}>
                     {group.category}
                   </h3>
@@ -47,17 +47,17 @@ export function Skills() {
                     {group.skills.map((s) => (
                       <div key={s.name} className="group flex flex-col items-center gap-1.5">
                         <div
-                          className={`flex h-16 w-16 items-center justify-center rounded-2xl border border-white/8 bg-white/4 p-3 transition-all duration-200 ${a.hover}`}
+                          className={`flex h-14 w-14 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.03] p-2.5 transition-all duration-200 ${a.hover} group-hover:scale-105`}
                         >
                           <Image
                             src={s.logo}
                             alt={s.name}
-                            width={56}
-                            height={56}
+                            width={48}
+                            height={48}
                             className="h-full w-full object-contain"
                           />
                         </div>
-                        <span className="whitespace-nowrap text-[10px] font-medium text-[#A3A3A3]">
+                        <span className="whitespace-nowrap text-[10px] font-medium text-[#A3A3A3] transition-colors group-hover:text-white">
                           {s.name}
                         </span>
                       </div>

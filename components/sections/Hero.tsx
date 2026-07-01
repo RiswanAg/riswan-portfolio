@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { PROFILE } from "@/lib/data";
+import { FolderOpen, Download, Mail, ChevronDown } from "lucide-react";
 
 export function Hero() {
   const [imgSrc, setImgSrc] = useState(PROFILE.image);
@@ -81,21 +82,24 @@ export function Hero() {
           <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
             <button
               onClick={() => go("projects")}
-              className="rounded-xl bg-gradient-to-r from-[#DF2531] to-[#7A1018] px-7 py-3.5 font-bold text-white transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-[#DF2531]/30 active:scale-[0.97]"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#DF2531] to-[#7A1018] px-7 py-3.5 font-bold text-white transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-[#DF2531]/30 active:scale-[0.97]"
             >
+              <FolderOpen size={16} strokeWidth={2} />
               View Projects
             </button>
             <a
               href={PROFILE.cv}
               download
-              className="rounded-xl border border-[#DF2531]/40 px-7 py-3.5 font-bold text-white transition-all hover:scale-[1.03] hover:border-[#DF2531]/60 hover:bg-[#DF2531]/10 active:scale-[0.97]"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#DF2531]/40 px-7 py-3.5 font-bold text-white transition-all hover:scale-[1.03] hover:border-[#DF2531]/60 hover:bg-[#DF2531]/10 active:scale-[0.97]"
             >
+              <Download size={16} strokeWidth={2} />
               Download CV
             </a>
             <button
               onClick={() => go("contact")}
-              className="rounded-xl border border-white/10 px-7 py-3.5 font-bold text-[#A3A3A3] transition-all hover:scale-[1.03] hover:border-white/25 hover:bg-white/5 active:scale-[0.97]"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-7 py-3.5 font-bold text-[#A3A3A3] transition-all hover:scale-[1.03] hover:border-white/25 hover:bg-white/5 active:scale-[0.97]"
             >
+              <Mail size={16} strokeWidth={2} />
               Contact Me
             </button>
           </div>
@@ -136,11 +140,11 @@ export function Hero() {
       </div>
 
       {/* Scroll cue */}
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-[#A3A3A3]/60">
+      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[#A3A3A3]/60">
         <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
           Scroll
         </span>
-        <span className="scroll-bob text-[#DF2531]/80">↓</span>
+        <ChevronDown size={18} className="scroll-bob text-[#DF2531]/80" strokeWidth={2} />
       </div>
     </section>
   );
