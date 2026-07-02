@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { PROFILE } from "@/lib/data";
 import { FolderOpen, Download, Mail, ChevronDown } from "lucide-react";
+import { SplineScene } from "@/components/ui/splite";
+import { TypingText } from "@/components/ui/typing-text";
 
 export function Hero() {
-  const [imgSrc, setImgSrc] = useState(PROFILE.image);
   const parallaxRef = useRef<HTMLDivElement>(null);
 
   // Subtle parallax on the photo cluster — transform only, rAF-throttled.
@@ -71,8 +71,8 @@ export function Hero() {
             <span className="text-white">Hamua</span>
           </h1>
 
-          <p className="mb-5 font-mono text-sm tracking-wide text-[#DF2531]/90 sm:text-base">
-            {PROFILE.roles.join("  ·  ")}
+          <p className="mb-5 min-h-[1.5em] font-mono text-sm tracking-wide text-[#DF2531]/90 sm:text-base">
+            <TypingText words={PROFILE.roles} />
           </p>
 
           <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-[#A3A3A3] md:mx-0">
@@ -105,37 +105,12 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Photo column */}
-        <div ref={parallaxRef} className="flex flex-shrink-0 justify-center">
-          <div className="group relative">
-            {/* Rotating gradient glow ring */}
-            <div
-              className="absolute -inset-1 rounded-[2rem] opacity-70 blur-[6px] transition-opacity duration-500 group-hover:opacity-100"
-              style={{
-                background:
-                  "conic-gradient(from 0deg, #DF2531, #7A1018, #000000, #DF2531)",
-              }}
-            />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#111111] p-[3px]">
-              <div className="relative h-72 w-60 overflow-hidden rounded-[1.8rem] bg-[#090909] sm:h-80 sm:w-64 lg:h-96 lg:w-80">
-                <Image
-                  src={imgSrc}
-                  alt="Riswan Hamua"
-                  fill
-                  sizes="(max-width: 768px) 16rem, 20rem"
-                  loading="eager"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  onError={() => setImgSrc(PROFILE.imageFallback)}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                {/* HUD corner brackets — game framing */}
-                <span className="absolute left-3 top-3 h-4 w-4 border-l-2 border-t-2 border-[#DF2531]/70" />
-                <span className="absolute right-3 top-3 h-4 w-4 border-r-2 border-t-2 border-white/70" />
-                <span className="absolute bottom-3 left-3 h-4 w-4 border-b-2 border-l-2 border-white/70" />
-                <span className="absolute bottom-3 right-3 h-4 w-4 border-b-2 border-r-2 border-[#DF2531]/70" />
-              </div>
-            </div>
-          </div>
+        {/* Spline column */}
+        <div ref={parallaxRef} className="relative h-[26rem] w-full flex-shrink-0 sm:h-[32rem] lg:h-[40rem] lg:w-[40rem]">
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="h-full w-full"
+          />
         </div>
       </div>
 

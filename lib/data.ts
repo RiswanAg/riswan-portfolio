@@ -4,12 +4,12 @@
 export const PROFILE = {
   name: "Riswan Hamua",
   roles: [
-    "Game Technology Student",
-    "Unity Developer",
-    "Interactive Simulation Developer",
+    "Final Year Game Technology Student",
+    "Tech Enthusiast",
+    "Universiti Teknikal Malaysia Melaka",
   ],
   tagline:
-    "I build interactive simulations and games that turn complex systems — from smart agriculture to real-time mechanics — into something you can play.",
+    "I don't just imagine things. I build them. Mostly games, sometimes something else entirely.",
   availability: "Open to Internship Opportunities",
   image: "/profile.jpg",
   imageFallback: "/profile.svg",
