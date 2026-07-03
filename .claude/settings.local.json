@@ -12,7 +12,17 @@
       "Bash(npx next *)",
       "Bash(git reset *)",
       "Bash(git commit *)",
-      "Bash(gh repo *)"
+      "Bash(gh repo *)",
+      "Bash(python *)",
+      "PowerShell(python --version 2>&1)",
+      "PowerShell(npm install *)",
+      "PowerShell(git *)",
+      "Bash(npx eslint *)",
+      "Bash(curl -s http://localhost:3001/ -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/hero-status-check)",
+      "Bash(curl -s -o /dev/null -w \"STATUS:%{http_code}\\\\n\" http://localhost:3000/)"
     ]
   }
 }

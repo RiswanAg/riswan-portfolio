@@ -2,7 +2,7 @@ import { Backdrop } from "@/components/ui/Backdrop";
 import { HomeIntro } from "@/components/ui/HomeIntro";
 import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
-import { Stats } from "@/components/sections/Stats";
+import { About } from "@/components/sections/About";
 import { CurrentlyBuilding } from "@/components/sections/CurrentlyBuilding";
 import { Skills } from "@/components/sections/Skills";
 import { Contact } from "@/components/sections/Contact";
@@ -16,7 +16,7 @@ export default function Portfolio() {
       <Navbar />
       <main className="relative z-10">
         <Hero />
-        <Stats />
+        <About />
         <CurrentlyBuilding />
         <Skills />
         <Contact />

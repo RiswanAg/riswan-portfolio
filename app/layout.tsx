@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Anton, Share_Tech_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -9,6 +9,28 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+// Coolvetica isn't on Google Fonts (foundry-only license) — Anton is the
+// closest free, redistributable condensed-impact alternative.
+const anton = Anton({
+  variable: "--font-anton",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+// Monofonto isn't on Google Fonts either — Share Tech Mono is a similar
+// geometric/technical monospace, and matches the site's existing HUD look.
+const shareTechMono = Share_Tech_Mono({
+  variable: "--font-share-tech-mono",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const roboto = Roboto({
+  variable: "--font-roboto",
+  weight: ["400", "700"],
   subsets: ["latin"],
 });
 
@@ -77,7 +99,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} ${shareTechMono.variable} ${roboto.variable} h-full antialiased`}
     >
       <head>
         <script

@@ -10,11 +10,51 @@ export const PROFILE = {
   ],
   tagline:
     "I don't just imagine things. I build them. Mostly games, sometimes something else entirely.",
-  availability: "Open to Internship Opportunities",
-  image: "/profile.jpg",
+  availability: "Ready to Innovate",
+  image: "/profile.png",
   imageFallback: "/profile.svg",
   cv: "/cv.pdf",
 };
+
+// ─── Home "About Me" section ────────────────────────────────────────────────
+
+export const ABOUT_HOME = {
+  heading: "About Me",
+  greeting: "Hello, I'm",
+  bio:
+    "I'm a Game Technology student at UTeM who enjoys turning ideas into things people can play, feel, and remember. I build games, prototypes, and creative projects by experimenting, testing, breaking, fixing, and improving them until they become something interesting.",
+  quote: "Leveraging AI as a professional tool, not a replacement.",
+};
+
+export type AboutStat = {
+  icon: "code" | "award" | "star" | "cgpa";
+  value: string;
+  label: string;
+  detail: string;
+  href?: string;
+};
+
+export const ABOUT_STATS: AboutStat[] = [
+  {
+    icon: "cgpa",
+    value: "3.80",
+    label: "Current CGPA",
+    detail: "Bachelor of IT (Game Technology), UTeM",
+  },
+  {
+    icon: "code",
+    value: "6",
+    label: "Total Projects",
+    detail: "Unity, Unreal, Godot & more",
+    href: "/projects",
+  },
+  {
+    icon: "award",
+    value: "2",
+    label: "Certificate",
+    detail: "Silver Award ITEX 2026, 2nd Place FTMK Innovation",
+  },
+];
 
 export const NAV_LINKS = [
   { id: "building", label: "Building" },

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { PROFILE } from "@/lib/data";
-import { FolderOpen, Download, Mail, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
 import { TypingText } from "@/components/ui/typing-text";
 
@@ -34,9 +34,6 @@ export function Hero() {
     };
   }, []);
 
-  const go = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
   return (
     <section
       id="hero"
@@ -55,15 +52,15 @@ export function Hero() {
       </video>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col-reverse items-center justify-between gap-12 py-16 md:flex-row">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col-reverse items-center justify-between gap-12 py-16 md:flex-row">
         {/* Text column */}
         <div className="flex-1 text-center md:text-left">
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#DF2531]/30 bg-[#DF2531]/10 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#DF2531]">
+          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#DF2531]/30 bg-[#DF2531]/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-[#DF2531] sm:text-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#DF2531] pulse-soft" />
             {PROFILE.availability}
           </div>
 
-          <h1 className="mb-6 text-6xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+          <h1 className="mb-6 text-7xl font-black leading-[0.9] tracking-tight sm:text-8xl lg:text-[7rem] xl:text-[8rem]">
             <span className="bg-gradient-to-r from-[#FFFFFF] via-[#DF2531] to-[#7A1018] bg-clip-text text-transparent">
               Riswan
             </span>
@@ -71,42 +68,20 @@ export function Hero() {
             <span className="text-white">Hamua</span>
           </h1>
 
-          <p className="mb-5 min-h-[1.5em] font-mono text-sm tracking-wide text-[#DF2531]/90 sm:text-base">
+          <p className="mb-5 min-h-[1.5em] font-mono text-base tracking-wide text-[#DF2531]/90 sm:text-lg lg:text-xl">
             <TypingText words={PROFILE.roles} />
           </p>
 
-          <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-[#A3A3A3] md:mx-0">
+          <p className="mx-auto max-w-xl text-lg leading-relaxed text-[#A3A3A3] md:mx-0 sm:text-xl">
             {PROFILE.tagline}
           </p>
-
-          <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
-            <button
-              onClick={() => go("projects")}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#DF2531] to-[#7A1018] px-7 py-3.5 font-bold text-white transition-all hover:scale-[1.03] hover:shadow-xl hover:shadow-[#DF2531]/30 active:scale-[0.97]"
-            >
-              <FolderOpen size={16} strokeWidth={2} />
-              View Projects
-            </button>
-            <a
-              href={PROFILE.cv}
-              download
-              className="inline-flex items-center gap-2 rounded-xl border border-[#DF2531]/40 px-7 py-3.5 font-bold text-white transition-all hover:scale-[1.03] hover:border-[#DF2531]/60 hover:bg-[#DF2531]/10 active:scale-[0.97]"
-            >
-              <Download size={16} strokeWidth={2} />
-              Download CV
-            </a>
-            <button
-              onClick={() => go("contact")}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-7 py-3.5 font-bold text-[#A3A3A3] transition-all hover:scale-[1.03] hover:border-white/25 hover:bg-white/5 active:scale-[0.97]"
-            >
-              <Mail size={16} strokeWidth={2} />
-              Contact Me
-            </button>
-          </div>
         </div>
 
         {/* Spline column */}
-        <div ref={parallaxRef} className="relative h-[26rem] w-full flex-shrink-0 sm:h-[32rem] lg:h-[40rem] lg:w-[40rem]">
+        <div
+          ref={parallaxRef}
+          className="relative h-[22rem] w-full flex-shrink-0 sm:h-[30rem] md:h-[36rem] md:flex-[1.3] md:translate-x-6 lg:h-[44rem] lg:translate-x-12 xl:translate-x-16"
+        >
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
             className="h-full w-full"
