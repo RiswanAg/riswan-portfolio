@@ -22,7 +22,12 @@
       "Bash(curl -s http://localhost:3000/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/hero-status-check)",
-      "Bash(curl -s -o /dev/null -w \"STATUS:%{http_code}\\\\n\" http://localhost:3000/)"
+      "Bash(curl -s -o /dev/null -w \"STATUS:%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(npm run *)",
+      "Bash(curl *)",
+      "Bash(powershell -Command \"Get-Process -Id 21624 -ErrorAction SilentlyContinue\" 2>&1)",
+      "Bash(powershell -Command \"Stop-Process -Id 21624 -Force\")",
+      "Bash(disown)"
     ]
   }
 }

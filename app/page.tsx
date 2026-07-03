@@ -7,7 +7,6 @@ import { PortfolioShowcase } from "@/components/sections/PortfolioShowcase";
 import { Experience } from "@/components/sections/Experience";
 import { Education } from "@/components/sections/Education";
 import { Achievements } from "@/components/sections/Achievements";
-import { Skills } from "@/components/sections/Skills";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 
@@ -19,12 +18,15 @@ export default function Portfolio() {
       <Navbar />
       <main className="relative z-10">
         <Hero />
-        <About />
+        <div className="border-y border-white/5 bg-white/[0.015]">
+          <About />
+        </div>
         <PortfolioShowcase />
         <Experience />
-        <Education />
+        <div className="border-y border-white/5 bg-white/[0.015]">
+          <Education />
+        </div>
         <Achievements />
-        <Skills />
         <Contact />
       </main>
       <Footer />

@@ -66,23 +66,6 @@ export const NAV_LINKS: NavLink[] = [
   { id: "contact", label: "Contact" },
 ];
 
-// ─── Stats bar ────────────────────────────────────────────────────────────────
-// `value` drives the count-up animation when numeric; text stats render as-is.
-
-export type Stat = {
-  label: string;
-  value?: number; // numeric → animated counter
-  suffix?: string;
-  display?: string; // non-numeric stats
-};
-
-export const STATS: Stat[] = [
-  { label: "Dean's List", value: 6, suffix: " Semesters" },
-  { label: "Projects", value: 6, suffix: "+" },
-  { label: "Specialization", display: "Unity & C++" },
-  { label: "Field", display: "Game Technology" },
-];
-
 // ─── Featured projects ──────────────────────────────────────────────────────
 
 export type MediaItem = {
@@ -184,7 +167,7 @@ export const PROJECTS: Project[] = [
     ],
     fallbackIcon: "school",
     fallbackGradient: "from-indigo-800/50 via-purple-900/30 to-violet-900/50",
-    github: "https://github.com/RiswanAg",
+    github: "https://github.com/RiswanAg/Sneak-Out",
     demo: "#",
   },
   {
