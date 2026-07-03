@@ -23,7 +23,13 @@ const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
 export function Achievements() {
   return (
     <section id="achievements" className="relative px-6 py-28">
-      <div className="mx-auto max-w-3xl">
+      {/* Section identity glow */}
+      <div
+        aria-hidden
+        className="aurora left-1/2 top-0 h-[30vw] w-[30vw] -translate-x-1/2 bg-[#7A1018]/12"
+      />
+
+      <div className="relative mx-auto max-w-3xl">
         <SectionHeading eyebrow="Recognition" title="Achievements" />
 
         <div className="relative">

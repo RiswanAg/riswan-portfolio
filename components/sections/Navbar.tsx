@@ -2,12 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { NAV_LINKS } from "@/lib/data";
+
+// Sections tracked by the homepage scrollspy, in document order.
+const SCROLL_SECTION_IDS = ["hero", "about-home", "portfolio-showcase", "experience", "contact"];
+const NAV_OFFSET = 96; // px — accounts for the fixed navbar height
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeId, setActiveId] = useState("hero");
   const pathname = usePathname();
   const router = useRouter();
   const isHome = pathname === "/";
@@ -18,6 +24,41 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Scrollspy: highlight whichever tracked section has most recently
+  // crossed the navbar line. Only meaningful on the homepage, where all
+  // sections live on one page.
+  useEffect(() => {
+    if (!isHome) return;
+
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        let current = SCROLL_SECTION_IDS[0];
+        for (const id of SCROLL_SECTION_IDS) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top <= NAV_OFFSET) {
+            current = id;
+          }
+        }
+        setActiveId(current);
+        raf = 0;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [isHome]);
+
+  const isActive = (id: string, href?: string) => {
+    if (href) return pathname === href || pathname.startsWith(`${href}/`);
+    if (!isHome) return id === "portfolio-showcase" && pathname.startsWith("/projects");
+    return activeId === id;
+  };
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -50,33 +91,35 @@ export function Navbar() {
           RH
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((l) =>
-            "href" in l && l.href ? (
-              <Link
-                key={l.id}
-                href={l.href}
-                className={`text-sm tracking-wide transition-colors hover:text-white ${
-                  pathname.startsWith(l.href)
-                    ? "text-white"
-                    : "text-[#A3A3A3]"
-                }`}
-              >
+        <div className="hidden items-center gap-1 md:flex">
+          {NAV_LINKS.map((l) => {
+            const active = isActive(l.id, l.href);
+            const labelClass = `relative px-3 py-2 text-sm tracking-wide transition-colors ${
+              active ? "text-white" : "text-[#A3A3A3] hover:text-white"
+            }`;
+            const indicator = active && (
+              <motion.span
+                layoutId="nav-active-indicator"
+                className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-[#DF2531] to-[#7A1018]"
+                transition={{ type: "spring", stiffness: 380, damping: 32 }}
+              />
+            );
+
+            return l.href ? (
+              <Link key={l.id} href={l.href} className={labelClass}>
                 {l.label}
+                {indicator}
               </Link>
             ) : (
-              <button
-                key={l.id}
-                onClick={() => handleSectionLink(l.id)}
-                className="text-sm tracking-wide text-[#A3A3A3] transition-colors hover:text-white"
-              >
+              <button key={l.id} onClick={() => handleSectionLink(l.id)} className={labelClass}>
                 {l.label}
+                {indicator}
               </button>
-            )
-          )}
+            );
+          })}
           <button
             onClick={() => handleSectionLink("contact")}
-            className="rounded-lg bg-gradient-to-r from-[#DF2531] to-[#7A1018] px-4 py-2 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-[#DF2531]/30 hover:brightness-110"
+            className="ml-3 rounded-lg bg-gradient-to-r from-[#DF2531] to-[#7A1018] px-4 py-2 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-[#DF2531]/30 hover:brightness-110"
           >
             Open to Internships
           </button>
@@ -102,29 +145,23 @@ export function Navbar() {
       <div
         className={`overflow-hidden transition-all duration-300 md:hidden ${menuOpen ? "max-h-72" : "max-h-0"}`}
       >
-        <div className="flex flex-col gap-4 border-t border-white/10 bg-black/95 px-6 pb-6 pt-4">
-          {NAV_LINKS.map((l) =>
-            "href" in l && l.href ? (
-              <Link
-                key={l.id}
-                href={l.href}
-                onClick={() => setMenuOpen(false)}
-                className={`text-left text-sm transition-colors hover:text-white ${
-                  pathname.startsWith(l.href) ? "text-white" : "text-[#A3A3A3]"
-                }`}
-              >
+        <div className="flex flex-col gap-1 border-t border-white/10 bg-black/95 px-6 pb-6 pt-4">
+          {NAV_LINKS.map((l) => {
+            const active = isActive(l.id, l.href);
+            const rowClass = `flex items-center gap-3 rounded-lg py-2 pl-3 text-left text-sm transition-colors ${
+              active ? "border-l-2 border-[#DF2531] text-white" : "border-l-2 border-transparent text-[#A3A3A3] hover:text-white"
+            }`;
+
+            return l.href ? (
+              <Link key={l.id} href={l.href} onClick={() => setMenuOpen(false)} className={rowClass}>
                 {l.label}
               </Link>
             ) : (
-              <button
-                key={l.id}
-                onClick={() => handleSectionLink(l.id)}
-                className="text-left text-sm text-[#A3A3A3] transition-colors hover:text-white"
-              >
+              <button key={l.id} onClick={() => handleSectionLink(l.id)} className={rowClass}>
                 {l.label}
               </button>
-            )
-          )}
+            );
+          })}
         </div>
       </div>
     </nav>

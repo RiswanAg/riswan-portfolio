@@ -3,7 +3,10 @@ import { HomeIntro } from "@/components/ui/HomeIntro";
 import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
-import { CurrentlyBuilding } from "@/components/sections/CurrentlyBuilding";
+import { PortfolioShowcase } from "@/components/sections/PortfolioShowcase";
+import { Experience } from "@/components/sections/Experience";
+import { Education } from "@/components/sections/Education";
+import { Achievements } from "@/components/sections/Achievements";
 import { Skills } from "@/components/sections/Skills";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
@@ -17,7 +20,10 @@ export default function Portfolio() {
       <main className="relative z-10">
         <Hero />
         <About />
-        <CurrentlyBuilding />
+        <PortfolioShowcase />
+        <Experience />
+        <Education />
+        <Achievements />
         <Skills />
         <Contact />
       </main>

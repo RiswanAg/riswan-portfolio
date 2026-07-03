@@ -26,7 +26,17 @@ function InstitutionLogo({ logo, initials }: { logo: string; initials: string })
 export function Education() {
   return (
     <section id="education" className="relative px-6 py-28">
-      <div className="mx-auto max-w-3xl">
+      {/* Section identity glow */}
+      <div
+        aria-hidden
+        className="aurora -right-20 top-4 h-64 w-64 bg-[#DF2531]/12"
+      />
+      <div
+        aria-hidden
+        className="aurora -left-16 bottom-8 h-56 w-56 bg-[#7A1018]/14"
+      />
+
+      <div className="relative mx-auto max-w-3xl">
         <SectionHeading eyebrow="Academic Path" title="Education" />
 
         <div className="flex flex-col gap-6">

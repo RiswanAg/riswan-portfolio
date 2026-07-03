@@ -73,7 +73,7 @@ export function About() {
                 Download CV
               </motion.a>
               <motion.a
-                href="/projects"
+                href="#portfolio-showcase"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.02] px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-[#DF2531]/50 hover:bg-white/[0.05]"

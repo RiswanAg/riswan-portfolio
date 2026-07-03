@@ -12,6 +12,16 @@ export function Experience() {
 
   return (
     <section id="experience" className="relative px-6 py-28">
+      {/* Section identity glow */}
+      <div
+        aria-hidden
+        className="aurora -left-24 top-8 h-72 w-72 bg-[#7A1018]/15"
+      />
+      <div
+        aria-hidden
+        className="aurora -right-16 bottom-0 h-64 w-64 bg-[#DF2531]/10"
+      />
+
       {/* Full-viewport background image overlay — triggered by card hover */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         {EXPERIENCES.map((e, i) =>
@@ -53,6 +63,11 @@ export function Experience() {
 
       <div className="relative mx-auto max-w-3xl">
         <SectionHeading eyebrow="What I Have Done" title="Experience" />
+        <Reveal className="mx-auto -mt-8 mb-10 max-w-xl text-center" delay={80}>
+          <p className="text-sm leading-relaxed text-[#A3A3A3]">
+            From competitions to research collaborations — here&apos;s where I&apos;ve been, what I&apos;ve learned, and what I&apos;ve built along the way.
+          </p>
+        </Reveal>
 
         <div className="flex flex-col gap-6">
           {EXPERIENCES.map((e, i) => (

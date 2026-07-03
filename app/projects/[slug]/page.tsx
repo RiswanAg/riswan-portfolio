@@ -85,7 +85,7 @@ export default async function ProjectPage({
           {/* Back nav */}
           <Reveal>
             <Link
-              href="/projects"
+              href="/#portfolio-showcase"
               className="mb-8 inline-flex items-center gap-2 rounded-lg border border-white/8 bg-white/3 px-4 py-2 text-sm text-slate-400 transition-all hover:border-white/20 hover:text-slate-200"
             >
               <BackArrow /> All Projects

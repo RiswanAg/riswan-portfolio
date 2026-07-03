@@ -46,7 +46,7 @@ export const ABOUT_STATS: AboutStat[] = [
     value: "6",
     label: "Total Projects",
     detail: "Unity, Unreal, Godot & more",
-    href: "/projects",
+    href: "#portfolio-showcase",
   },
   {
     icon: "award",
@@ -56,13 +56,15 @@ export const ABOUT_STATS: AboutStat[] = [
   },
 ];
 
-export const NAV_LINKS = [
-  { id: "building", label: "Building" },
-  { id: "projects", label: "Projects", href: "/projects" },
-  { id: "skills", label: "Skills" },
-  { id: "about", label: "About", href: "/about" },
+export type NavLink = { id: string; label: string; href?: string };
+
+export const NAV_LINKS: NavLink[] = [
+  { id: "hero", label: "Home" },
+  { id: "about-home", label: "About" },
+  { id: "portfolio-showcase", label: "Portfolio" },
+  { id: "experience", label: "Journey" },
   { id: "contact", label: "Contact" },
-] as const;
+];
 
 // ─── Stats bar ────────────────────────────────────────────────────────────────
 // `value` drives the count-up animation when numeric; text stats render as-is.
@@ -80,51 +82,6 @@ export const STATS: Stat[] = [
   { label: "Specialization", display: "Unity & C++" },
   { label: "Field", display: "Game Technology" },
 ];
-
-// ─── Currently building: Smart Farming Simulation ──────────────────────────────
-
-export const BUILDING = {
-  status: "In Active Development",
-  version: "v0.1",
-  title: "Agrileap",
-  kicker: "Currently Building",
-  pitch:
-    "A cozy smart-farming sim that teaches modern oil-palm nursery management — blending IoT soil data, drone scouting, and AI disease detection into a hands-on learning experience. Grow smart. Farm better. Live green.",
-  image: "/smart-farming-showcase.png", // graceful styled fallback if missing
-  hud: ["SOIL 62%", "DRONE ONLINE", "NURSERY · BLOCK A", "AI SCAN: READY"],
-  features: [
-    {
-      icon: "gamepad",
-      label: "Unity Simulation",
-      desc: "Built as a real-time, interactive 3D smart-farming simulation.",
-    },
-    {
-      icon: "sprout",
-      label: "Oil Palm Nursery",
-      desc: "An authentic nursery environment and crop lifecycle to manage.",
-    },
-    {
-      icon: "radio-tower",
-      label: "IoT Soil Monitoring",
-      desc: "Live soil & moisture sensor data feeds the gameplay loop.",
-    },
-    {
-      icon: "scan-eye",
-      label: "Drone Monitoring",
-      desc: "Aerial scouting system for field overview and inspection.",
-    },
-    {
-      icon: "microscope",
-      label: "Disease Detection",
-      desc: "AI-assisted plant disease identification mechanics.",
-    },
-    {
-      icon: "graduation-cap",
-      label: "Interactive Learning",
-      desc: "A gamified, hands-on educational loop for real agronomy skills.",
-    },
-  ],
-};
 
 // ─── Featured projects ──────────────────────────────────────────────────────
 
