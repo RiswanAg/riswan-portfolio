@@ -56,6 +56,33 @@ export const ABOUT_STATS: AboutStat[] = [
   },
 ];
 
+// ─── Certificates ───────────────────────────────────────────────────────────
+
+export type Certificate = {
+  name: string;
+  org: string;
+  date?: string;
+  /** Certificate image in /public/certificates. */
+  image: string;
+  /** Public Udemy verification URL — proves authenticity. */
+  url: string;
+};
+
+export const CERTIFICATES: Certificate[] = [
+  {
+    name: "Complete C# Unity 3D Game Development",
+    org: "Udemy · GameDev.tv Team, Rick Davidson & Stephen Hubbard",
+    image: "/certificates/complete-csharp-unity-3d.jpg",
+    url: "https://www.udemy.com/certificate/UC-54b6e164-c3e0-4c12-9ee9-d0435edfc345/",
+  },
+  {
+    name: "Learn To Create An Online Multiplayer Game In Unity",
+    org: "Udemy · James Doyle",
+    image: "/certificates/online-multiplayer-unity.jpg",
+    url: "https://www.udemy.com/certificate/UC-b24cd80e-2b67-466f-9bf7-692831e2e6f7/",
+  },
+];
+
 export type NavLink = { id: string; label: string; href?: string };
 
 export const NAV_LINKS: NavLink[] = [
@@ -211,7 +238,18 @@ export const PROJECTS: Project[] = [
 
 // ─── Skills (grouped) ──────────────────────────────────────────────────────
 
-export type Skill = { name: string; logo: string };
+// Proficiency tiers, in descending order. Drives the ring fill + label.
+export type SkillLevel = "Expert" | "Advanced" | "Proficient" | "Familiar";
+
+/** Ring fill (0–1) per tier — the arc length shown in the proficiency ring. */
+export const SKILL_LEVEL_FILL: Record<SkillLevel, number> = {
+  Expert: 0.95,
+  Advanced: 0.8,
+  Proficient: 0.62,
+  Familiar: 0.45,
+};
+
+export type Skill = { name: string; logo: string; level: SkillLevel };
 export type SkillGroup = { category: string; accent: string; skills: Skill[] };
 
 export const SKILL_GROUPS: SkillGroup[] = [
@@ -219,42 +257,42 @@ export const SKILL_GROUPS: SkillGroup[] = [
     category: "Game Development",
     accent: "emerald",
     skills: [
-      { name: "Unity", logo: "/skills/unity.png" },
-      { name: "Unreal Engine", logo: "/skills/unreal.png" },
-      { name: "Godot", logo: "/skills/godot.png" },
-      { name: "C#", logo: "/skills/csharp.png" },
-      { name: "C++", logo: "/skills/cpp.png" },
+      { name: "Unity", logo: "/skills/unity.png", level: "Expert" },
+      { name: "Unreal Engine", logo: "/skills/unreal.png", level: "Proficient" },
+      { name: "Godot", logo: "/skills/godot.png", level: "Proficient" },
+      { name: "C#", logo: "/skills/csharp.png", level: "Expert" },
+      { name: "C++", logo: "/skills/cpp.png", level: "Expert" },
     ],
   },
   {
     category: "Creative Tools",
     accent: "lime",
     skills: [
-      { name: "Blender", logo: "/skills/blender.png" },
-      { name: "After Effects", logo: "/skills/aftereffects.png" },
-      { name: "Photoshop", logo: "/skills/photoshop.png" },
-      { name: "CapCut", logo: "/skills/capcut.png" },
+      { name: "Blender", logo: "/skills/blender.png", level: "Familiar" },
+      { name: "After Effects", logo: "/skills/aftereffects.png", level: "Familiar" },
+      { name: "Photoshop", logo: "/skills/photoshop.png", level: "Proficient" },
+      { name: "CapCut", logo: "/skills/capcut.png", level: "Proficient" },
     ],
   },
   {
     category: "AI Tools",
     accent: "cyan",
     skills: [
-      { name: "Claude Code", logo: "/skills/claudecode.png" },
-      { name: "Codex", logo: "/skills/codex.png" },
-      { name: "NotebookLM", logo: "/skills/notebooklm.png" },
-      { name: "Higgsfield", logo: "/skills/higgsfield.png" },
-      { name: "Nano Banana", logo: "/skills/nanobanana-color.png" },
+      { name: "Claude Code", logo: "/skills/claudecode.png", level: "Expert" },
+      { name: "Codex", logo: "/skills/codex.png", level: "Advanced" },
+      { name: "NotebookLM", logo: "/skills/notebooklm.png", level: "Familiar" },
+      { name: "Higgsfield", logo: "/skills/higgsfield.png", level: "Familiar" },
+      { name: "Nano Banana", logo: "/skills/nanobanana-color.png", level: "Familiar" },
     ],
   },
   {
     category: "Development",
     accent: "sky",
     skills: [
-      { name: "Git", logo: "/skills/git.png" },
-      { name: "GitHub", logo: "/skills/github.png" },
-      { name: "MySQL", logo: "/skills/mysql.png" },
-      { name: "Python", logo: "/skills/phyton.png" },
+      { name: "Git", logo: "/skills/git.png", level: "Advanced" },
+      { name: "GitHub", logo: "/skills/github.png", level: "Advanced" },
+      { name: "MySQL", logo: "/skills/mysql.png", level: "Familiar" },
+      { name: "Python", logo: "/skills/phyton.png", level: "Proficient" },
     ],
   },
 ];

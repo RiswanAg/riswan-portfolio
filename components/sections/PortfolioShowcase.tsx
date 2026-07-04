@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Code2,
@@ -11,10 +12,19 @@ import {
   Sparkles,
   Terminal,
   BadgeCheck,
+  ExternalLink,
 } from "lucide-react";
-import { PROJECTS, SKILL_GROUPS, type Project } from "@/lib/data";
+import {
+  PROJECTS,
+  SKILL_GROUPS,
+  CERTIFICATES,
+  SKILL_LEVEL_FILL,
+  type Project,
+  type SkillLevel,
+} from "@/lib/data";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";
+import { SkillRing } from "@/components/ui/SkillRing";
 
 const TABS = [
   { id: "projects", label: "Projects", icon: Code2 },
@@ -23,13 +33,6 @@ const TABS = [
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
-
-// TODO: Replace with real certificates
-const PLACEHOLDER_CERTIFICATES = [
-  { name: "[Certificate Name]", org: "[Issuing Organization]", date: "[Date]" },
-  { name: "[Certificate Name]", org: "[Issuing Organization]", date: "[Date]" },
-  { name: "[Certificate Name]", org: "[Issuing Organization]", date: "[Date]" },
-];
 
 const CATEGORY_ICONS: Record<string, typeof Gamepad2> = {
   "Game Development": Gamepad2,
@@ -185,71 +188,122 @@ function CertificatesTab() {
       viewport={{ once: true, amount: 0.2 }}
       className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
     >
-      {PLACEHOLDER_CERTIFICATES.map((cert, i) => (
-        <motion.div
-          key={i}
+      {CERTIFICATES.map((cert) => (
+        <motion.a
+          key={cert.url}
+          href={cert.url}
+          target="_blank"
+          rel="noopener noreferrer"
           variants={item}
           whileHover={{ y: -4 }}
           transition={{ duration: 0.2 }}
-          className="flex flex-col gap-4 rounded-3xl border border-white/8 bg-[#111111] p-6 transition-colors duration-200 hover:border-[#DF2531]/40"
+          className="group flex flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#111111] transition-colors duration-200 hover:border-[#DF2531]/40"
         >
-          <div className="flex items-center justify-between">
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#DF2531]/20 to-[#7A1018]/20 text-[#DF2531]">
-              <BadgeCheck size={22} />
-            </span>
-            <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.15em] text-[#A3A3A3]">
-              Placeholder
+          {/* Certificate preview */}
+          <div className="relative aspect-[4/3] overflow-hidden border-b border-white/8 bg-black">
+            <Image
+              src={cert.image}
+              alt={`${cert.name} certificate`}
+              fill
+              sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw"
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            />
+            <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-white backdrop-blur-sm transition-colors group-hover:border-[#DF2531]/50">
+              Verify
+              <ExternalLink size={11} />
             </span>
           </div>
-          <div>
-            <h3 className="text-lg font-bold text-white">{cert.name}</h3>
-            <p className="mt-1 text-sm text-[#A3A3A3]">{cert.org}</p>
-            <p className="mt-1 font-mono text-xs text-[#A3A3A3]/60">{cert.date}</p>
+
+          {/* Meta */}
+          <div className="flex items-start gap-3 p-6">
+            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#DF2531]/20 to-[#7A1018]/20 text-[#DF2531]">
+              <BadgeCheck size={18} />
+            </span>
+            <div>
+              <h3 className="text-base font-bold leading-snug text-white">{cert.name}</h3>
+              <p className="mt-1 text-sm text-[#A3A3A3]">{cert.org}</p>
+              {cert.date && (
+                <p className="mt-1 font-mono text-xs text-[#A3A3A3]">{cert.date}</p>
+              )}
+            </div>
           </div>
-        </motion.div>
+        </motion.a>
       ))}
     </motion.div>
   );
 }
 
+const LEVEL_ORDER: SkillLevel[] = ["Expert", "Advanced", "Proficient", "Familiar"];
+
 function TechStackTab() {
+  const featured = SKILL_GROUPS.flatMap((g) => g.skills).filter(
+    (s) => s.level === "Expert"
+  );
+  const supporting = SKILL_GROUPS.map((g) => ({
+    category: g.category,
+    skills: g.skills.filter((s) => s.level !== "Expert"),
+  })).filter((g) => g.skills.length > 0);
+
   return (
-    <motion.div
-      variants={container}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
-      className="grid grid-cols-1 gap-6 sm:grid-cols-2"
-    >
-      {SKILL_GROUPS.map((group) => {
-        const Icon = CATEGORY_ICONS[group.category] ?? Layers;
-        return (
-          <motion.div
-            key={group.category}
-            variants={item}
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.2 }}
-            className="flex flex-col gap-5 rounded-3xl border border-white/8 bg-[#111111] p-6 transition-colors duration-200 hover:border-[#DF2531]/40"
-          >
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#DF2531]/20 to-[#7A1018]/20 text-[#DF2531]">
-                <Icon size={22} />
-              </span>
-              <h3 className="text-lg font-bold text-white">{group.category}</h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {group.skills.map((skill) => (
-                <span
-                  key={skill.name}
-                  className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] tracking-wide text-[#A3A3A3]"
-                >
-                  {skill.name}
+    <div className="flex flex-col gap-16">
+      {/* Core expertise — signature skills, large rings */}
+      <div>
+        <Reveal className="mb-9 text-center">
+          <h3 className="text-2xl font-black text-white sm:text-3xl">
+            Core Expertise
+          </h3>
+          <p className="mx-auto mt-2 max-w-md text-sm text-[#A3A3A3]">
+            The tools I reach for first — where I do my strongest work.
+          </p>
+        </Reveal>
+        <Reveal delay={120}>
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-10">
+            {featured.map((skill) => (
+              <SkillRing key={skill.name} skill={skill} variant="featured" />
+            ))}
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Supporting toolkit — grouped by category, compact rings */}
+      <div className="flex flex-col gap-12">
+        {supporting.map((group, gi) => {
+          const Icon = CATEGORY_ICONS[group.category] ?? Layers;
+          return (
+            <Reveal key={group.category} delay={gi * 80}>
+              <div className="mb-7 flex items-center justify-center gap-2.5">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#DF2531]/20 to-[#7A1018]/20 text-[#DF2531]">
+                  <Icon size={16} />
                 </span>
-              ))}
-            </div>
-          </motion.div>
-        );
-      })}
-    </motion.div>
+                <h4 className="text-base font-bold text-white">
+                  {group.category}
+                </h4>
+              </div>
+              <div className="grid grid-cols-2 justify-items-center gap-x-6 gap-y-9 sm:grid-cols-3 md:grid-cols-4">
+                {group.skills.map((skill) => (
+                  <SkillRing key={skill.name} skill={skill} />
+                ))}
+              </div>
+            </Reveal>
+          );
+        })}
+      </div>
+
+      {/* Proficiency legend */}
+      <Reveal className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-white/8 pt-8">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A3A3A3]">
+          Proficiency
+        </span>
+        {LEVEL_ORDER.map((lvl) => (
+          <span key={lvl} className="flex items-center gap-2">
+            <span
+              className="h-2 w-2 rounded-full bg-[#DF2531]"
+              style={{ opacity: 0.35 + SKILL_LEVEL_FILL[lvl] * 0.65 }}
+            />
+            <span className="text-xs text-[#A3A3A3]">{lvl}</span>
+          </span>
+        ))}
+      </Reveal>
+    </div>
   );
 }
