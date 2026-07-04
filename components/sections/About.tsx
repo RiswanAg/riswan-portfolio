@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Code2, Award, Star, GraduationCap, Quote, Download, FolderKanban } from "lucide-react";
 import { PROFILE, ABOUT_HOME, ABOUT_STATS } from "@/lib/data";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { CountUp } from "@/components/ui/CountUp";
 
 const STAT_ICONS = { code: Code2, award: Award, star: Star, cgpa: GraduationCap };
 
@@ -121,7 +122,7 @@ export function About() {
                   <Icon size={20} className="text-[#DF2531]" />
                 </div>
                 <div className="mb-1 text-3xl font-black text-white">
-                  {stat.value}
+                  <CountUp value={stat.value} />
                 </div>
                 <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-slate-200">
                   {stat.label}

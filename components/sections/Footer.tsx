@@ -42,7 +42,7 @@ export function Footer() {
           ))}
         </div>
 
-        <p className="font-mono text-xs text-[#A3A3A3]/60">
+        <p className="font-mono text-xs text-[#A3A3A3]">
           © 2026 Riswan Hamua · Game Technology
         </p>
       </div>

@@ -46,7 +46,7 @@ export function Contact() {
                     <Mail size={24} strokeWidth={1.5} />
                   </span>
                 )}
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A3A3A3]/60">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A3A3A3]">
                   {c.label}
                 </span>
                 <span className="break-all text-sm font-medium text-[#A3A3A3] transition-colors group-hover:text-white">

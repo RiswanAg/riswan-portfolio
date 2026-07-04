@@ -74,7 +74,7 @@ export function PortfolioShowcase() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative z-10 flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:px-5 ${
+                  className={`relative z-10 flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:px-5 ${
                     isActive ? "text-white" : "text-[#A3A3A3] hover:text-white"
                   }`}
                 >
@@ -148,7 +148,7 @@ function ProjectsTab() {
           <button
             key={f}
             onClick={() => setActive(f)}
-            className={`rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-all duration-200 ${
+            className={`inline-flex min-h-[40px] items-center rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-all duration-200 ${
               active === f
                 ? "border-[#DF2531]/50 bg-[#DF2531]/15 text-white"
                 : "border-white/8 bg-white/3 text-[#A3A3A3] hover:border-white/20 hover:text-white"

@@ -128,6 +128,8 @@ export function Navbar() {
         <button
           onClick={() => setMenuOpen((o) => !o)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
           className="group flex h-8 w-8 flex-col justify-center gap-[5px] md:hidden"
         >
           <span
@@ -143,12 +145,14 @@ export function Navbar() {
       </div>
 
       <div
-        className={`overflow-hidden transition-all duration-300 md:hidden ${menuOpen ? "max-h-72" : "max-h-0"}`}
+        id="mobile-menu"
+        className={`overflow-hidden transition-all duration-300 md:hidden ${menuOpen ? "max-h-72" : "invisible max-h-0"}`}
+        inert={!menuOpen}
       >
         <div className="flex flex-col gap-1 border-t border-white/10 bg-black/95 px-6 pb-6 pt-4">
           {NAV_LINKS.map((l) => {
             const active = isActive(l.id, l.href);
-            const rowClass = `flex items-center gap-3 rounded-lg py-2 pl-3 text-left text-sm transition-colors ${
+            const rowClass = `flex min-h-[44px] items-center gap-3 rounded-lg py-2.5 pl-3 text-left text-sm transition-colors ${
               active ? "border-l-2 border-[#DF2531] text-white" : "border-l-2 border-transparent text-[#A3A3A3] hover:text-white"
             }`;
 

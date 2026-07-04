@@ -83,13 +83,13 @@ export function Experience() {
                       {e.period}
                     </span>
                     <h3 className="mt-1.5 font-bold text-white">{e.role}</h3>
-                    <p className="mt-0.5 text-sm font-medium text-slate-400">
+                    <p className="mt-0.5 text-sm font-medium text-slate-300">
                       {e.organisation}
                     </p>
                   </div>
                 </div>
 
-                <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                <p className="mt-3 text-sm leading-relaxed text-slate-300">
                   {e.description}
                 </p>
 
@@ -97,7 +97,7 @@ export function Experience() {
                   {e.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-white/8 bg-white/4 px-3 py-1 text-[11px] font-medium text-slate-400"
+                      className="rounded-full border border-white/8 bg-white/4 px-3 py-1 text-[11px] font-medium text-slate-300"
                     >
                       {tag}
                     </span>

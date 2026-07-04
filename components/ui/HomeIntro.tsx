@@ -1,22 +1,49 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+
+const SESSION_KEY = "rh-intro-seen";
+
+// Shared easing — a soft cinematic ease-out ("expo-out"-like).
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+// Line-mask reveal: each word rises from behind an overflow-hidden clip.
+const line = {
+  hidden: { y: "110%" },
+  show: (i: number) => ({
+    y: "0%",
+    transition: { duration: 0.9, ease: EASE, delay: 0.25 + i * 0.12 },
+  }),
+};
 
 export function HomeIntro() {
-  const [active, setActive] = useState(true);
   const reduceMotion = useReducedMotion();
+  const [active, setActive] = useState(true);
 
+  // Skip synchronously (before paint) if already shown this session, so
+  // returning visitors never see a black flash. Mark as seen on first play.
+  useLayoutEffect(() => {
+    if (reduceMotion) {
+      setActive(false);
+      return;
+    }
+    if (typeof window !== "undefined" && sessionStorage.getItem(SESSION_KEY)) {
+      setActive(false);
+    } else {
+      sessionStorage.setItem(SESSION_KEY, "1");
+    }
+  }, [reduceMotion]);
+
+  // Lock scroll while the stage is up.
   useEffect(() => {
-    if (!active || reduceMotion) return;
-
-    const previousOverflow = document.body.style.overflow;
+    if (!active) return;
+    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = previous;
     };
-  }, [active, reduceMotion]);
+  }, [active]);
 
   if (reduceMotion) return null;
 
@@ -25,63 +52,64 @@ export function HomeIntro() {
       {active && (
         <motion.div
           aria-hidden
-          className="fixed inset-0 z-[80] flex items-center justify-center overflow-hidden bg-black"
-          initial={{ opacity: 1 }}
+          className="fixed inset-0 z-[80] flex flex-col items-center justify-center overflow-hidden bg-black"
+          initial={{ y: 0 }}
           exit={{
-            opacity: 0,
-            transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+            y: "-100%",
+            transition: { duration: 0.7, ease: [0.7, 0, 0.3, 1] },
           }}
         >
-          <div className="absolute inset-0 bg-grid opacity-80" />
+          {/* faint mesh + breathing red glow */}
+          <div className="absolute inset-0 bg-grid opacity-60" />
           <motion.div
-            className="absolute h-56 w-56 rounded-full bg-[#DF2531]/20 blur-3xl"
-            initial={{ scale: 0.65, opacity: 0 }}
-            animate={{ scale: [0.65, 1, 0.45], opacity: [0, 1, 0] }}
-            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute h-72 w-72 rounded-full bg-[#DF2531]/20 blur-3xl"
+            initial={{ scale: 0.7, opacity: 0 }}
+            animate={{ scale: 1.15, opacity: 1 }}
+            transition={{ duration: 1.6, ease: EASE }}
           />
 
-          <motion.div
-            className="fixed left-[calc(50%-6.75rem)] top-[calc(50%-1.25rem)]"
-            initial={{ x: 0, y: 0, scale: 1 }}
-            animate={{
-              x: "calc(-50vw + min(50vw, 36rem) + 1.5rem)",
-              y: "calc(-50vh + 1rem)",
-              scale: 0.5,
-            }}
-            transition={{
-              delay: 0.7,
-              duration: 1.05,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            onAnimationComplete={() => setActive(false)}
+          {/* eyebrow */}
+          <motion.p
+            className="relative mb-5 font-mono text-[10px] uppercase tracking-[0.6em] text-[#DF2531] sm:text-xs"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
           >
-            <motion.span
-              className="absolute left-0 top-0 whitespace-nowrap bg-gradient-to-r from-[#FFFFFF] via-[#DF2531] to-[#7A1018] bg-clip-text text-3xl font-black tracking-[0.18em] text-transparent sm:text-5xl"
-              initial={{ opacity: 1, filter: "blur(0px)" }}
-              animate={{ opacity: [1, 1, 0], filter: ["blur(0px)", "blur(0px)", "blur(8px)"] }}
-              transition={{
-                delay: 0.35,
-                duration: 1.2,
-                times: [0, 0.58, 1],
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              RISWAN HAMUA
-            </motion.span>
-            <motion.span
-              className="absolute left-0 top-0 bg-gradient-to-r from-[#DF2531] to-[#FFFFFF] bg-clip-text text-[2.5rem] font-black tracking-tight text-transparent"
-              initial={{ opacity: 0, filter: "blur(8px)" }}
-              animate={{ opacity: [0, 0, 1], filter: ["blur(8px)", "blur(8px)", "blur(0px)"] }}
-              transition={{
-                delay: 0.35,
-                duration: 1.2,
-                times: [0, 0.55, 1],
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              RH
-            </motion.span>
-          </motion.div>
+            Portfolio
+          </motion.p>
+
+          {/* name — line-by-line mask reveal */}
+          <div className="relative flex flex-col items-center leading-[0.95]">
+            {["RISWAN", "HAMUA"].map((word, i) => (
+              <span key={word} className="overflow-hidden py-0.5">
+                <motion.span
+                  custom={i}
+                  variants={line}
+                  initial="hidden"
+                  animate="show"
+                  className={`block bg-gradient-to-r bg-clip-text text-5xl font-black tracking-tight text-transparent sm:text-7xl lg:text-8xl ${
+                    i === 0
+                      ? "from-white via-[#DF2531] to-[#7A1018]"
+                      : "from-[#7A1018] via-[#DF2531] to-white"
+                  }`}
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </div>
+
+          {/* underline draw */}
+          <motion.span
+            className="relative mt-6 block h-[2px] w-40 origin-left rounded-full bg-gradient-to-r from-[#DF2531] to-transparent sm:w-56"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.85 }}
+            onAnimationComplete={() => {
+              // Hold briefly after everything has settled, then lift the stage.
+              window.setTimeout(() => setActive(false), 550);
+            }}
+          />
         </motion.div>
       )}
     </AnimatePresence>

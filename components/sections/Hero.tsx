@@ -1,13 +1,39 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { PROFILE } from "@/lib/data";
 import { ChevronDown } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
 import { TypingText } from "@/components/ui/typing-text";
 
+// Cinematic ease-out, shared with the intro curtain for a continuous feel.
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 export function Hero() {
   const parallaxRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  // Stagger the text-column entrance. On reduced motion everything is
+  // instantly visible (no transforms).
+  const container = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: 0.09, delayChildren: 0.15 },
+    },
+  };
+  const rise = {
+    hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 22 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: EASE },
+    },
+  };
+  const nameLine = {
+    hidden: reduceMotion ? { y: "0%" } : { y: "110%" },
+    show: { y: "0%", transition: { duration: 0.9, ease: EASE } },
+  };
 
   // Subtle parallax on the photo cluster — transform only, rAF-throttled.
   useEffect(() => {
@@ -54,28 +80,50 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col-reverse items-center justify-between gap-12 py-16 md:flex-row">
         {/* Text column */}
-        <div className="flex-1 text-center md:text-left">
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#DF2531]/30 bg-[#DF2531]/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-[#DF2531] sm:text-sm">
+        <motion.div
+          className="flex-1 text-center md:text-left"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.div
+            variants={rise}
+            className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#DF2531]/30 bg-[#DF2531]/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-[#DF2531] sm:text-sm"
+          >
             <span className="h-1.5 w-1.5 rounded-full bg-[#DF2531] pulse-soft" />
             {PROFILE.availability}
-          </div>
+          </motion.div>
 
           <h1 className="mb-6 text-7xl font-black leading-[0.9] tracking-tight sm:text-8xl lg:text-[7rem] xl:text-[8rem]">
-            <span className="bg-gradient-to-r from-[#FFFFFF] via-[#DF2531] to-[#7A1018] bg-clip-text text-transparent">
-              Riswan
+            <span className="block overflow-hidden pb-1">
+              <motion.span
+                variants={nameLine}
+                className="block bg-gradient-to-r from-[#FFFFFF] via-[#DF2531] to-[#7A1018] bg-clip-text text-transparent"
+              >
+                Riswan
+              </motion.span>
             </span>
-            <br />
-            <span className="text-white">Hamua</span>
+            <span className="block overflow-hidden pb-1">
+              <motion.span variants={nameLine} className="block text-white">
+                Hamua
+              </motion.span>
+            </span>
           </h1>
 
-          <p className="mb-5 min-h-[1.5em] font-mono text-base tracking-wide text-[#DF2531]/90 sm:text-lg lg:text-xl">
+          <motion.p
+            variants={rise}
+            className="mb-5 min-h-[1.5em] font-mono text-base tracking-wide text-[#DF2531]/90 sm:text-lg lg:text-xl"
+          >
             <TypingText words={PROFILE.roles} />
-          </p>
+          </motion.p>
 
-          <p className="mx-auto max-w-xl text-lg leading-relaxed text-[#A3A3A3] md:mx-0 sm:text-xl">
+          <motion.p
+            variants={rise}
+            className="mx-auto max-w-xl text-lg leading-relaxed text-[#A3A3A3] md:mx-0 sm:text-xl"
+          >
             {PROFILE.tagline}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Spline column */}
         <div
