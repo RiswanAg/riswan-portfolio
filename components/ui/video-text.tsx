@@ -84,10 +84,28 @@ export function VideoText({
   const content = React.Children.toArray(children).join("");
 
   useEffect(() => {
+    // The mask SVG is rendered as a standalone data-URI resource, isolated from
+    // the page's CSS cascade — var(...) tokens (e.g. var(--font-heading)) don't
+    // resolve there. Resolve them here via a probe element so the mask actually
+    // matches the font used elsewhere on the page, instead of silently falling
+    // back to the browser default.
+    const resolveFontFamily = (family: string) => {
+      if (!family.includes("var(")) return family;
+      const probe = document.createElement("span");
+      probe.style.position = "absolute";
+      probe.style.visibility = "hidden";
+      probe.style.fontFamily = family;
+      document.body.appendChild(probe);
+      const resolved = getComputedStyle(probe).fontFamily;
+      document.body.removeChild(probe);
+      return resolved || family;
+    };
+
     const updateSvgMask = () => {
       const responsiveFontSize =
         typeof fontSize === "number" ? `${fontSize}vw` : fontSize;
-      const newSvgMask = `<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><text x='50%' y='50%' font-size='${responsiveFontSize}' font-weight='${fontWeight}' text-anchor='${textAnchor}' dominant-baseline='${dominantBaseline}' font-family='${fontFamily}'>${content}</text></svg>`;
+      const resolvedFontFamily = resolveFontFamily(fontFamily);
+      const newSvgMask = `<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><text x='50%' y='50%' font-size='${responsiveFontSize}' font-weight='${fontWeight}' text-anchor='${textAnchor}' dominant-baseline='${dominantBaseline}' font-family='${resolvedFontFamily}'>${content}</text></svg>`;
       setSvgMask(newSvgMask);
     };
 
