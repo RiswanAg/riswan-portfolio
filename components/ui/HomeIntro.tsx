@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SESSION_KEY = "rh-intro-seen";
 
@@ -19,21 +19,16 @@ const line = {
 
 export function HomeIntro() {
   const reduceMotion = useReducedMotion();
-  const [active, setActive] = useState(true);
-
-  // Skip synchronously (before paint) if already shown this session, so
-  // returning visitors never see a black flash. Mark as seen on first play.
-  useLayoutEffect(() => {
-    if (reduceMotion) {
-      setActive(false);
-      return;
-    }
-    if (typeof window !== "undefined" && sessionStorage.getItem(SESSION_KEY)) {
-      setActive(false);
-    } else {
-      sessionStorage.setItem(SESSION_KEY, "1");
-    }
-  }, [reduceMotion]);
+  // Decide up front, before first paint, whether the curtain should mount
+  // at all. If it starts "active" and only flips off afterwards, framer
+  // still plays the full exit (slide-up) animation on unmount — which then
+  // covers/rushes the Hero's own entrance animation on every refresh.
+  const [active, setActive] = useState(() => {
+    if (typeof window === "undefined") return false;
+    if (sessionStorage.getItem(SESSION_KEY)) return false;
+    sessionStorage.setItem(SESSION_KEY, "1");
+    return true;
+  });
 
   // Lock scroll while the stage is up.
   useEffect(() => {
@@ -87,7 +82,7 @@ export function HomeIntro() {
                   variants={line}
                   initial="hidden"
                   animate="show"
-                  className={`block bg-gradient-to-r bg-clip-text text-5xl font-black tracking-tight text-transparent sm:text-7xl lg:text-8xl ${
+                  className={`block bg-gradient-to-r bg-clip-text text-5xl font-black tracking-tight text-transparent sm:text-7xl lg:text-8xl font-[family-name:var(--font-heading)] ${
                     i === 0
                       ? "from-white via-[#2EE6C6] to-[#7C5CFF]"
                       : "from-[#7C5CFF] via-[#2EE6C6] to-white"

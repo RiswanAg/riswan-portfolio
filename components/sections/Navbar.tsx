@@ -86,7 +86,7 @@ export function Navbar() {
         <Link
           href="/"
           aria-label="Riswan Hamua home"
-          className="bg-gradient-to-r from-[#2EE6C6] to-[#FFFFFF] bg-clip-text text-xl font-black tracking-tight text-transparent"
+          className="bg-gradient-to-r from-[#2EE6C6] to-[#FFFFFF] bg-clip-text text-xl font-black tracking-tight text-transparent font-[family-name:var(--font-heading)]"
         >
           RH
         </Link>

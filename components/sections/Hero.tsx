@@ -2,11 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
-import { PROFILE, HERO_HIGHLIGHTS, CONTACTS } from "@/lib/data";
-import { ChevronDown, Download, ArrowRight } from "lucide-react";
+import { PROFILE, HERO_HIGHLIGHTS } from "@/lib/data";
+import { ChevronDown } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
 import { TypingText } from "@/components/ui/typing-text";
+import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
+import { VideoText } from "@/components/ui/video-text";
 
 // Cinematic ease-out, shared with the intro curtain for a continuous feel.
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -66,23 +67,36 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-screen items-center overflow-hidden px-6 pt-24"
     >
-      {/* Optional ambient hero video — silently absent until /hero-bg.mp4 exists */}
-      <video
-        aria-hidden
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.18] motion-reduce:hidden"
-      >
-        <source src="/hero-bg.mp4" type="video/mp4" />
-      </video>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
+      {/* Ambient background — animated shadow drift, tinted to the accent palette */}
+      <div className="pointer-events-none absolute inset-0">
+        <EtherealShadow
+          color="rgba(124, 92, 255, 0.5)"
+          animation={reduceMotion ? undefined : { scale: 60, speed: 80 }}
+          noise={{ opacity: 0.35, scale: 1.2 }}
+          sizing="fill"
+        />
+      </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col-reverse items-center justify-between gap-12 py-16 md:flex-row">
-        {/* Text column */}
+      {/* Interactive Spline scene — right-anchored, full height, wide drag/orbit zone */}
+      <div
+        ref={parallaxRef}
+        className="absolute inset-y-0 right-0 w-full sm:w-[85%] md:w-[72%] lg:w-[62%] xl:w-[58%]"
+      >
+        <SplineScene
+          scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+          className="h-full w-full"
+        />
+      </div>
+
+      {/* Legibility scrims — sit above the scene, below the text */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent md:to-black/0" />
+
+      {/* Text overlay — purely decorative (no links live here anymore), so it never
+          intercepts pointer events and the scene can track the cursor underneath it too. */}
+      <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center py-16 md:items-start">
         <motion.div
-          className="flex-1 text-center md:text-left"
+          className="w-full max-w-2xl text-center md:text-left"
           variants={container}
           initial="hidden"
           animate="show"
@@ -95,18 +109,35 @@ export function Hero() {
             {PROFILE.availability}
           </motion.div>
 
-          <h1 className="mb-6 text-7xl font-black leading-[0.9] tracking-tight sm:text-8xl lg:text-[7rem] xl:text-[8rem]">
+          <h1 className="mb-6 font-black leading-[0.9] tracking-tight">
             <span className="block overflow-hidden pb-1">
               <motion.span
                 variants={nameLine}
-                className="block bg-gradient-to-r from-[#FFFFFF] via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-transparent"
+                className="block h-[10vw] min-h-[3.5rem] w-full"
               >
-                Riswan
+                <VideoText
+                  src="https://cdn.magicui.design/ocean-small.webm"
+                  fontSize={8}
+                  fontWeight={900}
+                  fontFamily="var(--font-heading), sans-serif"
+                >
+                  Riswan
+                </VideoText>
               </motion.span>
             </span>
             <span className="block overflow-hidden pb-1">
-              <motion.span variants={nameLine} className="block text-white">
-                Hamua
+              <motion.span
+                variants={nameLine}
+                className="block h-[10vw] min-h-[3.5rem] w-full"
+              >
+                <VideoText
+                  src="https://cdn.magicui.design/ocean-small.webm"
+                  fontSize={8}
+                  fontWeight={900}
+                  fontFamily="var(--font-heading), sans-serif"
+                >
+                  Hamua
+                </VideoText>
               </motion.span>
             </span>
           </h1>
@@ -125,52 +156,6 @@ export function Hero() {
             {PROFILE.tagline}
           </motion.p>
 
-          {/* Primary conversion row — CV, work, socials. Recruiters act here. */}
-          <motion.div
-            variants={rise}
-            className="mt-9 flex flex-wrap items-center justify-center gap-3 md:justify-start"
-          >
-            <a
-              href={PROFILE.cv}
-              download
-              className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-all duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
-            >
-              <Download size={16} strokeWidth={2.5} />
-              Download CV
-            </a>
-            <a
-              href="#portfolio-showcase"
-              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
-            >
-              View My Work
-              <ArrowRight
-                size={16}
-                className="transition-transform duration-200 group-hover:translate-x-1"
-              />
-            </a>
-            <span className="mx-1 hidden h-6 w-px bg-white/10 sm:block" />
-            {CONTACTS.filter(
-              (c) => (c.label === "GitHub" || c.label === "LinkedIn") && c.logo
-            ).map((c) => (
-              <a
-                key={c.label}
-                href={c.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={c.label}
-                className="group flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.03] transition-all duration-200 hover:scale-110 hover:border-[#2EE6C6]/50"
-              >
-                <Image
-                  src={c.logo!}
-                  alt={c.label}
-                  width={18}
-                  height={18}
-                  className="h-[18px] w-[18px] object-contain opacity-60 transition-opacity group-hover:opacity-100"
-                />
-              </a>
-            ))}
-          </motion.div>
-
           {/* Credibility strip — the facts a recruiter scans for */}
           <motion.div
             variants={rise}
@@ -187,17 +172,6 @@ export function Hero() {
             ))}
           </motion.div>
         </motion.div>
-
-        {/* Spline column */}
-        <div
-          ref={parallaxRef}
-          className="relative h-[22rem] w-full flex-shrink-0 sm:h-[30rem] md:h-[36rem] md:flex-[1.3] md:translate-x-6 lg:h-[44rem] lg:translate-x-12 xl:translate-x-16"
-        >
-          <SplineScene
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="h-full w-full"
-          />
-        </div>
       </div>
 
       {/* Scroll cue */}

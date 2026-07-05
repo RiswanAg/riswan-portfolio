@@ -59,7 +59,7 @@ export const ABOUT_STATS: AboutStat[] = [
     icon: "award",
     value: "2",
     label: "Certificate",
-    detail: "Silver Award ITEX 2026, 2nd Place FTMK Innovation",
+    detail: "Silver Award ITEX 2026, Silver Award FTMK Innovation",
   },
 ];
 
@@ -188,7 +188,7 @@ export const PROJECTS: Project[] = [
     slug: "sneak-out",
     title: "Sneak Out",
     description:
-      "An online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture. Players take on the role of students sneaking out of the dormitory at night, outwitting prefects and wardens in a cat-and-mouse chase built around shared cultural memory. Winner of 2nd Place at the FTMK Innovation Competition.",
+      "An online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture. Players take on the role of students sneaking out of the dormitory at night, outwitting prefects and wardens in a cat-and-mouse chase built around shared cultural memory. Winner of a Silver Award at the FTMK Workshop 2 Innovation Competition.",
     tech: ["Unity", "C#", "Netcode", "Multiplayer", "Game Design"],
     contribution:
       "Led the full game design and development, including real-time multiplayer networking, role-based gameplay mechanics, and cultural level design that captures the Asrama Sekolah experience.",
@@ -309,28 +309,47 @@ export const SKILL_GROUPS: SkillGroup[] = [
 export type Achievement = {
   year: string;
   title: string;
+  /** Punchy one-liner shown by default — the full story lives in `description`. */
+  summary: string;
+  /** Short outcome badge, e.g. "2nd Place", surfaced prominently. */
+  highlight: string;
   description: string;
   icon: string;
+  /** Optional linked portfolio project slug (e.g. "sneak-out"). */
+  projectSlug?: string;
+  /** Optional real photos to use in the Journey gallery instead of the placeholder folder. */
+  gallery?: string[];
 };
 
 export const ACHIEVEMENTS: Achievement[] = [
   {
     year: "2026",
     title: "Silver Award — ITEX 2026",
+    summary: "Coordinated the exhibit for one of only two UTeM projects at ITEX — it won Silver.",
+    highlight: "Silver · International",
     description:
-      "Contributed to a Silver Award-winning exhibit at the International Invention, Innovation & Technology Exhibition (ITEX 2026) — collaborating directly with a supervisor to engineer AI behaviour systems for a holographic game built on the Tilt 5 platform.",
+      "Our project was one of only two selected to represent UTeM at the International Invention, Innovation & Technology Exhibition (ITEX 2026). I coordinated the exhibition floor — operating and demonstrating the Tilt 5 holographic hardware, and explaining the game's innovation and technical structure to judges and visitors. The exhibit won a Silver Award in international competition.",
     icon: "award",
+    gallery: [
+      "/about/Experience/Research Collaborator/WhatsApp Image 2026-06-20 at 5.39.50 PM.jpeg",
+      "/about/Experience/Research Collaborator/WhatsApp Image 2026-06-20 at 5.39.51 PM.jpeg",
+    ],
   },
   {
     year: "2025",
-    title: "2nd Place — FTMK Innovation Competition",
+    title: "Silver Award — FTMK Workshop 2 Innovation Competition",
+    summary: "Silver for Sneak Out — and the project that let underrated teammates prove themselves.",
+    highlight: "Silver Award",
     description:
-      "Secured 2nd Place at Workshop 2 of the FTMK Innovation Competition by designing and developing an online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture — blending real-time networking, game design, and local storytelling.",
+      "Won a Silver Award at Workshop 2 of the FTMK Innovation Competition with Sneak Out, an online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture — blending real-time networking, game design, and local storytelling. Beyond building the game, I worked hard to lift my groupmates, teammates many had underestimated, and this project became the moment they showed their real potential.",
     icon: "trophy",
+    projectSlug: "sneak-out",
   },
   {
     year: "2024 – 2025",
     title: "Multiple Game Jam Awards — Game Designer & Developer",
+    summary: "Repeated wins as both designer and developer across multiple game jams.",
+    highlight: "Multiple Wins",
     description:
       "Recognised across several game jams as both Game Designer and Developer — consistently delivering creative, polished game concepts under tight time constraints and competitive judging.",
     icon: "gamepad",
@@ -338,6 +357,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     year: "2023 – 2026",
     title: "Dean's List — All 6 Semesters",
+    summary: "A perfect academic streak — Dean's List in every single semester.",
+    highlight: "6 / 6 Semesters",
     description:
       "Placed on the Dean's List every semester from Semester 1 through Semester 6 — a full-degree record of academic excellence maintained without interruption.",
     icon: "star",
@@ -345,6 +366,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     year: "2022",
     title: "National Football Participation",
+    summary: "Represented at national level — teamwork and composure under real pressure.",
+    highlight: "National",
     description:
       "Selected to compete at the national level in football — demonstrating the same teamwork, discipline, and composure under pressure that drives my work in collaborative development.",
     icon: "zap",
@@ -352,6 +375,8 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     year: "2020",
     title: "3rd Place — Sabah COVID-19 Infographic Competition",
+    summary: "Third place for public-health visual design under a state brief.",
+    highlight: "3rd Place",
     description:
       "Awarded 3rd Place for outstanding visual communication and creative design under a public-health brief — an early signal of the design sensibility that now shapes my game and UI work.",
     icon: "pen-tool",
@@ -364,6 +389,10 @@ export type Experience = {
   period: string;
   role: string;
   organisation: string;
+  /** Punchy one-liner shown by default — the full story lives in `description`. */
+  summary: string;
+  /** Short outcome badge surfaced prominently. */
+  highlight: string;
   description: string;
   tags: string[];
   bgImages?: { left: string; right: string };
@@ -371,21 +400,11 @@ export type Experience = {
 
 export const EXPERIENCES: Experience[] = [
   {
-    period: "2026",
-    role: "Research Collaborator",
-    organisation: "UTeM / FTMK",
-    description:
-      "Collaborated with a supervising lecturer to design and implement AI behaviour systems for a Tilt 5 holographic game, exhibited at the International Invention, Innovation and Technology Exhibition (ITEX) 2026. The project earned a Silver Award in international competition.",
-    tags: ["Unity", "Tilt 5", "AI Behaviour", "Research"],
-    bgImages: {
-      left: "/about/Experience/Research Collaborator/WhatsApp Image 2026-06-20 at 5.39.50 PM.jpeg",
-      right: "/about/Experience/Research Collaborator/WhatsApp Image 2026-06-20 at 5.39.51 PM.jpeg",
-    },
-  },
-  {
     period: "2025",
     role: "Facilitator",
     organisation: "Next Gen Digital Ninja 2025",
+    summary: "Ran hands-on game-dev sessions for high-schoolers using GDevelop and Unity on Tilt 5.",
+    highlight: "Mentor",
     description:
       "Mentored high school students in game development as part of the Next Gen Digital Ninja 2025 programme. Led hands-on sessions covering GDevelop for 2D game creation and Unity on the Tilt 5 holographic platform, making spatial and immersive development accessible to young learners.",
     tags: ["GDevelop", "Unity", "Tilt 5", "Mentoring"],
@@ -398,6 +417,8 @@ export const EXPERIENCES: Experience[] = [
     period: "2024 – 2025",
     role: "Game Designer and Developer",
     organisation: "Various Game Jams",
+    summary: "Designed and shipped complete games under game-jam deadlines — several took home awards.",
+    highlight: "Award-winning",
     description:
       "Competed in multiple game jams filling both the designer and developer roles. Produced complete, polished game experiences under tight deadlines and earned awards at several events, demonstrating creative problem-solving and the ability to ship under pressure.",
     tags: ["Game Design", "Unity", "GDevelop", "Rapid Prototyping"],
@@ -415,6 +436,10 @@ export type Education = {
   institution: string;
   qualification: string;
   grade?: string;
+  /** Punchy one-liner shown by default — the full story lives in `description`. */
+  summary: string;
+  /** Short outcome badge surfaced prominently. */
+  highlight: string;
   description: string;
   logo: string;
   logoInitials: string;
@@ -427,6 +452,8 @@ export const EDUCATION: Education[] = [
     qualification:
       "Bachelor of Information Technology (Game Technology) with Honours, FTMK",
     grade: "CGPA 3.80",
+    summary: "Game Technology degree with Dean's List recognition every single semester.",
+    highlight: "Dean's List ×6",
     description:
       "Currently pursuing a degree in Game Technology at the Faculty of Information and Communication Technology. Dean's List recognition across all six semesters reflects consistent academic performance alongside active involvement in research, international exhibitions, and game development competitions.",
     logo: "/education/utem.png",
@@ -437,6 +464,8 @@ export const EDUCATION: Education[] = [
     institution: "Kolej Matrikulasi Kejuruteraan Johor (KMKJ)",
     qualification: "Matriculation, Engineering Track",
     grade: "CGPA 3.67",
+    summary: "Engineering-track matriculation that sharpened the math and physics foundation.",
+    highlight: "CGPA 3.67",
     description:
       "Completed an engineering-track matriculation programme with a CGPA of 3.67. The rigorous curriculum in calculus, physics, and engineering principles sharpened analytical thinking and built the academic discipline carried forward into university.",
     logo: "/education/kmkj.png",
@@ -447,6 +476,8 @@ export const EDUCATION: Education[] = [
     institution: "SMK Madai",
     qualification: "Sijil Pelajaran Malaysia (SPM), Science Stream",
     grade: "6A 2B 1C",
+    summary: "Science-stream SPM with a strong 6A result and a solid STEM base.",
+    highlight: "6A 2B 1C",
     description:
       "Completed secondary education in the Science stream with a strong SPM result of 6A 2B 1C. Built a solid foundation in mathematics and the sciences that continues to inform a systems-thinking approach to development.",
     logo: "/education/smk-madai.png",

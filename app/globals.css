@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  --font-heading: var(--font-geist-sans), var(--font-sans, sans-serif);
   /* Canvas — deep blue-black (2026 dark-first, off pure #000) */
   --background: #070B14;
   --surface: #0E1626;
@@ -31,7 +32,7 @@
   --color-card-foreground: var(--card-foreground);
   --color-border: var(--border);
   --color-muted-foreground: var(--muted-foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-share-tech-mono);
   --font-mono: var(--font-geist-mono);
 
   --animate-spotlight: spotlight 2s ease .75s 1 forwards;
@@ -84,6 +85,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Big display type — hero name, section titles */
+h1, h2, h3 {
+  font-family: var(--font-heading);
 }
 
 /* ── Background layers ─────────────────────────────────────────────────────── */

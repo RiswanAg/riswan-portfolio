@@ -27,7 +27,10 @@
       "Bash(curl *)",
       "Bash(powershell -Command \"Get-Process -Id 21624 -ErrorAction SilentlyContinue\" 2>&1)",
       "Bash(powershell -Command \"Stop-Process -Id 21624 -Force\")",
-      "Bash(disown)"
+      "Bash(disown)",
+      "Bash(PORT=3000 npm run dev)",
+      "Bash(node *)",
+      "WebFetch(domain:www.dafont.com)"
     ]
   }
 }

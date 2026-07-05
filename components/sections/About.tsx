@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Award, Star, GraduationCap, Quote, Download, FolderKanban } from "lucide-react";
-import { PROFILE, ABOUT_HOME, ABOUT_STATS } from "@/lib/data";
+import Image from "next/image";
+import { Code2, Award, Star, GraduationCap, Quote, Download, ArrowRight } from "lucide-react";
+import { PROFILE, ABOUT_HOME, ABOUT_STATS, CONTACTS } from "@/lib/data";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { CountUp } from "@/components/ui/CountUp";
 
@@ -59,29 +60,46 @@ export function About() {
               </p>
             </motion.div>
 
-            <div className="flex flex-wrap gap-4">
-              <motion.a
+            <div className="flex flex-wrap items-center gap-3">
+              <a
                 href={PROFILE.cv}
                 download
-                whileHover={{
-                  scale: 1.03,
-                  backgroundPosition: "100% 0%",
-                }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] bg-[length:160%_100%] bg-[0%_0%] px-6 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-[background-position]"
+                className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-all duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
               >
-                <Download size={16} />
+                <Download size={16} strokeWidth={2.5} />
                 Download CV
-              </motion.a>
-              <motion.a
+              </a>
+              <a
                 href="#portfolio-showcase"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.02] px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-[#2EE6C6]/50 hover:bg-white/[0.05]"
+                className="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
               >
-                <FolderKanban size={16} />
-                View Projects
-              </motion.a>
+                View My Work
+                <ArrowRight
+                  size={16}
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                />
+              </a>
+              <span className="mx-1 hidden h-6 w-px bg-white/10 sm:block" />
+              {CONTACTS.filter(
+                (c) => (c.label === "GitHub" || c.label === "LinkedIn") && c.logo
+              ).map((c) => (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={c.label}
+                  className="group flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.03] transition-all duration-200 hover:scale-110 hover:border-[#2EE6C6]/50"
+                >
+                  <Image
+                    src={c.logo!}
+                    alt={c.label}
+                    width={18}
+                    height={18}
+                    className="h-[18px] w-[18px] object-contain opacity-60 transition-opacity group-hover:opacity-100"
+                  />
+                </a>
+              ))}
             </div>
           </motion.div>
 
