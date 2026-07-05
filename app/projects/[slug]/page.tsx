@@ -7,6 +7,7 @@ import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { TechBadge, StatusBadge } from "@/components/ui/Badges";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { ItchIcon } from "@/components/ui/BrandIcons";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { Gallery } from "@/components/ui/Gallery";
@@ -130,7 +131,7 @@ export default async function ProjectPage({
               <Reveal delay={180}>
                 <div className="rounded-2xl border border-white/6 bg-white/3 p-5">
                   <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#2EE6C6]/80">
-                    My Contribution
+                    What I Did
                   </p>
                   <p className="text-sm leading-relaxed text-slate-400">
                     {project.contribution}
@@ -158,7 +159,13 @@ export default async function ProjectPage({
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] py-3 text-sm font-bold text-[#03140F] transition-all hover:shadow-lg hover:shadow-[#2EE6C6]/30"
                     >
-                      <ExternalIcon /> Live Demo
+                      {project.demo.includes("itch.io") ? (
+                        <><ItchIcon /> Go to itch.io</>
+                      ) : project.kind === "video" ? (
+                        <><ExternalIcon /> Watch on YouTube</>
+                      ) : (
+                        <><ExternalIcon /> Live Demo</>
+                      )}
                     </a>
                   )}
                 </div>

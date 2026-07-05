@@ -20,7 +20,7 @@ export const PROFILE = {
 export const HERO_HIGHLIGHTS = [
   "CGPA 3.80 · Dean's List ×6",
   "Silver Award — ITEX 2026",
-  "6 Shipped Projects",
+  "10 Shipped Projects",
 ];
 
 // ─── Home "About Me" section ────────────────────────────────────────────────
@@ -50,9 +50,9 @@ export const ABOUT_STATS: AboutStat[] = [
   },
   {
     icon: "code",
-    value: "6",
+    value: "11",
     label: "Total Projects",
-    detail: "Unity, Unreal, Godot & more",
+    detail: "Games, video production & more",
     href: "#portfolio-showcase",
   },
   {
@@ -69,9 +69,13 @@ export type Certificate = {
   name: string;
   org: string;
   date?: string;
-  /** Certificate image in /public/certificates. */
-  image: string;
-  /** Public Udemy verification URL — proves authenticity. */
+  /** Certificate image in /public/certificates. Omit for PDF-only certificates. */
+  image?: string;
+  /** How the thumbnail fills its 4:3 frame. Use "contain" for portrait/A4 certificates so nothing gets cropped off. Defaults to "cover". */
+  imageFit?: "cover" | "contain";
+  /** PDF certificate in /public/certificates, shown as a document card when there's no image. */
+  pdf?: string;
+  /** Public verification URL — proves authenticity. For PDF-only certs, this can be the PDF itself. */
   url: string;
 };
 
@@ -87,6 +91,24 @@ export const CERTIFICATES: Certificate[] = [
     org: "Udemy · James Doyle",
     image: "/certificates/online-multiplayer-unity.jpg",
     url: "https://www.udemy.com/certificate/UC-b24cd80e-2b67-466f-9bf7-692831e2e6f7/",
+  },
+  {
+    name: "1st Place — Play Next, D'FTMK Technity 2026",
+    org: "Universiti Teknikal Malaysia Melaka · Faculty of Information & Communication Technology",
+    date: "2026",
+    image: "/certificates/play-next-game-jam.jpg",
+    imageFit: "contain",
+    pdf: "/certificates/play-next-game-jam.pdf",
+    url: "/certificates/play-next-game-jam.pdf",
+  },
+  {
+    name: "MYVERSE — Malaysia Creative Technology Competition 2026",
+    org: "TechVerse Production · Supported by MDEC",
+    date: "2026",
+    image: "/certificates/myverse-2026.jpg",
+    imageFit: "contain",
+    pdf: "/certificates/myverse-2026.pdf",
+    url: "/certificates/myverse-2026.pdf",
   },
 ];
 
@@ -108,14 +130,21 @@ export type MediaItem = {
   caption?: string;
 };
 
+export type ProjectKind = "game" | "video" | "other";
+
 export type Project = {
   slug: string;
   title: string;
+  /** One short scannable line shown on the card face (e.g. "Solo Dev · Multiplayer"). */
+  role: string;
+  kind: ProjectKind;
   description: string;
   tech: string[];
   contribution: string;
   status: { label: string; tone: "live" | "done" | "proto" };
   image: string;
+  /** How the card thumbnail fills its 16:9 frame. Defaults to "cover" (crops). Use "contain" to show the full image with no crop. */
+  imageFit?: "cover" | "contain";
   fallbackIcon: string;
   fallbackGradient: string;
   github: string;
@@ -129,9 +158,11 @@ export const PROJECTS: Project[] = [
   {
     slug: "smart-farming",
     title: "Agrileap",
+    role: "Final Year Project · Simulation & AI systems",
+    kind: "game",
     description:
       "A cozy smart-farming sim set in an oil-palm nursery — grow smart, farm better, live green. Features IoT soil monitoring, drone scouting, AI disease detection, and a hands-on harvest loop as interactive gameplay.",
-    tech: ["Unity", "C#", "IoT", "AI", "Simulation"],
+    tech: ["Hologram", "Smart Farming", "Unity", "C#", "IoT", "AI", "Simulation"],
     contribution:
       "Designing the simulation systems, sensor-driven gameplay loop, and interactive learning mechanics.",
     status: { label: "In Development", tone: "live" },
@@ -147,27 +178,97 @@ export const PROJECTS: Project[] = [
     featured: true,
   },
   {
-    slug: "library-management",
-    title: "Library Management System",
+    slug: "sneak-out",
+    title: "Sneak Out",
+    role: "Lead Dev · Multiplayer · 🏆 Silver Award",
+    kind: "game",
     description:
-      "A full-featured library management system with CRUD operations, user authentication, and a persistent relational database.",
-    tech: ["C++", "MySQL", "OOP"],
+      "An online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture. Players take on the role of students sneaking out of the dormitory at night, outwitting prefects and wardens in a cat-and-mouse chase built around shared cultural memory. Winner of a Silver Award at the FTMK Workshop 2 Innovation Competition.",
+    tech: ["Online Multiplayer", "Unity", "C#", "Netcode", "Game Design"],
     contribution:
-      "Architected the relational schema and built the CRUD interface with OOP principles and session handling.",
+      "Led the full game design and development, including real-time multiplayer networking, role-based gameplay mechanics, and cultural level design that captures the Asrama Sekolah experience.",
     status: { label: "Completed", tone: "done" },
-    image: "/projects/library/thumbnail.png",
-    previewVideo: "/projects/library/preview.mp4",
+    image: "/projects/sneak-out/thumbnail.png",
+    previewVideo: "/projects/sneak-out/preview.mp4",
     gallery: [
-      { type: "image", src: "/projects/library/thumbnail.png" },
+      { type: "image", src: "/projects/sneak-out/thumbnail.png" },
+      { type: "youtube", src: "QZSrrUhhF-s", caption: "Sneak Out gameplay trailer" },
     ],
-    fallbackIcon: "book-open",
-    fallbackGradient: "from-[#4988C4]/50 via-[#1C4D8D]/30 to-[#0F2854]/50",
+    fallbackIcon: "school",
+    fallbackGradient: "from-indigo-800/50 via-purple-900/30 to-violet-900/50",
+    github: "https://github.com/RiswanAg/Sneak-Out",
+    demo: "#",
+  },
+  {
+    slug: "overtime",
+    title: "Overtime",
+    role: "🏆 1st Place · Play Next Game Jam",
+    kind: "game",
+    description:
+      "A fast, chaotic co-op game inspired by Overcooked — but set in the pressure-cooker of an IT company instead of a kitchen. Built for the Play Next Game Jam, where it took 1st place. Playable in the browser on itch.io.",
+    tech: ["Unity", "C#", "Co-op", "Game Design", "Level Design"],
+    contribution:
+      "Developed the core gameplay mechanics and handled the majority of the programming in Unity, building the co-op systems under jam time pressure for the team's 1st-place entry.",
+    status: { label: "Released", tone: "done" },
+    image: "/projects/overtime/thumbnail.png",
+    imageFit: "contain",
+    gallery: [
+      { type: "youtube", src: "L5u_-nXka_4", caption: "Overtime — official trailer" },
+      { type: "youtube", src: "jB-o6vJV1kM", caption: "Overtime — full gameplay" },
+      { type: "image", src: "/projects/overtime/thumbnail.png", caption: "Overtime cover art" },
+    ],
+    fallbackIcon: "gamepad",
+    fallbackGradient: "from-[#F0682E]/40 via-[#7C5CFF]/30 to-[#1C4D8D]/40",
+    github: "#",
+    demo: "https://symocolon.itch.io/overtime",
+  },
+  {
+    slug: "cave-runner",
+    title: "Cave Runner",
+    role: "Solo Dev · Multiplatform (PC & Mobile)",
+    kind: "game",
+    description:
+      "An endless cave-runner built solo in Unreal Engine 5. Its highlight is true multiplatform play — the same game runs on desktop/PC and mobile, with controls and performance tuned for both. Playable in the browser on itch.io.",
+    tech: ["Unreal Engine 5", "Blueprints", "Multiplatform", "Mobile", "Game Design"],
+    contribution:
+      "Built the entire game solo — core runner gameplay, level generation, and cross-platform input and optimization so it plays smoothly on both PC and mobile.",
+    status: { label: "Released", tone: "done" },
+    image: "/projects/cave-runner/thumbnail.png",
+    gallery: [
+      { type: "youtube", src: "VN3mTIw-K8c", caption: "Cave Runner — gameplay" },
+      { type: "image", src: "/projects/cave-runner/thumbnail.png", caption: "Cave Runner cover art" },
+    ],
+    fallbackIcon: "gamepad",
+    fallbackGradient: "from-[#1C4D8D]/50 via-[#0F2854]/40 to-[#7C5CFF]/30",
+    github: "#",
+    demo: "https://riswanag.itch.io/cave-runner",
+  },
+  {
+    slug: "safety-first",
+    title: "SafetyFirst 3D",
+    role: "Solo Dev · WebGL · 3 game modes",
+    kind: "game",
+    description:
+      "A web-based 3D educational game that transforms mandatory construction safety training for TVET students into an engaging, interactive experience. Built with Three.js, it runs directly in the browser with no installation required. Three gameplay modes cover real-time PPE selection, a 3D hazard hunt, and a fast-paced obstacle runner, all grounded in Malaysian DOSH and OSHA compliance standards.",
+    tech: ["Three.js", "JavaScript", "Web GL", "Game Design", "OSHA"],
+    contribution:
+      "Designed and developed the full game including all three gameplay modes, real-time regulatory feedback system that references DOSH and OSHA standards on incorrect choices, and cross-browser responsive optimization.",
+    status: { label: "Completed", tone: "done" },
+    image: "/projects/safety-first/thumbnail.png",
+    previewVideo: "/projects/safety-first/preview.mp4",
+    gallery: [
+      { type: "image", src: "/projects/safety-first/thumbnail.png" },
+    ],
+    fallbackIcon: "shield-check",
+    fallbackGradient: "from-[#BDE8F5]/20 via-[#4988C4]/30 to-[#1C4D8D]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
   },
   {
     slug: "rabbit-racing",
     title: "Rabbit Invasion Racing",
+    role: "Solo Dev · Graphics & physics",
+    kind: "game",
     description:
       "A 3D racing game built with OpenGL featuring custom GLSL shaders, real-time physics, and dynamic obstacle spawning.",
     tech: ["OpenGL", "C++", "GLSL", "Physics"],
@@ -185,28 +286,10 @@ export const PROJECTS: Project[] = [
     demo: "#",
   },
   {
-    slug: "sneak-out",
-    title: "Sneak Out",
-    description:
-      "An online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture. Players take on the role of students sneaking out of the dormitory at night, outwitting prefects and wardens in a cat-and-mouse chase built around shared cultural memory. Winner of a Silver Award at the FTMK Workshop 2 Innovation Competition.",
-    tech: ["Unity", "C#", "Netcode", "Multiplayer", "Game Design"],
-    contribution:
-      "Led the full game design and development, including real-time multiplayer networking, role-based gameplay mechanics, and cultural level design that captures the Asrama Sekolah experience.",
-    status: { label: "Completed", tone: "done" },
-    image: "/projects/sneak-out/thumbnail.png",
-    previewVideo: "/projects/sneak-out/preview.mp4",
-    gallery: [
-      { type: "image", src: "/projects/sneak-out/thumbnail.png" },
-      { type: "youtube", src: "QZSrrUhhF-s", caption: "Sneak Out gameplay trailer" },
-    ],
-    fallbackIcon: "school",
-    fallbackGradient: "from-indigo-800/50 via-purple-900/30 to-violet-900/50",
-    github: "https://github.com/RiswanAg/Sneak-Out",
-    demo: "#",
-  },
-  {
     slug: "reyclash",
     title: "Reyclash",
+    role: "Programmer · Team of 4",
+    kind: "game",
     description:
       "A game developed for the MYVERSE Competition — Malaysia Creative Tech Competition 2026. Reyclash teaches children how to sort and use recycling bins correctly through fast-paced, interactive gameplay.",
     tech: ["Unity", "C#", "Game Design", "Education"],
@@ -223,23 +306,85 @@ export const PROJECTS: Project[] = [
     demo: "#",
   },
   {
-    slug: "safety-first",
-    title: "SafetyFirst 3D",
+    slug: "library-management",
+    title: "Library Management System",
+    role: "Solo · Backend & database design",
+    kind: "other",
     description:
-      "A web-based 3D educational game that transforms mandatory construction safety training for TVET students into an engaging, interactive experience. Built with Three.js, it runs directly in the browser with no installation required. Three gameplay modes cover real-time PPE selection, a 3D hazard hunt, and a fast-paced obstacle runner, all grounded in Malaysian DOSH and OSHA compliance standards.",
-    tech: ["Three.js", "JavaScript", "Web GL", "Game Design", "OSHA"],
+      "A full-featured library management system with CRUD operations, user authentication, and a persistent relational database.",
+    tech: ["C++", "MySQL", "OOP"],
     contribution:
-      "Designed and developed the full game including all three gameplay modes, real-time regulatory feedback system that references DOSH and OSHA standards on incorrect choices, and cross-browser responsive optimization.",
+      "Architected the relational schema and built the CRUD interface with OOP principles and session handling.",
     status: { label: "Completed", tone: "done" },
-    image: "/projects/safety-first/thumbnail.png",
-    previewVideo: "/projects/safety-first/preview.mp4",
+    image: "/projects/library/thumbnail.png",
+    previewVideo: "/projects/library/preview.mp4",
     gallery: [
-      { type: "image", src: "/projects/safety-first/thumbnail.png" },
+      { type: "image", src: "/projects/library/thumbnail.png" },
     ],
-    fallbackIcon: "shield-check",
-    fallbackGradient: "from-[#BDE8F5]/20 via-[#4988C4]/30 to-[#1C4D8D]/50",
+    fallbackIcon: "book-open",
+    fallbackGradient: "from-[#4988C4]/50 via-[#1C4D8D]/30 to-[#0F2854]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
+  },
+  {
+    slug: "mission-delivered",
+    title: "Mission: Delivered",
+    role: "Director · Editor · Cameraman",
+    kind: "video",
+    description:
+      "A 5-minute cinematic ad for Shopee, produced as a motion-graphics project. I directed the piece, ran the camera, and handled almost all of the editing — blending live footage with motion graphics and AI-generated video (Higgsfield) into one polished spot. The project I'm proudest of, and where I fell in love with editing all over again.",
+    tech: ["Directing", "Video Editing", "Motion Graphics", "AI Video", "Higgsfield", "Cinematography"],
+    contribution:
+      "Directed the full production and led editing end to end — shot planning, cinematography, motion graphics, AI-generated sequences with Higgsfield, colour, and the final edit.",
+    status: { label: "Released", tone: "done" },
+    image: "/projects/mission-delivered/thumbnail.jpg",
+    gallery: [
+      { type: "youtube", src: "8B_SRydN_ME", caption: "Mission: Delivered — Shopee ad (full video)" },
+    ],
+    fallbackIcon: "video",
+    fallbackGradient: "from-[#7C5CFF]/40 via-[#F0682E]/30 to-[#2EE6C6]/30",
+    github: "#",
+    demo: "https://youtu.be/8B_SRydN_ME",
+  },
+  {
+    slug: "kinetic-typography",
+    title: "Kinetic Typography",
+    role: "Motion Designer · Intro & Closing",
+    kind: "video",
+    description:
+      "A kinetic-typography motion piece built entirely in After Effects, made with a team of four to introduce ourselves. I animated the opening introduction, my own segment, and the closing, and chose the track that ties it all together.",
+    tech: ["After Effects", "Kinetic Typography", "Motion Graphics", "Sound Design"],
+    contribution:
+      "Designed and animated the intro, my personal segment, and the closing sequence in After Effects, and selected the soundtrack that drives the pacing.",
+    status: { label: "Released", tone: "done" },
+    image: "/projects/motion-intro/thumbnail.jpg",
+    gallery: [
+      { type: "youtube", src: "17cvcFdY01Q", caption: "Kinetic Typography — After Effects motion piece" },
+    ],
+    fallbackIcon: "video",
+    fallbackGradient: "from-[#2EE6C6]/30 via-[#7C5CFF]/40 to-[#27C7E5]/30",
+    github: "#",
+    demo: "https://youtu.be/17cvcFdY01Q",
+  },
+  {
+    slug: "inovasi-sosial",
+    title: "Projek Inovasi Sosial",
+    role: "Video Production · Editor & Cameraman",
+    kind: "video",
+    description:
+      "A group video for a Critical Thinking course pitching a social-innovation idea. I handled the full video production — shooting all the footage as cameraman and editing the whole piece together into a clear, polished final cut.",
+    tech: ["Video Editing", "Cinematography", "Video Production", "Storytelling"],
+    contribution:
+      "Owned the entire video production: ran the camera for all footage and edited the complete video from raw clips to final delivery.",
+    status: { label: "Released", tone: "done" },
+    image: "/projects/inovasi-sosial/thumbnail.jpg",
+    gallery: [
+      { type: "youtube", src: "tQFBa98peRI", caption: "Projek Idea Inovasi Sosial — group video" },
+    ],
+    fallbackIcon: "video",
+    fallbackGradient: "from-[#F0682E]/30 via-[#7C5CFF]/40 to-[#2EE6C6]/30",
+    github: "#",
+    demo: "https://youtu.be/tQFBa98peRI",
   },
 ];
 

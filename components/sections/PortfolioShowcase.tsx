@@ -13,13 +13,15 @@ import {
   Terminal,
   BadgeCheck,
   ExternalLink,
+  Video,
+  FileText,
 } from "lucide-react";
 import {
   PROJECTS,
   SKILL_GROUPS,
   CERTIFICATES,
   SKILL_LEVEL_FILL,
-  type Project,
+  type ProjectKind,
   type SkillLevel,
 } from "@/lib/data";
 import { ProjectCard } from "@/components/ui/ProjectCard";
@@ -116,65 +118,96 @@ export function PortfolioShowcase() {
   );
 }
 
-const ALL_FILTER = "All";
-
-function getFilters(projects: Project[]) {
-  const techCounts: Record<string, number> = {};
-  for (const p of projects) {
-    for (const t of p.tech) {
-      techCounts[t] = (techCounts[t] ?? 0) + 1;
-    }
-  }
-  // Only show tech tags that appear in more than one project
-  const popularTech = Object.entries(techCounts)
-    .filter(([, count]) => count > 1)
-    .map(([tech]) => tech)
-    .sort();
-  return [ALL_FILTER, ...popularTech, "Completed", "In Development"];
-}
+const KIND_SEGMENTS = [
+  { id: "game", label: "Game", icon: Gamepad2 },
+  { id: "video", label: "Video", icon: Video },
+  { id: "other", label: "Others", icon: Layers },
+] as const satisfies readonly { id: ProjectKind; label: string; icon: typeof Gamepad2 }[];
 
 function ProjectsTab() {
-  const [active, setActive] = useState(ALL_FILTER);
-  const filters = useMemo(() => getFilters(PROJECTS), []);
+  const [active, setActive] = useState<ProjectKind>("game");
 
-  const filtered = useMemo(() => {
-    if (active === ALL_FILTER) return PROJECTS;
-    if (active === "Completed") return PROJECTS.filter((p) => p.status.tone === "done");
-    if (active === "In Development") return PROJECTS.filter((p) => p.status.tone === "live");
-    return PROJECTS.filter((p) => p.tech.includes(active));
-  }, [active]);
+  const counts = useMemo(() => {
+    const c: Record<ProjectKind, number> = { game: 0, video: 0, other: 0 };
+    for (const p of PROJECTS) c[p.kind] += 1;
+    return c;
+  }, []);
+
+  const filtered = useMemo(
+    () => PROJECTS.filter((p) => p.kind === active),
+    [active]
+  );
 
   return (
     <div>
-      <div className="mb-8 flex flex-wrap justify-center gap-2">
-        {filters.map((f) => (
-          <button
-            key={f}
-            onClick={() => setActive(f)}
-            className={`inline-flex min-h-[40px] items-center rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-all duration-200 ${
-              active === f
-                ? "border-[#2EE6C6]/50 bg-[#2EE6C6]/15 text-white"
-                : "border-white/8 bg-white/3 text-[#93A2B8] hover:border-white/20 hover:text-white"
-            }`}
-          >
-            {f}
-          </button>
-        ))}
+      {/* Segmented filter — Game · Video · Others */}
+      <div className="mb-10 flex justify-center">
+        <div className="relative inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1.5">
+          {KIND_SEGMENTS.map((seg) => {
+            const Icon = seg.icon;
+            const isActive = active === seg.id;
+            return (
+              <button
+                key={seg.id}
+                onClick={() => setActive(seg.id)}
+                className={`relative z-10 flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:px-5 ${
+                  isActive ? "text-[#03140F] font-bold" : "text-[#93A2B8] hover:text-white"
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="showcase-filter-indicator"
+                    className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5]"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <Icon size={16} />
+                {seg.label}
+                <span
+                  className={`rounded-full px-1.5 text-[11px] font-bold tabular-nums ${
+                    isActive ? "bg-black/15 text-[#03140F]" : "bg-white/8 text-[#93A2B8]"
+                  }`}
+                >
+                  {counts[seg.id]}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <motion.div
-        key={active}
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-      >
-        {filtered.map((project) => (
-          <motion.div key={project.slug} variants={item}>
-            <ProjectCard project={project} href={`/projects/${project.slug}`} />
-          </motion.div>
-        ))}
-      </motion.div>
+      {filtered.length > 0 ? (
+        <motion.div
+          key={active}
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {filtered.map((project) => (
+            <motion.div key={project.slug} variants={item}>
+              <ProjectCard project={project} href={`/projects/${project.slug}`} />
+            </motion.div>
+          ))}
+        </motion.div>
+      ) : (
+        <motion.div
+          key="empty"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="mx-auto max-w-md rounded-3xl border border-dashed border-white/12 bg-white/[0.02] px-8 py-16 text-center"
+        >
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#7C5CFF]/20 to-[#2EE6C6]/20 text-[#7C5CFF]">
+            <Video size={26} />
+          </span>
+          <h3 className="mt-5 text-lg font-black text-white">Video reel coming soon</h3>
+          <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-[#93A2B8]">
+            Trailers, edits and motion work I&apos;ve produced — I&apos;m polishing the
+            showcase now. Check back shortly.
+          </p>
+        </motion.div>
+      )}
     </div>
   );
 }
@@ -200,16 +233,29 @@ function CertificatesTab() {
           className="group flex flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#0E1626] transition-colors duration-200 hover:border-[#2EE6C6]/40"
         >
           {/* Certificate preview */}
-          <div className="relative aspect-[4/3] overflow-hidden border-b border-white/8 bg-black">
-            <Image
-              src={cert.image}
-              alt={`${cert.name} certificate`}
-              fill
-              sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw"
-              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            />
+          <div className={`relative aspect-[4/3] overflow-hidden border-b border-white/8 bg-black ${cert.imageFit === "contain" ? "bg-[#0E1626]" : ""}`}>
+            {cert.image ? (
+              <Image
+                src={cert.image}
+                alt={`${cert.name} certificate`}
+                fill
+                sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw"
+                className={`transition-transform duration-500 group-hover:scale-105 ${
+                  cert.imageFit === "contain" ? "object-contain p-3" : "object-cover object-top"
+                }`}
+              />
+            ) : (
+              <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#7C5CFF]/20 via-[#0E1626] to-[#2EE6C6]/10 transition-transform duration-500 group-hover:scale-105">
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#7C5CFF]/30 to-[#2EE6C6]/30 text-white">
+                  <FileText size={26} />
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#93A2B8]">
+                  PDF Certificate
+                </span>
+              </div>
+            )}
             <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-white backdrop-blur-sm transition-colors group-hover:border-[#2EE6C6]/50">
-              Verify
+              {cert.url.toLowerCase().endsWith(".pdf") ? "View PDF" : "Verify"}
               <ExternalLink size={11} />
             </span>
           </div>
