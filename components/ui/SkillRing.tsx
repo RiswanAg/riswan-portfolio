@@ -65,8 +65,8 @@ export function SkillRing({
           />
           <defs>
             <linearGradient id="skill-arc" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#7A1018" />
-              <stop offset="100%" stopColor="#DF2531" />
+              <stop offset="0%" stopColor="#7C5CFF" />
+              <stop offset="100%" stopColor="#2EE6C6" />
             </linearGradient>
           </defs>
         </svg>
@@ -92,7 +92,7 @@ export function SkillRing({
         >
           {skill.name}
         </p>
-        <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#DF2531]">
+        <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#2EE6C6]">
           {skill.level}
         </p>
       </div>

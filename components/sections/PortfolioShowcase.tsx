@@ -60,10 +60,10 @@ export function PortfolioShowcase() {
     <section id="portfolio-showcase" className="relative z-10 px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <Reveal className="text-center">
-          <h2 className="bg-gradient-to-r from-white via-[#DF2531] to-[#7A1018] bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl">
+          <h2 className="bg-gradient-to-r from-white via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl">
             Portfolio Showcase
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#A3A3A3] sm:text-base">
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#93A2B8] sm:text-base">
             Explore my projects, certifications, and technical expertise across multiple game engines and tools.
           </p>
         </Reveal>
@@ -78,13 +78,13 @@ export function PortfolioShowcase() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`relative z-10 flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:px-5 ${
-                    isActive ? "text-white" : "text-[#A3A3A3] hover:text-white"
+                    isActive ? "text-[#03140F] font-bold" : "text-[#93A2B8] hover:text-white"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="showcase-tab-indicator"
-                      className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-[#DF2531] to-[#7A1018]"
+                      className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5]"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -153,8 +153,8 @@ function ProjectsTab() {
             onClick={() => setActive(f)}
             className={`inline-flex min-h-[40px] items-center rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-all duration-200 ${
               active === f
-                ? "border-[#DF2531]/50 bg-[#DF2531]/15 text-white"
-                : "border-white/8 bg-white/3 text-[#A3A3A3] hover:border-white/20 hover:text-white"
+                ? "border-[#2EE6C6]/50 bg-[#2EE6C6]/15 text-white"
+                : "border-white/8 bg-white/3 text-[#93A2B8] hover:border-white/20 hover:text-white"
             }`}
           >
             {f}
@@ -197,7 +197,7 @@ function CertificatesTab() {
           variants={item}
           whileHover={{ y: -4 }}
           transition={{ duration: 0.2 }}
-          className="group flex flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#111111] transition-colors duration-200 hover:border-[#DF2531]/40"
+          className="group flex flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#0E1626] transition-colors duration-200 hover:border-[#2EE6C6]/40"
         >
           {/* Certificate preview */}
           <div className="relative aspect-[4/3] overflow-hidden border-b border-white/8 bg-black">
@@ -208,7 +208,7 @@ function CertificatesTab() {
               sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw"
               className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             />
-            <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-white backdrop-blur-sm transition-colors group-hover:border-[#DF2531]/50">
+            <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-white backdrop-blur-sm transition-colors group-hover:border-[#2EE6C6]/50">
               Verify
               <ExternalLink size={11} />
             </span>
@@ -216,14 +216,14 @@ function CertificatesTab() {
 
           {/* Meta */}
           <div className="flex items-start gap-3 p-6">
-            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#DF2531]/20 to-[#7A1018]/20 text-[#DF2531]">
+            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2EE6C6]/20 to-[#7C5CFF]/20 text-[#2EE6C6]">
               <BadgeCheck size={18} />
             </span>
             <div>
               <h3 className="text-base font-bold leading-snug text-white">{cert.name}</h3>
-              <p className="mt-1 text-sm text-[#A3A3A3]">{cert.org}</p>
+              <p className="mt-1 text-sm text-[#93A2B8]">{cert.org}</p>
               {cert.date && (
-                <p className="mt-1 font-mono text-xs text-[#A3A3A3]">{cert.date}</p>
+                <p className="mt-1 font-mono text-xs text-[#93A2B8]">{cert.date}</p>
               )}
             </div>
           </div>
@@ -252,7 +252,7 @@ function TechStackTab() {
           <h3 className="text-2xl font-black text-white sm:text-3xl">
             Core Expertise
           </h3>
-          <p className="mx-auto mt-2 max-w-md text-sm text-[#A3A3A3]">
+          <p className="mx-auto mt-2 max-w-md text-sm text-[#93A2B8]">
             The tools I reach for first — where I do my strongest work.
           </p>
         </Reveal>
@@ -272,7 +272,7 @@ function TechStackTab() {
           return (
             <Reveal key={group.category} delay={gi * 80}>
               <div className="mb-7 flex items-center justify-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#DF2531]/20 to-[#7A1018]/20 text-[#DF2531]">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#2EE6C6]/20 to-[#7C5CFF]/20 text-[#2EE6C6]">
                   <Icon size={16} />
                 </span>
                 <h4 className="text-base font-bold text-white">
@@ -291,16 +291,16 @@ function TechStackTab() {
 
       {/* Proficiency legend */}
       <Reveal className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-white/8 pt-8">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#A3A3A3]">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#93A2B8]">
           Proficiency
         </span>
         {LEVEL_ORDER.map((lvl) => (
           <span key={lvl} className="flex items-center gap-2">
             <span
-              className="h-2 w-2 rounded-full bg-[#DF2531]"
+              className="h-2 w-2 rounded-full bg-[#2EE6C6]"
               style={{ opacity: 0.35 + SKILL_LEVEL_FILL[lvl] * 0.65 }}
             />
-            <span className="text-xs text-[#A3A3A3]">{lvl}</span>
+            <span className="text-xs text-[#93A2B8]">{lvl}</span>
           </span>
         ))}
       </Reveal>

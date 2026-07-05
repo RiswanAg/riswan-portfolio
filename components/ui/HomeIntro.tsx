@@ -62,7 +62,7 @@ export function HomeIntro() {
           {/* faint mesh + breathing red glow */}
           <div className="absolute inset-0 bg-grid opacity-60" />
           <motion.div
-            className="absolute h-72 w-72 rounded-full bg-[#DF2531]/20 blur-3xl"
+            className="absolute h-72 w-72 rounded-full bg-[#2EE6C6]/20 blur-3xl"
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1.15, opacity: 1 }}
             transition={{ duration: 1.6, ease: EASE }}
@@ -70,7 +70,7 @@ export function HomeIntro() {
 
           {/* eyebrow */}
           <motion.p
-            className="relative mb-5 font-mono text-[10px] uppercase tracking-[0.6em] text-[#DF2531] sm:text-xs"
+            className="relative mb-5 font-mono text-[10px] uppercase tracking-[0.6em] text-[#2EE6C6] sm:text-xs"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
@@ -89,8 +89,8 @@ export function HomeIntro() {
                   animate="show"
                   className={`block bg-gradient-to-r bg-clip-text text-5xl font-black tracking-tight text-transparent sm:text-7xl lg:text-8xl ${
                     i === 0
-                      ? "from-white via-[#DF2531] to-[#7A1018]"
-                      : "from-[#7A1018] via-[#DF2531] to-white"
+                      ? "from-white via-[#2EE6C6] to-[#7C5CFF]"
+                      : "from-[#7C5CFF] via-[#2EE6C6] to-white"
                   }`}
                 >
                   {word}
@@ -101,7 +101,7 @@ export function HomeIntro() {
 
           {/* underline draw */}
           <motion.span
-            className="relative mt-6 block h-[2px] w-40 origin-left rounded-full bg-gradient-to-r from-[#DF2531] to-transparent sm:w-56"
+            className="relative mt-6 block h-[2px] w-40 origin-left rounded-full bg-gradient-to-r from-[#2EE6C6] to-transparent sm:w-56"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.85 }}

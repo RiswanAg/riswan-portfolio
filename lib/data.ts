@@ -10,11 +10,18 @@ export const PROFILE = {
   ],
   tagline:
     "I don't just imagine things. I build them. Mostly games, sometimes something else entirely.",
-  availability: "Ready to Innovate",
+  availability: "Open to Internship Opportunities",
   image: "/profile.png",
   imageFallback: "/profile.svg",
   cv: "/cv.pdf",
 };
+
+/** Proof points shown directly in the hero — instant recruiter credibility. */
+export const HERO_HIGHLIGHTS = [
+  "CGPA 3.80 · Dean's List ×6",
+  "Silver Award — ITEX 2026",
+  "6 Shipped Projects",
+];
 
 // ─── Home "About Me" section ────────────────────────────────────────────────
 

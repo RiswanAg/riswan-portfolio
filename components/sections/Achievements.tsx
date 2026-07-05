@@ -1,6 +1,7 @@
 import { ACHIEVEMENTS } from "@/lib/data";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { GlowCard } from "@/components/ui/GlowCard";
 import {
   Award,
   Trophy,
@@ -26,7 +27,7 @@ export function Achievements() {
       {/* Section identity glow */}
       <div
         aria-hidden
-        className="aurora left-1/2 top-0 h-[30vw] w-[30vw] -translate-x-1/2 bg-[#7A1018]/12"
+        className="aurora left-1/2 top-0 h-[30vw] w-[30vw] -translate-x-1/2 bg-[#7C5CFF]/12"
       />
 
       <div className="relative mx-auto max-w-3xl">
@@ -34,7 +35,7 @@ export function Achievements() {
 
         <div className="relative">
           {/* Vertical spine */}
-          <div className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-[#DF2531]/60 via-[#7A1018]/30 to-transparent md:left-1/2" />
+          <div className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-[#2EE6C6]/60 via-[#7C5CFF]/30 to-transparent md:left-1/2" />
 
           <div className="flex flex-col gap-10">
             {ACHIEVEMENTS.map((a, i) => (
@@ -51,7 +52,7 @@ export function Achievements() {
                     const Icon = ACHIEVEMENT_ICONS[a.icon] ?? Award;
                     return (
                       <div
-                        className={`absolute top-1 z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-[#DF2531]/40 bg-[#111111] text-[#DF2531] shadow-lg shadow-black/50 ${
+                        className={`absolute top-1 z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-[#2EE6C6]/40 bg-[#0E1626] text-[#2EE6C6] shadow-lg shadow-black/50 ${
                           i % 2 === 0
                             ? "left-0 md:-left-4"
                             : "left-0 md:-right-4 md:left-auto"
@@ -62,15 +63,15 @@ export function Achievements() {
                     );
                   })()}
 
-                  <div className="ml-12 rounded-2xl border border-white/8 bg-[#111111] p-6 transition-all duration-300 hover:border-[#DF2531]/25 md:ml-0">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#DF2531]">
+                  <GlowCard className="ml-12 rounded-2xl border border-white/8 bg-[#0E1626] p-6 transition-all duration-300 hover:border-[#2EE6C6]/25 md:ml-0">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#2EE6C6]">
                       {a.year}
                     </span>
                     <h3 className="mt-1.5 font-bold text-white">{a.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                    <p className="mt-2 text-sm leading-relaxed text-slate-400">
                       {a.description}
                     </p>
-                  </div>
+                  </GlowCard>
                 </div>
               </Reveal>
             ))}

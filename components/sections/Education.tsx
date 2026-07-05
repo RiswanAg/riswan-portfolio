@@ -2,6 +2,7 @@ import { EDUCATION } from "@/lib/data";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { GlowCard } from "@/components/ui/GlowCard";
 
 function InstitutionLogo({ logo, initials }: { logo: string; initials: string }) {
   return (
@@ -29,11 +30,11 @@ export function Education() {
       {/* Section identity glow */}
       <div
         aria-hidden
-        className="aurora -right-20 top-4 h-64 w-64 bg-[#DF2531]/12"
+        className="aurora -right-20 top-4 h-64 w-64 bg-[#2EE6C6]/12"
       />
       <div
         aria-hidden
-        className="aurora -left-16 bottom-8 h-56 w-56 bg-[#7A1018]/14"
+        className="aurora -left-16 bottom-8 h-56 w-56 bg-[#7C5CFF]/14"
       />
 
       <div className="relative mx-auto max-w-3xl">
@@ -42,16 +43,16 @@ export function Education() {
         <div className="flex flex-col gap-6">
           {EDUCATION.map((e, i) => (
             <Reveal key={e.institution} delay={i * 100}>
-              <div className="group rounded-2xl border border-white/8 bg-[#111111] p-6 transition-all duration-300 hover:border-[#DF2531]/25">
+              <GlowCard className="group rounded-2xl border border-white/8 bg-[#0E1626] p-6 transition-all duration-300 hover:border-[#2EE6C6]/25">
                 <div className="flex flex-wrap items-start gap-5">
                   <InstitutionLogo logo={e.logo} initials={e.logoInitials} />
 
                   <div className="flex flex-1 flex-wrap items-start justify-between gap-3">
                     <div className="flex-1">
-                      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#DF2531]">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#2EE6C6]">
                         {e.period}
                       </span>
-                      <h3 className="mt-1.5 text-base font-bold text-white transition-all duration-300 group-hover:text-lg group-hover:text-[#DF2531]">
+                      <h3 className="mt-1.5 text-base font-bold text-white transition-all duration-300 group-hover:text-lg group-hover:text-[#2EE6C6]">
                         {e.institution}
                       </h3>
                       <p className="mt-0.5 text-sm font-medium text-slate-400">
@@ -60,17 +61,17 @@ export function Education() {
                     </div>
 
                     {e.grade && (
-                      <span className="shrink-0 rounded-full border border-[#DF2531]/20 bg-[#DF2531]/5 px-3 py-1 font-mono text-xs text-[#DF2531]">
+                      <span className="shrink-0 rounded-full border border-[#2EE6C6]/20 bg-[#2EE6C6]/5 px-3 py-1 font-mono text-xs text-[#2EE6C6]">
                         {e.grade}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <p className="mt-4 text-sm leading-relaxed text-slate-500">
+                <p className="mt-4 text-sm leading-relaxed text-slate-400">
                   {e.description}
                 </p>
-              </div>
+              </GlowCard>
             </Reveal>
           ))}
         </div>

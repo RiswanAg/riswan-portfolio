@@ -3,7 +3,7 @@ import type { Project } from "@/lib/data";
 /** Mono tech pill. */
 export function TechBadge({ children }: { children: string }) {
   return (
-    <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] tracking-wide text-[#A3A3A3]">
+    <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] tracking-wide text-[#93A2B8]">
       {children}
     </span>
   );
@@ -14,9 +14,9 @@ const STATUS_STYLES: Record<
   { ring: string; dot: string; text: string }
 > = {
   live: {
-    ring: "border-[#DF2531]/40 bg-[#DF2531]/10",
-    dot: "bg-[#DF2531]",
-    text: "text-[#DF2531]",
+    ring: "border-[#2EE6C6]/40 bg-[#2EE6C6]/10",
+    dot: "bg-[#2EE6C6]",
+    text: "text-[#2EE6C6]",
   },
   done: {
     ring: "border-white/20 bg-white/5",
@@ -24,9 +24,9 @@ const STATUS_STYLES: Record<
     text: "text-white",
   },
   proto: {
-    ring: "border-[#7A1018]/50 bg-[#7A1018]/20",
-    dot: "bg-[#7A1018]",
-    text: "text-[#DF2531]",
+    ring: "border-[#7C5CFF]/50 bg-[#7C5CFF]/20",
+    dot: "bg-[#7C5CFF]",
+    text: "text-[#2EE6C6]",
   },
 };
 

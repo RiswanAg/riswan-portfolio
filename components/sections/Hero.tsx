@@ -2,8 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { PROFILE } from "@/lib/data";
-import { ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { PROFILE, HERO_HIGHLIGHTS, CONTACTS } from "@/lib/data";
+import { ChevronDown, Download, ArrowRight } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
 import { TypingText } from "@/components/ui/typing-text";
 
@@ -88,9 +89,9 @@ export function Hero() {
         >
           <motion.div
             variants={rise}
-            className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#DF2531]/30 bg-[#DF2531]/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-[#DF2531] sm:text-sm"
+            className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#2EE6C6]/30 bg-[#2EE6C6]/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-[#2EE6C6] sm:text-sm"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#DF2531] pulse-soft" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#2EE6C6] pulse-soft" />
             {PROFILE.availability}
           </motion.div>
 
@@ -98,7 +99,7 @@ export function Hero() {
             <span className="block overflow-hidden pb-1">
               <motion.span
                 variants={nameLine}
-                className="block bg-gradient-to-r from-[#FFFFFF] via-[#DF2531] to-[#7A1018] bg-clip-text text-transparent"
+                className="block bg-gradient-to-r from-[#FFFFFF] via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-transparent"
               >
                 Riswan
               </motion.span>
@@ -112,17 +113,79 @@ export function Hero() {
 
           <motion.p
             variants={rise}
-            className="mb-5 min-h-[1.5em] font-mono text-base tracking-wide text-[#DF2531]/90 sm:text-lg lg:text-xl"
+            className="mb-5 min-h-[1.5em] font-mono text-base tracking-wide text-[#2EE6C6]/90 sm:text-lg lg:text-xl"
           >
             <TypingText words={PROFILE.roles} />
           </motion.p>
 
           <motion.p
             variants={rise}
-            className="mx-auto max-w-xl text-lg leading-relaxed text-[#A3A3A3] md:mx-0 sm:text-xl"
+            className="mx-auto max-w-xl text-lg leading-relaxed text-[#93A2B8] md:mx-0 sm:text-xl"
           >
             {PROFILE.tagline}
           </motion.p>
+
+          {/* Primary conversion row — CV, work, socials. Recruiters act here. */}
+          <motion.div
+            variants={rise}
+            className="mt-9 flex flex-wrap items-center justify-center gap-3 md:justify-start"
+          >
+            <a
+              href={PROFILE.cv}
+              download
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-all duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
+            >
+              <Download size={16} strokeWidth={2.5} />
+              Download CV
+            </a>
+            <a
+              href="#portfolio-showcase"
+              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
+            >
+              View My Work
+              <ArrowRight
+                size={16}
+                className="transition-transform duration-200 group-hover:translate-x-1"
+              />
+            </a>
+            <span className="mx-1 hidden h-6 w-px bg-white/10 sm:block" />
+            {CONTACTS.filter(
+              (c) => (c.label === "GitHub" || c.label === "LinkedIn") && c.logo
+            ).map((c) => (
+              <a
+                key={c.label}
+                href={c.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={c.label}
+                className="group flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.03] transition-all duration-200 hover:scale-110 hover:border-[#2EE6C6]/50"
+              >
+                <Image
+                  src={c.logo!}
+                  alt={c.label}
+                  width={18}
+                  height={18}
+                  className="h-[18px] w-[18px] object-contain opacity-60 transition-opacity group-hover:opacity-100"
+                />
+              </a>
+            ))}
+          </motion.div>
+
+          {/* Credibility strip — the facts a recruiter scans for */}
+          <motion.div
+            variants={rise}
+            className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 md:justify-start"
+          >
+            {HERO_HIGHLIGHTS.map((h) => (
+              <span
+                key={h}
+                className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-[#93A2B8]"
+              >
+                <span className="h-1 w-1 flex-shrink-0 rounded-full bg-[#2EE6C6]" />
+                {h}
+              </span>
+            ))}
+          </motion.div>
         </motion.div>
 
         {/* Spline column */}
@@ -138,11 +201,11 @@ export function Hero() {
       </div>
 
       {/* Scroll cue */}
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[#A3A3A3]/60">
+      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[#93A2B8]/60">
         <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
           Scroll
         </span>
-        <ChevronDown size={18} className="scroll-bob text-[#DF2531]/80" strokeWidth={2} />
+        <ChevronDown size={18} className="scroll-bob text-[#2EE6C6]/80" strokeWidth={2} />
       </div>
     </section>
   );

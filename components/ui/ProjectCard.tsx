@@ -126,7 +126,7 @@ function ExpandedPanel({
 
       {/* Panel — starts at card rect, expands to full screen */}
       <motion.div
-        className="fixed z-50 flex flex-col overflow-hidden border border-white/10 bg-[#111111] shadow-2xl shadow-black/70 lg:flex-row"
+        className="fixed z-50 flex flex-col overflow-hidden border border-white/10 bg-[#0E1626] shadow-2xl shadow-black/70 lg:flex-row"
         initial={{
           left: originRect.left,
           top: originRect.top,
@@ -176,7 +176,7 @@ function ExpandedPanel({
             )}
           </div>
 
-          {active.caption && <p className="px-4 py-2 text-center text-xs text-[#A3A3A3]/60">{active.caption}</p>}
+          {active.caption && <p className="px-4 py-2 text-center text-xs text-[#93A2B8]/60">{active.caption}</p>}
 
           {media.length > 1 && (
             <div className="flex gap-2 overflow-x-auto p-3">
@@ -184,7 +184,7 @@ function ExpandedPanel({
                 <button
                   key={i}
                   onClick={() => setActiveIndex(i)}
-                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${i === activeIndex ? "border-[#DF2531]" : "border-white/10 opacity-40 hover:opacity-70"}`}
+                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${i === activeIndex ? "border-[#2EE6C6]" : "border-white/10 opacity-40 hover:opacity-70"}`}
                 >
                   {m.type === "youtube" ? (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-red-950/60 text-slate-300">
@@ -208,7 +208,7 @@ function ExpandedPanel({
               <StatusBadge status={project.status} />
               <h2 className="mt-3 text-2xl font-black leading-tight text-white">{project.title}</h2>
             </div>
-            <button onClick={onClose} className="mt-1 shrink-0 rounded-full border border-white/10 p-2 text-[#A3A3A3] transition-all hover:border-white/30 hover:text-white">
+            <button onClick={onClose} className="mt-1 shrink-0 rounded-full border border-white/10 p-2 text-[#93A2B8] transition-all hover:border-white/30 hover:text-white">
               <CloseIcon />
             </button>
           </div>
@@ -217,21 +217,21 @@ function ExpandedPanel({
             {project.tech.map((t) => <TechBadge key={t}>{t}</TechBadge>)}
           </div>
 
-          <p className="text-sm leading-relaxed text-[#A3A3A3]">{project.description}</p>
+          <p className="text-sm leading-relaxed text-[#93A2B8]">{project.description}</p>
 
           <div className="rounded-2xl border border-white/6 bg-white/3 p-4">
-            <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#DF2531]/80">My Contribution</p>
-            <p className="text-sm leading-relaxed text-[#A3A3A3]/70">{project.contribution}</p>
+            <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#2EE6C6]/80">My Contribution</p>
+            <p className="text-sm leading-relaxed text-[#93A2B8]/70">{project.contribution}</p>
           </div>
 
           <div className="mt-auto flex gap-3 pt-2">
             {project.github !== "#" && (
-              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#A3A3A3] transition-all hover:border-white/25 hover:text-white">
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#93A2B8] transition-all hover:border-white/25 hover:text-white">
                 <GithubIcon />GitHub
               </a>
             )}
             {project.demo !== "#" && (
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#DF2531] to-[#7A1018] py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-[#DF2531]/30">
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] py-2.5 text-sm font-bold text-[#03140F] transition-all hover:shadow-lg hover:shadow-[#2EE6C6]/30">
                 <ExternalIcon />Live Demo
               </a>
             )}
@@ -303,7 +303,7 @@ export function ProjectCard({ project, featured, href }: { project: Project; fea
           />
         )}
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0E1626] via-transparent to-transparent" />
         <div className="absolute left-4 top-4"><StatusBadge status={project.status} /></div>
         <div className="absolute inset-0 flex items-end justify-center pb-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <span className="rounded-full border border-white/20 bg-black/60 px-4 py-1.5 text-xs font-medium tracking-wide text-white backdrop-blur-sm">
@@ -317,19 +317,19 @@ export function ProjectCard({ project, featured, href }: { project: Project; fea
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t) => <TechBadge key={t}>{t}</TechBadge>)}
         </div>
-        <h3 className={`font-black leading-snug text-white transition-colors group-hover:text-[#DF2531] ${featured ? "text-2xl" : "text-xl"}`}>
+        <h3 className={`font-black leading-snug text-white transition-colors group-hover:text-[#2EE6C6] ${featured ? "text-2xl" : "text-xl"}`}>
           {project.title}
         </h3>
-        <p className="line-clamp-3 text-sm leading-relaxed text-[#A3A3A3]">{project.description}</p>
+        <p className="line-clamp-3 text-sm leading-relaxed text-[#93A2B8]">{project.description}</p>
         <div className="mt-auto">
-          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#DF2531]/80">My Contribution</p>
-          <p className="line-clamp-2 text-sm leading-relaxed text-[#A3A3A3]/70">{project.contribution}</p>
+          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#2EE6C6]/80">My Contribution</p>
+          <p className="line-clamp-2 text-sm leading-relaxed text-[#93A2B8]/70">{project.contribution}</p>
         </div>
       </div>
     </>
   );
 
-  const cardClass = `group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#111111] transition-[border-color,box-shadow] duration-300 hover:border-[#DF2531]/30 hover:shadow-2xl hover:shadow-[#DF2531]/10 ${featured ? "lg:flex-row" : ""}`;
+  const cardClass = `group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-white/8 bg-[#0E1626] transition-[border-color,box-shadow] duration-300 hover:border-[#2EE6C6]/30 hover:shadow-2xl hover:shadow-[#2EE6C6]/10 ${featured ? "lg:flex-row" : ""}`;
 
   if (href) {
     return (

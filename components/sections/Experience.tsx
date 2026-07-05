@@ -5,6 +5,7 @@ import Image from "next/image";
 import { EXPERIENCES } from "@/lib/data";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { GlowCard } from "@/components/ui/GlowCard";
 
 export function Experience() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -15,11 +16,11 @@ export function Experience() {
       {/* Section identity glow */}
       <div
         aria-hidden
-        className="aurora -left-24 top-8 h-72 w-72 bg-[#7A1018]/15"
+        className="aurora -left-24 top-8 h-72 w-72 bg-[#7C5CFF]/15"
       />
       <div
         aria-hidden
-        className="aurora -right-16 bottom-0 h-64 w-64 bg-[#DF2531]/10"
+        className="aurora -right-16 bottom-0 h-64 w-64 bg-[#2EE6C6]/10"
       />
 
       {/* Full-viewport background image overlay — triggered by card hover */}
@@ -64,7 +65,7 @@ export function Experience() {
       <div className="relative mx-auto max-w-3xl">
         <SectionHeading eyebrow="What I Have Done" title="Experience" />
         <Reveal className="mx-auto -mt-8 mb-10 max-w-xl text-center" delay={80}>
-          <p className="text-sm leading-relaxed text-[#A3A3A3]">
+          <p className="text-sm leading-relaxed text-[#93A2B8]">
             From competitions to research collaborations — here&apos;s where I&apos;ve been, what I&apos;ve learned, and what I&apos;ve built along the way.
           </p>
         </Reveal>
@@ -73,13 +74,13 @@ export function Experience() {
           {EXPERIENCES.map((e, i) => (
             <Reveal key={e.role + e.organisation} delay={i * 100}>
               <div
-                className="rounded-2xl border border-white/8 bg-[#111111]/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-[#DF2531]/25"
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
+              <GlowCard className="rounded-2xl border border-white/8 bg-[#0E1626]/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-[#2EE6C6]/25">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#DF2531]">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#2EE6C6]">
                       {e.period}
                     </span>
                     <h3 className="mt-1.5 font-bold text-white">{e.role}</h3>
@@ -103,6 +104,7 @@ export function Experience() {
                     </span>
                   ))}
                 </div>
+              </GlowCard>
               </div>
             </Reveal>
           ))}

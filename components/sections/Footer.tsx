@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowUp } from "lucide-react";
 import { CONTACTS } from "@/lib/data";
 
 const FOOTER_SOCIALS = [
@@ -17,9 +18,14 @@ export function Footer() {
   return (
     <footer className="relative z-10 border-t border-white/10 px-6 py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
-        <span className="bg-gradient-to-r from-[#DF2531] to-[#FFFFFF] bg-clip-text text-lg font-black text-transparent">
-          Riswan Hamua
-        </span>
+        <div className="flex flex-col items-center gap-1 md:items-start">
+          <span className="bg-gradient-to-r from-[#2EE6C6] to-[#FFFFFF] bg-clip-text text-lg font-black text-transparent">
+            Riswan Hamua
+          </span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#93A2B8]/70">
+            Build · Break · Fix · Ship
+          </span>
+        </div>
 
         <div className="flex items-center gap-4">
           {socials.map((s) => (
@@ -29,7 +35,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="group flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-white/[0.04] transition-all duration-200 hover:border-[#DF2531]/30 hover:bg-[#DF2531]/10"
+              className="group flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-white/[0.04] transition-all duration-200 hover:border-[#2EE6C6]/30 hover:bg-[#2EE6C6]/10"
             >
               <Image
                 src={s.logo!}
@@ -42,9 +48,18 @@ export function Footer() {
           ))}
         </div>
 
-        <p className="font-mono text-xs text-[#A3A3A3]">
-          © 2026 Riswan Hamua · Game Technology
-        </p>
+        <div className="flex items-center gap-4">
+          <p className="font-mono text-xs text-[#93A2B8]">
+            © 2026 Riswan Hamua · Game Technology
+          </p>
+          <a
+            href="#hero"
+            aria-label="Back to top"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-white/[0.04] text-[#93A2B8] transition-all duration-200 hover:border-[#2EE6C6]/40 hover:bg-[#2EE6C6]/10 hover:text-white"
+          >
+            <ArrowUp size={16} />
+          </a>
+        </div>
       </div>
     </footer>
   );

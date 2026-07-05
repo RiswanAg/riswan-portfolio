@@ -1,24 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  /* Canvas */
-  --background: #000000;
-  --surface: #111111;
-  --surface-2: #090909;
-  --foreground: #FFFFFF;
-  --muted: #A3A3A3;
+  /* Canvas — deep blue-black (2026 dark-first, off pure #000) */
+  --background: #070B14;
+  --surface: #0E1626;
+  --surface-2: #0A101E;
+  --foreground: #EAF1F8;
+  --muted: #93A2B8;
 
-  /* Signature accents — red-black palette */
-  --accent-primary: #DF2531;
-  --accent-light: #FFFFFF;
-  --accent-mid: #7A1018;
-  --accent-dark: #111111;
+  /* Signature accents — "Neon Depths": aqua-cyan + electric violet */
+  --accent-primary: #2EE6C6;
+  --accent-cyan: #27C7E5;
+  --accent-secondary: #7C5CFF;
+  --accent-ink: #03140F;
+  --accent-light: #EAF1F8;
+  --accent-mid: #7C5CFF;
+  --accent-dark: #0E1626;
 
   /* shadcn/ui tokens */
-  --card: #111111;
-  --card-foreground: #FFFFFF;
-  --border: #262626;
-  --muted-foreground: #A3A3A3;
+  --card: #0E1626;
+  --card-foreground: #EAF1F8;
+  --border: #1F2B40;
+  --muted-foreground: #93A2B8;
 }
 
 @theme inline {
@@ -51,7 +54,7 @@ html {
 
 /* ── Visible keyboard focus — Tailwind preflight strips the default outline ── */
 :where(a, button, [role="button"], input, textarea, select):focus-visible {
-  outline: 2px solid #DF2531;
+  outline: 2px solid #2EE6C6;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -65,11 +68,11 @@ html {
   transform: translateY(-150%);
   transition: transform 0.2s ease;
   border-radius: 0.5rem;
-  background: #DF2531;
+  background: #2EE6C6;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #fff;
+  color: #03140F;
 }
 .skip-link:focus-visible {
   transform: translateY(0);
@@ -95,8 +98,8 @@ body {
 
 .bg-grid-tight {
   background-image:
-    linear-gradient(rgba(223, 37, 49, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(223, 37, 49, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(46, 230, 198, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 230, 198, 0.08) 1px, transparent 1px);
   background-size: 34px 34px;
 }
 
@@ -212,12 +215,12 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #070B14;
 }
 ::-webkit-scrollbar-thumb {
-  background: #7A1018;
+  background: #1F3A46;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #DF2531;
+  background: #2EE6C6;
 }
