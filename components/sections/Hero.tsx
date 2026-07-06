@@ -5,9 +5,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { PROFILE, HERO_HIGHLIGHTS } from "@/lib/data";
 import { ChevronDown } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
-import { TypingText } from "@/components/ui/typing-text";
+import { MorphingText } from "@/components/ui/morphing-text";
 import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
-import { VideoText } from "@/components/ui/video-text";
+import { TypingText } from "@/components/ui/typing-text";
 
 // Cinematic ease-out, shared with the intro curtain for a continuous feel.
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -109,35 +109,15 @@ export function Hero() {
             {PROFILE.availability}
           </motion.div>
 
-          <h1 className="mb-6 font-black leading-[0.9] tracking-tight">
+          <h1 className="mb-2 font-black leading-[0.9] tracking-tight" aria-label={`${PROFILE.name}, Game Developer`}>
             <span className="block overflow-hidden pb-1">
-              <motion.span
-                variants={nameLine}
-                className="block h-[10vw] min-h-[3.5rem] w-full"
-              >
-                <VideoText
-                  src="https://cdn.magicui.design/ocean-small.webm"
-                  fontSize={8}
-                  fontWeight={900}
-                  fontFamily="var(--font-heading), sans-serif"
-                >
-                  Riswan
-                </VideoText>
-              </motion.span>
-            </span>
-            <span className="block overflow-hidden pb-1">
-              <motion.span
-                variants={nameLine}
-                className="block h-[10vw] min-h-[3.5rem] w-full"
-              >
-                <VideoText
-                  src="https://cdn.magicui.design/ocean-small.webm"
-                  fontSize={8}
-                  fontWeight={900}
-                  fontFamily="var(--font-heading), sans-serif"
-                >
-                  Hamua
-                </VideoText>
+              <motion.span variants={nameLine} className="block">
+                <MorphingText
+                  texts={[PROFILE.name, "Game Developer"]}
+                  interval={2600}
+                  className="h-[1.05em] text-4xl sm:text-5xl md:text-7xl"
+                  textClassName="bg-gradient-to-r from-white via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-transparent"
+                />
               </motion.span>
             </span>
           </h1>

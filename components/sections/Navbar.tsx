@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { NAV_LINKS } from "@/lib/data";
 
 // Sections tracked by the homepage scrollspy, in document order.
-const SCROLL_SECTION_IDS = ["hero", "about-home", "portfolio-showcase", "experience", "contact"];
+const SCROLL_SECTION_IDS = ["hero", "about-home", "portfolio-showcase", "experience", "education", "contact"];
 const NAV_OFFSET = 96; // px — accounts for the fixed navbar height
 
 export function Navbar() {

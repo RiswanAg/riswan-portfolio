@@ -23,12 +23,15 @@ export function HomeIntro() {
   // at all. If it starts "active" and only flips off afterwards, framer
   // still plays the full exit (slide-up) animation on unmount — which then
   // covers/rushes the Hero's own entrance animation on every refresh.
-  const [active, setActive] = useState(() => {
-    if (typeof window === "undefined") return false;
-    if (sessionStorage.getItem(SESSION_KEY)) return false;
+  // Always false on first render (server and client) so hydration matches;
+  // the actual decision is made client-only, after mount, below.
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem(SESSION_KEY)) return;
     sessionStorage.setItem(SESSION_KEY, "1");
-    return true;
-  });
+    setActive(true);
+  }, []);
 
   // Lock scroll while the stage is up.
   useEffect(() => {

@@ -140,9 +140,11 @@ function ProjectsTab() {
 
   return (
     <div>
-      {/* Segmented filter — Game · Video · Others */}
+      {/* Sub-filter — Game · Video · Others. Underline tabs, deliberately a
+          lighter treatment than the solid-pill primary tabs above so the two
+          navigation levels stay visually distinct. */}
       <div className="mb-10 flex justify-center">
-        <div className="relative inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1.5">
+        <div className="inline-flex items-center gap-7 border-b border-white/10 sm:gap-9">
           {KIND_SEGMENTS.map((seg) => {
             const Icon = seg.icon;
             const isActive = active === seg.id;
@@ -150,26 +152,26 @@ function ProjectsTab() {
               <button
                 key={seg.id}
                 onClick={() => setActive(seg.id)}
-                className={`relative z-10 flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:px-5 ${
-                  isActive ? "text-[#03140F] font-bold" : "text-[#93A2B8] hover:text-white"
+                className={`relative flex min-h-[44px] items-center gap-2 px-0.5 pb-3 text-sm font-semibold transition-colors duration-200 ${
+                  isActive ? "text-[#2EE6C6]" : "text-[#93A2B8] hover:text-white"
                 }`}
               >
-                {isActive && (
-                  <motion.span
-                    layoutId="showcase-filter-indicator"
-                    className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5]"
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                  />
-                )}
                 <Icon size={16} />
                 {seg.label}
                 <span
-                  className={`rounded-full px-1.5 text-[11px] font-bold tabular-nums ${
-                    isActive ? "bg-black/15 text-[#03140F]" : "bg-white/8 text-[#93A2B8]"
+                  className={`rounded-full px-1.5 text-[11px] font-bold tabular-nums transition-colors ${
+                    isActive ? "bg-[#2EE6C6]/15 text-[#2EE6C6]" : "bg-white/8 text-[#93A2B8]"
                   }`}
                 >
                   {counts[seg.id]}
                 </span>
+                {isActive && (
+                  <motion.span
+                    layoutId="showcase-filter-indicator"
+                    className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5]"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
               </button>
             );
           })}

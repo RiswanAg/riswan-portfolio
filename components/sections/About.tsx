@@ -6,6 +6,7 @@ import { Code2, Award, Star, GraduationCap, Quote, Download, ArrowRight } from "
 import { PROFILE, ABOUT_HOME, ABOUT_STATS, CONTACTS } from "@/lib/data";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { CountUp } from "@/components/ui/CountUp";
+import { CometCard } from "@/components/ui/comet-card";
 
 const STAT_ICONS = { code: Code2, award: Award, star: Star, cgpa: GraduationCap };
 
@@ -111,21 +112,34 @@ export function About() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           >
-            <div className="relative aspect-[3/4] w-full max-w-sm">
+            <div className="relative w-full max-w-sm">
               <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-[#2EE6C6]/40 via-[#7C5CFF]/30 to-transparent blur-2xl" />
-              <div className="relative h-full w-full overflow-hidden rounded-2xl border border-white/10">
-                <SmartImage
-                  src={PROFILE.image}
-                  alt={PROFILE.name}
-                  eager
-                  sizes="(min-width: 640px) 384px, 100vw"
-                  fallback={
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#0E1626] to-[#0A101E] text-6xl font-black text-white/10">
-                      RH
-                    </div>
-                  }
-                />
-              </div>
+              <CometCard className="relative">
+                <div className="flex w-full flex-col items-stretch rounded-2xl border border-white/10 bg-[#0E1626] p-3">
+                  <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl">
+                    <SmartImage
+                      src={PROFILE.image}
+                      alt={PROFILE.name}
+                      eager
+                      sizes="(min-width: 640px) 384px, 100vw"
+                      fallback={
+                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#0E1626] to-[#0A101E] text-6xl font-black text-white/10">
+                          RH
+                        </div>
+                      }
+                    />
+                  </div>
+                  <div className="mt-3 flex flex-shrink-0 items-center justify-between px-2 py-1 font-[family-name:var(--font-share-tech-mono)] text-white">
+                    <span className="text-xs tracking-wide text-[#2EE6C6]">
+                      {PROFILE.name}
+                    </span>
+                    <span className="flex items-center gap-1.5 text-xs text-white/50">
+                      <span className="h-2 w-2 rounded-full bg-[#2EE6C6] shadow-[0_0_8px_#2EE6C6]" />
+                      Available
+                    </span>
+                  </div>
+                </div>
+              </CometCard>
             </div>
           </motion.div>
         </div>

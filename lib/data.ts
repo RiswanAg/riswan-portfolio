@@ -4,9 +4,10 @@
 export const PROFILE = {
   name: "Riswan Hamua",
   roles: [
-    "Final Year Game Technology Student",
-    "Tech Enthusiast",
-    "Universiti Teknikal Malaysia Melaka",
+    "Game Developer",
+    "Unity Programmer",
+    "Immersive Tech Builder",
+    "Systems Thinker",
   ],
   tagline:
     "I don't just imagine things. I build them. Mostly games, sometimes something else entirely.",
@@ -119,7 +120,7 @@ export const NAV_LINKS: NavLink[] = [
   { id: "about-home", label: "About" },
   { id: "portfolio-showcase", label: "Portfolio" },
   { id: "experience", label: "Journey" },
-  { id: "contact", label: "Contact" },
+  { id: "education", label: "Education" },
 ];
 
 // ─── Featured projects ──────────────────────────────────────────────────────
