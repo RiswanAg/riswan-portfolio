@@ -11,6 +11,7 @@ import { ItchIcon } from "@/components/ui/BrandIcons";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { Gallery } from "@/components/ui/Gallery";
+import { FileText, Check, CheckCircle2, Circle, ChevronDown } from "lucide-react";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -168,10 +169,117 @@ export default async function ProjectPage({
                       )}
                     </a>
                   )}
+                  {project.docs && project.docs !== "#" && (
+                    <a
+                      href={project.docs}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-3 text-sm font-semibold text-slate-300 transition-all hover:border-white/25 hover:text-white"
+                    >
+                      <FileText size={16} /> Documentation
+                    </a>
+                  )}
                 </div>
               </Reveal>
             </div>
           </div>
+
+          {/* Extra project detail: results, highlights, timeline, technical deep-dive */}
+          {(project.achievements || project.highlights || project.milestones || project.technicalDetails) && (
+            <div className="mt-16 space-y-10">
+              {project.achievements && (
+                <Reveal>
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                    Results
+                  </p>
+                  <div className="grid gap-4 sm:grid-cols-3">
+                    {project.achievements.map((a) => (
+                      <div
+                        key={a.label}
+                        className="rounded-2xl border border-white/6 bg-white/3 p-5 text-center"
+                      >
+                        <p className="text-2xl font-black text-[#2EE6C6]">{a.value}</p>
+                        <p className="mt-1 text-xs text-slate-400">{a.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              )}
+
+              {project.highlights && (
+                <Reveal delay={60}>
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                    Highlights
+                  </p>
+                  <ul className="grid gap-2.5 sm:grid-cols-2">
+                    {project.highlights.map((h) => (
+                      <li
+                        key={h}
+                        className="flex items-start gap-2.5 rounded-xl border border-white/6 bg-white/3 px-4 py-3 text-sm text-slate-300"
+                      >
+                        <Check size={16} className="mt-0.5 shrink-0 text-[#2EE6C6]" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              )}
+
+              {project.milestones && (
+                <Reveal delay={120}>
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                    Development Timeline
+                  </p>
+                  <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] transition-all duration-700"
+                      style={{
+                        width: `${Math.round(
+                          (project.milestones.filter((m) => m.done).length /
+                            project.milestones.length) *
+                            100
+                        )}%`,
+                      }}
+                    />
+                  </div>
+                  <ul className="space-y-2.5">
+                    {project.milestones.map((m) => (
+                      <li
+                        key={m.label}
+                        className="flex items-center gap-3 rounded-xl border border-white/6 bg-white/3 px-4 py-3 text-sm"
+                      >
+                        {m.done ? (
+                          <CheckCircle2 size={16} className="shrink-0 text-[#2EE6C6]" />
+                        ) : (
+                          <Circle size={16} className="shrink-0 text-slate-600" />
+                        )}
+                        <span className={m.done ? "text-slate-300" : "text-slate-500"}>
+                          {m.label}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              )}
+
+              {project.technicalDetails && (
+                <Reveal delay={180}>
+                  <details className="group rounded-2xl border border-white/6 bg-white/3 p-5">
+                    <summary className="flex cursor-pointer list-none items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-[#2EE6C6]/80">
+                      Technical Details
+                      <ChevronDown
+                        size={16}
+                        className="text-slate-500 transition-transform duration-300 group-open:rotate-180"
+                      />
+                    </summary>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                      {project.technicalDetails}
+                    </p>
+                  </details>
+                </Reveal>
+              )}
+            </div>
+          )}
 
           {/* Related projects */}
           {related.length > 0 && (

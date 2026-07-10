@@ -20,6 +20,8 @@ import {
   Video,
   Layers,
   ArrowUpRight,
+  Hand,
+  FileText,
   LucideIcon,
 } from "lucide-react";
 
@@ -32,6 +34,7 @@ const PROJECT_FALLBACK_ICONS: Record<string, LucideIcon> = {
   "shield-check": ShieldCheck,
   gamepad: Gamepad2,
   video: Video,
+  hand: Hand,
 };
 
 const KIND_META: Record<ProjectKind, { label: string; icon: LucideIcon; dot: string }> = {
@@ -264,6 +267,11 @@ function ExpandedPanel({
                 ) : (
                   <><ExternalIcon /> Live Demo</>
                 )}
+              </a>
+            )}
+            {project.docs && project.docs !== "#" && (
+              <a href={project.docs} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#93A2B8] transition-all hover:border-white/25 hover:text-white">
+                <FileText size={16} />Docs
               </a>
             )}
           </div>

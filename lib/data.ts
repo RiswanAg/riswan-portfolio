@@ -150,9 +150,19 @@ export type Project = {
   fallbackGradient: string;
   github: string;
   demo: string;
+  /** Optional documentation link. "#" (or omitted) hides the button. */
+  docs?: string;
   featured?: boolean;
   previewVideo?: string;
   gallery?: MediaItem[];
+  /** Scannable feature list, shown as a checklist on the detail page. */
+  highlights?: string[];
+  /** Development timeline / roadmap, rendered as a progress bar + checklist. */
+  milestones?: { label: string; done: boolean }[];
+  /** Key results/metrics, shown as stat cards (e.g. model accuracy). */
+  achievements?: { label: string; value: string }[];
+  /** Longer technical write-up, shown in an expandable "Technical Details" panel. */
+  technicalDetails?: string;
 };
 
 export const PROJECTS: Project[] = [
@@ -326,6 +336,50 @@ export const PROJECTS: Project[] = [
     fallbackGradient: "from-[#4988C4]/50 via-[#1C4D8D]/30 to-[#0F2854]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
+  },
+  {
+    slug: "signspeak-bim",
+    title: "SignSpeak BIM",
+    role: "Solo Dev · Computer Vision & ML pipeline",
+    kind: "other",
+    description:
+      "A real-time computer vision application that recognizes custom hand signs through a webcam using MediaPipe and classical machine learning. The project includes a complete ML pipeline from dataset collection to live recognition, and is being developed incrementally with a milestone-driven approach.",
+    tech: ["Python", "OpenCV", "MediaPipe", "scikit-learn", "NumPy", "Joblib"],
+    contribution:
+      "Designed the full project architecture and computer vision workflow — built the dataset recording system and landmark preprocessing pipeline, the machine learning training pipeline comparing multiple classifiers, and automatic best-model selection with evaluation and metadata generation, all in a modular, unit-tested Python codebase.",
+    status: { label: "In Development", tone: "live" },
+    image: "/projects/signspeak-bim/thumbnail.png",
+    fallbackIcon: "hand",
+    fallbackGradient: "from-[#2EE6C6]/30 via-[#0F2854]/40 to-[#1C4D8D]/50",
+    github: "https://github.com/RiswanAg",
+    demo: "#",
+    docs: "#",
+    highlights: [
+      "Real-time hand tracking using MediaPipe",
+      "Custom landmark dataset recorder",
+      "Automatic dataset validation",
+      "Landmark normalization",
+      "Trained and compared Random Forest, SVM and KNN",
+      "Automatic best-model selection",
+      "Live model loading",
+      "Modular project architecture",
+      "Unit-tested training pipeline",
+    ],
+    milestones: [
+      { label: "Webcam capture, real-time hand tracking & two-hand detection", done: true },
+      { label: "Dataset recorder, landmark preprocessing & CSV session storage", done: true },
+      { label: "ML training pipeline — Random Forest, SVM, KNN + automatic model selection", done: true },
+      { label: "Real-time prediction & sentence builder", done: false },
+      { label: "ElevenLabs speech synthesis", done: false },
+      { label: "UI polish & performance optimization", done: false },
+    ],
+    achievements: [
+      { label: "Best Model", value: "SVM" },
+      { label: "Accuracy", value: "98.59%" },
+      { label: "F1 Score", value: "98.55%" },
+    ],
+    technicalDetails:
+      "The pipeline is fully modular: a MediaPipe Hands recognizer streams 21 landmarks per hand in real time, which are normalized for translation and scale invariance before being logged into session-based CSVs by a custom dataset recorder with automatic validation. The training pipeline benchmarks Random Forest, SVM, and KNN classifiers side by side, automatically selecting and persisting the best-performing model via Joblib — currently an SVM at 98.59% accuracy and 98.55% F1. The codebase is unit-tested end to end, from landmark preprocessing through model persistence, so the pipeline stays reliable as new milestones (real-time prediction, sentence building, speech synthesis) are added.",
   },
   {
     slug: "mission-delivered",
