@@ -49,7 +49,17 @@ type Milestone = {
   gallery: string[];
   /** Optional link through to a related portfolio project. */
   link?: { href: string; label: string };
+  /** Folder name — used as the lookup key into ACCENT_LAYOUT below. */
+  key: string;
+  /** False when no real photos have been uploaded yet — renders text-only. */
+  hasPhotos: boolean;
 };
+
+// Folders with no real photos uploaded yet — these panels render as
+// text-only (no image frame, no placeholder cards) until photos are added.
+// Once you drop photos into /public/journey/<folder>/{1,2,3}.jpg, remove the
+// folder name from this set to switch that panel back to the photo layout.
+const NO_PHOTOS_YET = new Set<string>(["award-6-covid-infographic"]);
 
 const KIND_META: Record<Kind, { label: string; color: string }> = {
   work: { label: "Experience", color: "#2EE6C6" },
@@ -65,9 +75,24 @@ const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
   "pen-tool": PenTool,
 };
 
-// Photo folders use simple, predictable names so real files are easy to drop in:
-//   /public/journey/experience-1/{1,2,3}.jpg   (1-based, in the data.ts order)
-//   /public/journey/award-1/{1,2,3}.jpg
+// Photo folders are named after each milestone so it's obvious which is which:
+//   /public/journey/experience-1-nextgen-digital-ninja/{1,2,3}.jpg
+//   /public/journey/award-1-itex-2026-silver/{1,2,3}.jpg
+// The arrays below are 1:1 with EXPERIENCES / ACHIEVEMENTS in lib/data.ts.
+const EXPERIENCE_FOLDERS = [
+  "experience-1-nextgen-digital-ninja",
+  "experience-2-game-jams",
+];
+
+const AWARD_FOLDERS = [
+  "award-1-itex-2026-silver",
+  "award-2-ftmk-sneakout-silver",
+  "award-3-game-jam-wins",
+  "award-4-deans-list",
+  "award-5-national-football",
+  "award-6-covid-infographic",
+];
+
 const galleryPaths = (folder: string): string[] => [
   `/journey/${folder}/1.jpg`,
   `/journey/${folder}/2.jpg`,
@@ -78,27 +103,35 @@ function buildMilestones(): Milestone[] {
   const expSort = [2025.1, 2024.9];
   const achSort = [2026.4, 2025.4, 2025.2, 2026.3, 2022.1, 2020.1];
 
-  const work: Milestone[] = EXPERIENCES.map((e, i) => ({
-    kind: "work",
-    sort: expSort[i] ?? 2000,
-    icon: Briefcase,
-    period: e.period,
-    title: e.role,
-    subtitle: e.organisation,
-    summary: e.summary,
-    highlight: e.highlight,
-    description: e.description,
-    // Reuse the real photos/thumbnails already wired into each experience for
-    // slots 1-2, then a predictable placeholder folder for slot 3.
-    gallery: e.bgImages
-      ? [e.bgImages.left, e.bgImages.right, `/journey/experience-${i + 1}/3.jpg`]
-      : galleryPaths(`experience-${i + 1}`),
-  }));
+  const work: Milestone[] = EXPERIENCES.map((e, i) => {
+    const folder = EXPERIENCE_FOLDERS[i] ?? `experience-${i + 1}`;
+    return {
+      kind: "work",
+      sort: expSort[i] ?? 2000,
+      icon: Briefcase,
+      period: e.period,
+      title: e.role,
+      subtitle: e.organisation,
+      summary: e.summary,
+      highlight: e.highlight,
+      description: e.description,
+      // Real uploaded photos win when available; otherwise fall back to the
+      // project thumbnails, then a predictable placeholder folder.
+      gallery: e.gallery
+        ? [...e.gallery, `/journey/${folder}/3.jpg`]
+        : e.bgImages
+          ? [e.bgImages.left, e.bgImages.right, `/journey/${folder}/3.jpg`]
+          : galleryPaths(folder),
+      key: folder,
+      hasPhotos: !NO_PHOTOS_YET.has(folder),
+    };
+  });
 
   const awards: Milestone[] = ACHIEVEMENTS.map((a, i) => {
     const project = a.projectSlug
       ? PROJECTS.find((p) => p.slug === a.projectSlug)
       : undefined;
+    const folder = AWARD_FOLDERS[i] ?? `award-${i + 1}`;
     return {
       kind: "award" as const,
       sort: achSort[i] ?? 2000,
@@ -112,11 +145,13 @@ function buildMilestones(): Milestone[] {
       // Real photos win when available; otherwise a placeholder folder + a
       // third placeholder slot rounds out the cluster.
       gallery: a.gallery
-        ? [...a.gallery, `/journey/award-${i + 1}/3.jpg`]
-        : galleryPaths(`award-${i + 1}`),
+        ? [...a.gallery, `/journey/${folder}/3.jpg`]
+        : galleryPaths(folder),
       link: project
         ? { href: `/projects/${project.slug}`, label: `Explore ${project.title}` }
         : undefined,
+      key: folder,
+      hasPhotos: !NO_PHOTOS_YET.has(folder),
     };
   });
 
@@ -153,19 +188,34 @@ function FloatingPhoto({
   floatDelay = 0,
   floatDuration = 5,
   reduceMotion = false,
+  maxWidth,
+  maxHeight,
 }: {
   src: string;
   y: MotionValue<string> | string;
   rotate: number;
+  /** Position only (e.g. "top-2 right-0") — size is controlled by maxWidth/maxHeight below. */
   className: string;
   color: string;
   floatDelay?: number;
   floatDuration?: number;
   reduceMotion?: boolean;
+  /** Upper bound on rendered width, in px. See EXPERIENCE_FOLDERS / AWARD_FOLDERS accent size table below to tweak per-photo. */
+  maxWidth: number;
+  /** Upper bound on rendered height, in px. The box always keeps the photo's true aspect ratio — whichever of maxWidth/maxHeight is hit first wins, so a tall portrait photo shrinks in width rather than getting cropped or padded. */
+  maxHeight: number;
 }) {
+  // Until the real image loads, fall back to a 3:4 box so layout doesn't
+  // jump; once we know the true dimensions the card reshapes to match, so
+  // nothing gets cropped or letterboxed — the box always matches the photo's
+  // real aspect ratio exactly.
+  const [ratio, setRatio] = useState<number | null>(null);
+  const effectiveRatio = ratio ?? 3 / 4;
+  const width = Math.min(maxWidth, maxHeight * effectiveRatio);
+
   return (
     // Outer layer: scroll-driven parallax + tilt + positioning.
-    <motion.div style={{ y, rotate }} className={`absolute ${className}`}>
+    <motion.div style={{ y, rotate, width }} className={`absolute ${className}`}>
       {/* Inner layer: continuous idle float (bob), independent of scroll. */}
       <motion.div
         animate={reduceMotion ? undefined : { y: [0, -12, 0] }}
@@ -175,18 +225,72 @@ function FloatingPhoto({
           ease: "easeInOut",
           delay: floatDelay,
         }}
-        className="relative h-full w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0B1120] shadow-2xl shadow-black/60"
+        style={{ aspectRatio: effectiveRatio }}
+        className="relative w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0B1120] shadow-2xl shadow-black/60"
       >
         <SmartImage
           src={src}
           alt=""
-          sizes="240px"
+          sizes="320px"
+          className="object-contain"
           fallback={<PhotoPlaceholder color={color} label="Add photo" />}
+          onLoad={(img) => {
+            if (img.naturalWidth && img.naturalHeight) {
+              setRatio(img.naturalWidth / img.naturalHeight);
+            }
+          }}
         />
       </motion.div>
     </motion.div>
   );
 }
+
+// ── Floating photo layout — each of the 2 floating photos is tuned separately ──
+// Every panel has 2 floating accent photos: the TOP one (pinned near the top
+// corner of the hero) and the BOTTOM one (pinned near the bottom corner).
+// They're controlled by two independent tables below, both keyed by the
+// folder name in /public/journey/<key>/ (matches Milestone.key, set to the
+// same folder name in buildMilestones() above). Edit ACCENT_TOP_LAYOUT to
+// resize/reposition a top photo, ACCENT_BOTTOM_LAYOUT for a bottom photo —
+// they don't affect each other.
+//
+//   width / height — upper bound in px. The box always keeps the photo's
+//                    true aspect ratio, so whichever bound is hit first wins
+//                    (no cropping, no letterboxing).
+//   position       — Tailwind position classes, e.g. "top-4 right-0" or
+//                    "-bottom-6 left-10". Replaces the default left/right
+//                    side entirely, so you have full manual control.
+//   rotate         — tilt, in degrees (negative tilts left).
+//
+// Example — make the ITEX top photo bigger and move it further right:
+//   "award-1-itex-2026-silver": { width: 340, position: "top-0 -right-8" },
+type AccentSpot = { width: number; height: number; position: string; rotate: number };
+type AccentOverride = Partial<AccentSpot>;
+
+const DEFAULT_TOP = { width: 288, height: 280 };
+const DEFAULT_BOTTOM = { width: 208, height: 300 };
+
+const ACCENT_TOP_LAYOUT: Record<string, AccentOverride> = {
+  "award-1-itex-2026-silver": {width: 400, height: 320, position: "top-0 -right-0"},
+  "award-2-ftmk-sneakout-silver": {width: 200, height: 400},
+  "award-3-game-jam-wins": {},
+  "award-4-deans-list": { width: 350, height: 350},
+  "award-5-national-football": {},
+  "award-6-covid-infographic": {},
+  "experience-1-nextgen-digital-ninja": {},
+  "experience-2-game-jams": {},
+};
+
+const ACCENT_BOTTOM_LAYOUT: Record<string, AccentOverride> = {
+  "award-1-itex-2026-silver": {width: 400, height: 250, position: "bottom-0 -right-20"},
+  "award-2-ftmk-sneakout-silver": {width: 400, height: 250},
+  "award-3-game-jam-wins": {width: 400, height: 250, position: "top-0 -right-50"},
+  "award-4-deans-list": { width: 400, height: 400, position: "bottom-0 -right-30" },
+  "award-5-national-football": {width: 400, height: 250, position: "bottom-2 -right-5"},
+  "award-6-covid-infographic": {},
+  "experience-1-nextgen-digital-ninja": {},
+  "experience-2-game-jams": {width: 400, height: 250, position: "bottom-2 -right-5"},
+};
 
 // ── One cinematic panel ────────────────────────────────────────────────────────
 
@@ -209,7 +313,106 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
   const accent1Y = useTransform(scrollYProgress, [0, 1], ["40%", "-40%"]);
   const accent2Y = useTransform(scrollYProgress, [0, 1], ["55%", "-25%"]);
 
+  // Merge this panel's manual overrides — ACCENT_TOP_LAYOUT and
+  // ACCENT_BOTTOM_LAYOUT are independent tables, each keyed by folder name —
+  // on top of the flip-aware defaults.
+  const top: AccentSpot = {
+    ...DEFAULT_TOP,
+    position: flip ? "-left-4 top-2 lg:left-0" : "-right-4 top-2 lg:right-0",
+    rotate: flip ? 4 : -4,
+    ...ACCENT_TOP_LAYOUT[m.key],
+  };
+  const bottom: AccentSpot = {
+    ...DEFAULT_BOTTOM,
+    position: flip ? "bottom-10 left-8 lg:left-10" : "bottom-10 right-8 lg:right-10",
+    rotate: flip ? -5 : 5,
+    ...ACCENT_BOTTOM_LAYOUT[m.key],
+  };
+
   const [hero, ...accents] = m.gallery;
+
+  // No real photos uploaded yet for this one — skip the image frame and
+  // placeholder cards entirely, and just show the text.
+  if (!m.hasPhotos) {
+    return (
+      <div ref={ref} className="relative flex min-h-[60vh] items-center py-16">
+        <div className="relative mx-auto w-full max-w-3xl px-6">
+          <motion.div
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center"
+          >
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]"
+                style={{ color: "#03140F", background: meta.color }}
+              >
+                <Icon size={13} strokeWidth={2.6} />
+                {m.highlight}
+              </span>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#93A2B8]">
+                {m.period} · {meta.label}
+              </span>
+            </div>
+
+            <h3 className="mt-3 text-2xl font-black leading-tight text-white sm:text-3xl lg:text-4xl">
+              {m.title}
+            </h3>
+            {m.subtitle && (
+              <p className="mt-1 text-sm font-medium text-[#93A2B8]">{m.subtitle}</p>
+            )}
+            <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
+              {m.summary}
+            </p>
+
+            <AnimatePresence initial={false}>
+              {open && (
+                <motion.p
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="mx-auto max-w-xl overflow-hidden text-sm leading-relaxed text-[#93A2B8]"
+                >
+                  <span className="mt-3 block border-t border-white/10 pt-3">
+                    {m.description}
+                  </span>
+                </motion.p>
+              )}
+            </AnimatePresence>
+
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+              {m.description !== m.summary && (
+                <button
+                  onClick={() => setOpen((o) => !o)}
+                  aria-expanded={open}
+                  className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#93A2B8] transition-colors hover:text-white"
+                >
+                  <Plus
+                    size={13}
+                    className={`transition-transform duration-300 ${open ? "rotate-45" : ""}`}
+                  />
+                  {open ? "Show less" : "The full story"}
+                </button>
+              )}
+              {m.link && (
+                <Link
+                  href={m.link.href}
+                  className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.05]"
+                  style={{ color: "#03140F", background: meta.color }}
+                >
+                  {m.link.label}
+                  <ArrowUpRight size={13} strokeWidth={2.6} />
+                </Link>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -224,7 +427,7 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className={`relative h-[58vh] min-h-[380px] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 lg:w-[82%] ${
+            className={`relative aspect-[16/9] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 lg:w-[82%] ${
               flip ? "lg:ml-auto" : ""
             }`}
           >
@@ -328,28 +531,28 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
             <FloatingPhoto
               src={accents[0]}
               y={reduceMotion ? "0%" : accent1Y}
-              rotate={flip ? 4 : -4}
+              rotate={top.rotate}
               color={meta.color}
               reduceMotion={!!reduceMotion}
               floatDuration={5.5}
               floatDelay={0}
-              className={`hidden aspect-[3/4] w-40 md:block lg:w-52 ${
-                flip ? "-left-2 top-10 lg:left-0" : "-right-2 top-10 lg:right-0"
-              }`}
+              maxWidth={top.width}
+              maxHeight={top.height}
+              className={`hidden md:block ${top.position}`}
             />
           )}
           {accents[1] && (
             <FloatingPhoto
               src={accents[1]}
               y={reduceMotion ? "0%" : accent2Y}
-              rotate={flip ? -5 : 5}
+              rotate={bottom.rotate}
               color={meta.color}
               reduceMotion={!!reduceMotion}
               floatDuration={6.5}
               floatDelay={0.8}
-              className={`hidden aspect-square w-36 lg:block ${
-                flip ? "bottom-8 left-8" : "bottom-8 right-8"
-              }`}
+              maxWidth={bottom.width}
+              maxHeight={bottom.height}
+              className={`hidden lg:block ${bottom.position}`}
             />
           )}
         </div>

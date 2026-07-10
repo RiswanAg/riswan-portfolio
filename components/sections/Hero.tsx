@@ -3,9 +3,8 @@
 import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { PROFILE, HERO_HIGHLIGHTS } from "@/lib/data";
-import { ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Download } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
-import { MorphingText } from "@/components/ui/morphing-text";
 import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
 import { TypingText } from "@/components/ui/typing-text";
 
@@ -92,8 +91,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent md:to-black/0" />
 
-      {/* Text overlay — purely decorative (no links live here anymore), so it never
-          intercepts pointer events and the scene can track the cursor underneath it too. */}
+      {/* Text overlay keeps the Spline scene interactive except for the CTA row. */}
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center py-16 md:items-start">
         <motion.div
           className="w-full max-w-2xl text-center md:text-left"
@@ -109,22 +107,26 @@ export function Hero() {
             {PROFILE.availability}
           </motion.div>
 
-          <h1 className="mb-2 font-black leading-[0.9] tracking-tight" aria-label={`${PROFILE.name}, Game Developer`}>
+          <h1 className="mb-3 font-black leading-[0.9] tracking-tight" aria-label={`${PROFILE.name}, Unity Developer and Game Technology Student`}>
             <span className="block overflow-hidden pb-1">
               <motion.span variants={nameLine} className="block">
-                <MorphingText
-                  texts={[PROFILE.name, "Game Developer"]}
-                  interval={2600}
-                  className="h-[1.05em] text-4xl sm:text-5xl md:text-7xl"
-                  textClassName="bg-gradient-to-r from-white via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-transparent"
-                />
+                <span className="block bg-gradient-to-r from-white via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-5xl text-transparent sm:text-6xl md:text-7xl">
+                  {PROFILE.name}
+                </span>
               </motion.span>
             </span>
           </h1>
 
           <motion.p
             variants={rise}
-            className="mb-5 min-h-[1.5em] font-mono text-base tracking-wide text-[#2EE6C6]/90 sm:text-lg lg:text-xl"
+            className="mb-4 text-xl font-bold leading-snug text-white sm:text-2xl lg:text-3xl"
+          >
+            Unity Developer &amp; Game Technology Student
+          </motion.p>
+
+          <motion.p
+            variants={rise}
+            className="mb-5 min-h-[1.5em] font-mono text-sm uppercase tracking-[0.18em] text-[#2EE6C6]/90 sm:text-base"
           >
             <TypingText words={PROFILE.roles} />
           </motion.p>
@@ -135,6 +137,31 @@ export function Hero() {
           >
             {PROFILE.tagline}
           </motion.p>
+
+          <motion.div
+            variants={rise}
+            className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start"
+          >
+            <a
+              href="#portfolio-showcase"
+              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-all duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
+            >
+              View Unity Projects
+              <ArrowRight
+                size={16}
+                className="transition-transform duration-200 group-hover:translate-x-1"
+                strokeWidth={2.5}
+              />
+            </a>
+            <a
+              href={PROFILE.cv}
+              download
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
+            >
+              <Download size={16} strokeWidth={2} />
+              Download CV
+            </a>
+          </motion.div>
 
           {/* Credibility strip — the facts a recruiter scans for */}
           <motion.div

@@ -44,7 +44,7 @@ export function About() {
             <h3 className="mb-5 text-4xl font-black text-white sm:text-5xl">
               {PROFILE.name}
             </h3>
-            <p className="mb-6 font-[family-name:var(--font-share-tech-mono)] text-base leading-relaxed text-[#93A2B8] sm:text-lg">
+            <p className="mb-6 text-base leading-relaxed text-[#93A2B8] sm:text-lg">
               {ABOUT_HOME.bio}
             </p>
 
@@ -56,7 +56,7 @@ export function About() {
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.35 }}
             >
               <Quote size={20} className="mt-0.5 flex-shrink-0 text-[#2EE6C6]" />
-              <p className="font-[family-name:var(--font-share-tech-mono)] text-sm italic leading-relaxed text-slate-300 sm:text-base">
+              <p className="text-sm italic leading-relaxed text-slate-300 sm:text-base">
                 {ABOUT_HOME.quote}
               </p>
             </motion.div>

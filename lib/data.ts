@@ -476,10 +476,6 @@ export const ACHIEVEMENTS: Achievement[] = [
     description:
       "Our project was one of only two selected to represent UTeM at the International Invention, Innovation & Technology Exhibition (ITEX 2026). I coordinated the exhibition floor — operating and demonstrating the Tilt 5 holographic hardware, and explaining the game's innovation and technical structure to judges and visitors. The exhibit won a Silver Award in international competition.",
     icon: "award",
-    gallery: [
-      "/about/Experience/Research Collaborator/WhatsApp Image 2026-06-20 at 5.39.50 PM.jpeg",
-      "/about/Experience/Research Collaborator/WhatsApp Image 2026-06-20 at 5.39.51 PM.jpeg",
-    ],
   },
   {
     year: "2025",
@@ -542,6 +538,8 @@ export type Experience = {
   description: string;
   tags: string[];
   bgImages?: { left: string; right: string };
+  /** Optional real photos to use in the Journey gallery instead of the placeholder folder. */
+  gallery?: string[];
 };
 
 export const EXPERIENCES: Experience[] = [
@@ -554,10 +552,10 @@ export const EXPERIENCES: Experience[] = [
     description:
       "Mentored high school students in game development as part of the Next Gen Digital Ninja 2025 programme. Led hands-on sessions covering GDevelop for 2D game creation and Unity on the Tilt 5 holographic platform, making spatial and immersive development accessible to young learners.",
     tags: ["GDevelop", "Unity", "Tilt 5", "Mentoring"],
-    bgImages: {
-      left: "/projects/sneak-out/thumbnail.png",
-      right: "/projects/reyclash/thumbnail.png",
-    },
+    gallery: [
+      "/journey/experience-1-nextgen-digital-ninja/1.jpg",
+      "/journey/experience-1-nextgen-digital-ninja/2.jpg",
+    ],
   },
   {
     period: "2024 – 2025",

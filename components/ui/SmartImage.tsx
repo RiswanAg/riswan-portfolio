@@ -16,6 +16,7 @@ export function SmartImage({
   sizes = "100vw",
   eager = false,
   className = "object-cover",
+  onLoad,
 }: {
   src: string;
   alt: string;
@@ -23,6 +24,7 @@ export function SmartImage({
   sizes?: string;
   eager?: boolean;
   className?: string;
+  onLoad?: (img: HTMLImageElement) => void;
 }) {
   const [failed, setFailed] = useState(false);
 
@@ -39,6 +41,7 @@ export function SmartImage({
           loading={eager ? "eager" : "lazy"}
           className={className}
           onError={() => setFailed(true)}
+          onLoad={onLoad ? (e) => onLoad(e.currentTarget) : undefined}
         />
       )}
     </>

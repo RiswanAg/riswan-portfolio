@@ -97,6 +97,15 @@ export function HomeIntro() {
             ))}
           </div>
 
+          <motion.p
+            className="relative mt-5 px-6 text-center font-mono text-xs uppercase tracking-[0.28em] text-[#2EE6C6]/85 sm:text-sm"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.95 }}
+          >
+            Unity Developer &amp; Game Technology Student
+          </motion.p>
+
           {/* underline draw */}
           <motion.span
             className="relative mt-6 block h-[2px] w-40 origin-left rounded-full bg-gradient-to-r from-[#2EE6C6] to-transparent sm:w-56"
