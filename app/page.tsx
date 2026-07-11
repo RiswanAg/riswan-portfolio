@@ -1,5 +1,4 @@
 import { Backdrop } from "@/components/ui/Backdrop";
-import { HomeIntro } from "@/components/ui/HomeIntro";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
@@ -17,7 +16,6 @@ export default function Portfolio() {
         Skip to content
       </a>
       <Backdrop />
-      <HomeIntro />
       <ScrollProgress />
       <Navbar />
       <main id="main" className="relative z-10">

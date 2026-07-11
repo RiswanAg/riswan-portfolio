@@ -7,9 +7,9 @@ import Link from "next/link";
 import type { Project, ProjectKind } from "@/lib/data";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { TechBadge, StatusBadge } from "@/components/ui/Badges";
-import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { ItchIcon } from "@/components/ui/BrandIcons";
 import {
+  Trophy,
   Sprout,
   BookOpen,
   Rabbit,
@@ -320,7 +320,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
   const cardContent = (
     <>
       {/* Media — the hero. 16:9 landscape, video preview on hover. */}
-      <CardItem as="div" translateZ={50} className="relative w-full aspect-video overflow-hidden bg-[#0A101E]">
+      <div className="relative w-full aspect-video overflow-hidden bg-[#0A101E]">
         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
           <SmartImage
             src={project.image}
@@ -358,9 +358,17 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
         {/* Legibility gradient */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0E1626] via-transparent to-black/30" />
 
-        {/* Top row: category + status */}
-        <div className="absolute inset-x-3 top-3 flex items-center justify-between">
-          <KindChip kind={project.kind} />
+        {/* Top row: category (+ award proof) + status */}
+        <div className="absolute inset-x-3 top-3 flex items-start justify-between">
+          <div className="flex flex-col items-start gap-1.5">
+            <KindChip kind={project.kind} />
+            {project.award && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/30 bg-black/60 px-2.5 py-1 text-[11px] font-semibold text-amber-300 backdrop-blur-md">
+                <Trophy size={12} />
+                {project.award}
+              </span>
+            )}
+          </div>
           <StatusBadge status={project.status} />
         </div>
 
@@ -373,22 +381,22 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
           </div>
         )}
 
-        {/* Hover affordance */}
-        <div className="absolute inset-x-0 bottom-3 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md">
+        {/* CTA — always visible so touch users know the card is tappable */}
+        <div className="absolute inset-x-0 bottom-3 flex justify-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-xs font-semibold text-white/75 backdrop-blur-md transition-colors duration-300 group-hover:border-[#2EE6C6]/50 group-hover:text-white">
             {project.kind === "video" ? "Watch video" : href ? "View project" : "Quick look"}
             <ArrowUpRight size={14} />
           </span>
         </div>
-      </CardItem>
+      </div>
 
       {/* Footer — title + one context line + a few tech tags. No paragraphs. */}
-      <CardItem as="div" translateZ={30} className="flex w-full flex-col gap-3 p-5">
+      <div className="flex w-full flex-col gap-3 p-5">
         <div>
-          <h3 className="truncate text-lg font-black leading-snug text-white transition-colors group-hover:text-[#2EE6C6]">
+          <h3 className="text-lg font-black leading-snug text-white transition-colors group-hover:text-[#2EE6C6]">
             {project.title}
           </h3>
-          <p className="mt-1 truncate text-xs text-[#93A2B8]">{project.role}</p>
+          <p className="mt-1 text-xs text-[#93A2B8]">{project.role}</p>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
           {project.tech.slice(0, 3).map((t) => <TechBadge key={t}>{t}</TechBadge>)}
@@ -398,47 +406,39 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
             </span>
           )}
         </div>
-      </CardItem>
+      </div>
     </>
   );
 
   const cardClass =
-    "group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/8 bg-[#0E1626] [transform-style:preserve-3d] transition-[border-color,box-shadow] duration-300 hover:border-[#2EE6C6]/40 hover:shadow-2xl hover:shadow-[#2EE6C6]/10";
+    "group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/8 bg-[#0E1626] transition-[border-color,box-shadow] duration-300 hover:border-[#2EE6C6]/40 hover:shadow-2xl hover:shadow-[#2EE6C6]/10";
 
   if (href) {
     return (
-      <CardContainer containerClassName="block w-full h-full py-0" className="w-full h-full">
-        <CardBody className="w-full h-full">
-          <Link
-            href={href}
-            className={cardClass}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            {cardContent}
-          </Link>
-        </CardBody>
-      </CardContainer>
+      <Link
+        href={href}
+        className={cardClass}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {cardContent}
+      </Link>
     );
   }
 
   return (
     <>
-      <CardContainer containerClassName="block w-full h-full py-0" className="w-full h-full">
-        <CardBody className="w-full h-full">
-          <motion.div
-            ref={cardRef}
-            className={cardClass}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onClick={handleClick}
-            animate={{ opacity: expanded ? 0.4 : 1 }}
-            transition={{ duration: 0.25 }}
-          >
-            {cardContent}
-          </motion.div>
-        </CardBody>
-      </CardContainer>
+      <motion.div
+        ref={cardRef}
+        className={cardClass}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+        animate={{ opacity: expanded ? 0.4 : 1 }}
+        transition={{ duration: 0.25 }}
+      >
+        {cardContent}
+      </motion.div>
 
       <AnimatePresence>
         {expanded && originRect && (

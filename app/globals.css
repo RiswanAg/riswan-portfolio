@@ -130,6 +130,16 @@ h1, h2, h3 {
   animation: drift 18s ease-in-out infinite;
 }
 
+/* Phones: big blurred layers are the priciest thing to composite — shrink the
+   blur radius and stop the infinite drift so the GPU stays idle at rest. */
+@media (max-width: 767px) {
+  .aurora {
+    filter: blur(48px);
+    animation: none;
+    will-change: auto;
+  }
+}
+
 @keyframes drift {
   0%,
   100% {

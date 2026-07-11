@@ -22,10 +22,8 @@ export function About() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-            <span className="bg-gradient-to-r from-[#FFFFFF] via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-transparent">
-              {ABOUT_HOME.heading}
-            </span>
+          <h2 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+            {ABOUT_HOME.heading}
           </h2>
         </motion.div>
 

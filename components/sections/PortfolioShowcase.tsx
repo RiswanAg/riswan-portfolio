@@ -29,7 +29,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SkillRing } from "@/components/ui/SkillRing";
 
 const TABS = [
-  { id: "projects", label: "Projects", icon: Code2 },
+  { id: "projects", label: "All Projects", icon: Code2 },
   { id: "certificates", label: "Certificates", icon: Award },
   { id: "tech", label: "Tech Stack", icon: Layers },
 ] as const;
@@ -62,7 +62,7 @@ export function PortfolioShowcase() {
     <section id="portfolio-showcase" className="relative z-10 px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <Reveal className="text-center">
-          <h2 className="bg-gradient-to-r from-white via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl">
+          <h2 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
             Portfolio Showcase
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#93A2B8] sm:text-base">
@@ -70,7 +70,17 @@ export function PortfolioShowcase() {
           </p>
         </Reveal>
 
-        <Reveal delay={100} className="mt-10 flex justify-center">
+        {/* Featured work — the three strongest projects, visible with zero
+            clicks so a recruiter scrolling past sees the best work first. */}
+        <FeaturedWork />
+
+        <Reveal className="mb-4 mt-20 text-center">
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-[#93A2B8]">
+            Browse the full catalog
+          </p>
+        </Reveal>
+
+        <Reveal delay={100} className="flex justify-center">
           <div className="relative inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1.5">
             {TABS.map((tab) => {
               const Icon = tab.icon;
@@ -115,6 +125,29 @@ export function PortfolioShowcase() {
         </div>
       </div>
     </section>
+  );
+}
+
+function FeaturedWork() {
+  const featured = useMemo(() => PROJECTS.filter((p) => p.featured).slice(0, 3), []);
+  if (featured.length === 0) return null;
+
+  return (
+    <div className="mt-14">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.15 }}
+        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {featured.map((project) => (
+          <motion.div key={project.slug} variants={item}>
+            <ProjectCard project={project} href={`/projects/${project.slug}`} />
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
   );
 }
 

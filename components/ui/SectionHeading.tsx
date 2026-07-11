@@ -20,7 +20,7 @@ export function SectionHeading({
         </p>
         <span className="h-px w-8 bg-gradient-to-l from-[#2EE6C6] to-transparent" />
       </div>
-      <h2 className="bg-gradient-to-r from-white via-[#2EE6C6] to-[#7C5CFF] bg-clip-text text-4xl font-black tracking-tight text-transparent md:text-5xl">
+      <h2 className="text-4xl font-black tracking-tight text-white md:text-5xl">
         {title}
       </h2>
     </Reveal>

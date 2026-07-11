@@ -331,89 +331,6 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
 
   const [hero, ...accents] = m.gallery;
 
-  // No real photos uploaded yet for this one — skip the image frame and
-  // placeholder cards entirely, and just show the text.
-  if (!m.hasPhotos) {
-    return (
-      <div ref={ref} className="relative flex min-h-[60vh] items-center py-16">
-        <div className="relative mx-auto w-full max-w-3xl px-6">
-          <motion.div
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center"
-          >
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]"
-                style={{ color: "#03140F", background: meta.color }}
-              >
-                <Icon size={13} strokeWidth={2.6} />
-                {m.highlight}
-              </span>
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#93A2B8]">
-                {m.period} · {meta.label}
-              </span>
-            </div>
-
-            <h3 className="mt-3 text-2xl font-black leading-tight text-white sm:text-3xl lg:text-4xl">
-              {m.title}
-            </h3>
-            {m.subtitle && (
-              <p className="mt-1 text-sm font-medium text-[#93A2B8]">{m.subtitle}</p>
-            )}
-            <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
-              {m.summary}
-            </p>
-
-            <AnimatePresence initial={false}>
-              {open && (
-                <motion.p
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="mx-auto max-w-xl overflow-hidden text-sm leading-relaxed text-[#93A2B8]"
-                >
-                  <span className="mt-3 block border-t border-white/10 pt-3">
-                    {m.description}
-                  </span>
-                </motion.p>
-              )}
-            </AnimatePresence>
-
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-              {m.description !== m.summary && (
-                <button
-                  onClick={() => setOpen((o) => !o)}
-                  aria-expanded={open}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#93A2B8] transition-colors hover:text-white"
-                >
-                  <Plus
-                    size={13}
-                    className={`transition-transform duration-300 ${open ? "rotate-45" : ""}`}
-                  />
-                  {open ? "Show less" : "The full story"}
-                </button>
-              )}
-              {m.link && (
-                <Link
-                  href={m.link.href}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.05]"
-                  style={{ color: "#03140F", background: meta.color }}
-                >
-                  {m.link.label}
-                  <ArrowUpRight size={13} strokeWidth={2.6} />
-                </Link>
-              )}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
       ref={ref}
@@ -561,10 +478,111 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
   );
 }
 
+// ── Compact milestone (timeline row) ───────────────────────────────────────────
+// Everything that isn't a headline moment renders as a short scannable row
+// instead of a full-height cinematic panel, keeping the section a reasonable
+// scroll length so visitors actually reach the contact CTA.
+
+function TimelineItem({ m }: { m: Milestone }) {
+  const [open, setOpen] = useState(false);
+  const meta = KIND_META[m.kind];
+  const Icon = m.icon;
+
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="relative pl-12"
+    >
+      <span
+        className="absolute left-0 top-0.5 flex h-8 w-8 items-center justify-center rounded-full border bg-[#0E1626]"
+        style={{ borderColor: `${meta.color}55`, color: meta.color }}
+      >
+        <Icon size={14} strokeWidth={2.2} />
+      </span>
+
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span className="font-mono text-xs tracking-[0.15em] text-[#93A2B8]">
+          {m.period}
+        </span>
+        <span
+          className="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]"
+          style={{ color: "#03140F", background: meta.color }}
+        >
+          {m.highlight}
+        </span>
+      </div>
+      <h4 className="mt-1.5 text-lg font-bold leading-snug text-white">{m.title}</h4>
+      {m.subtitle && (
+        <p className="mt-0.5 text-sm text-[#93A2B8]">{m.subtitle}</p>
+      )}
+      <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#93A2B8]">
+        {m.summary}
+      </p>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.p
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-xl overflow-hidden text-sm leading-relaxed text-[#93A2B8]"
+          >
+            <span className="mt-2 block">{m.description}</span>
+          </motion.p>
+        )}
+      </AnimatePresence>
+
+      <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
+        {m.description !== m.summary && (
+          <button
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#93A2B8] transition-colors hover:text-white"
+          >
+            <Plus
+              size={13}
+              className={`transition-transform duration-300 ${open ? "rotate-45" : ""}`}
+            />
+            {open ? "Show less" : "Full story"}
+          </button>
+        )}
+        {m.link && (
+          <Link
+            href={m.link.href}
+            className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors hover:brightness-125"
+            style={{ color: meta.color }}
+          >
+            {m.link.label}
+            <ArrowUpRight size={13} strokeWidth={2.6} />
+          </Link>
+        )}
+      </div>
+    </motion.li>
+  );
+}
+
 // ── Section ───────────────────────────────────────────────────────────────────
+
+// Headline moments that earn the full-height cinematic photo treatment.
+// Everything else collapses into the compact timeline below them.
+const CINEMATIC_KEYS = new Set<string>([
+  "award-1-itex-2026-silver",
+  "award-2-ftmk-sneakout-silver",
+  "experience-1-nextgen-digital-ninja",
+]);
 
 export function Journey() {
   const milestones = useMemo(buildMilestones, []);
+  const cinematic = milestones.filter(
+    (m) => CINEMATIC_KEYS.has(m.key) && m.hasPhotos
+  );
+  const rest = milestones.filter(
+    (m) => !CINEMATIC_KEYS.has(m.key) || !m.hasPhotos
+  );
 
   return (
     <section id="experience" className="relative overflow-hidden px-0 py-24">
@@ -573,16 +591,26 @@ export function Journey() {
 
       <div className="px-6">
         <SectionHeading eyebrow="Where I've Been" title="My Journey" />
-        <p className="mx-auto -mt-8 mb-4 max-w-xl text-center text-sm leading-relaxed text-[#93A2B8]">
-          Keep scrolling — the story unfolds in pictures.
-        </p>
       </div>
 
       <div className="relative">
-        {milestones.map((m, i) => (
+        {cinematic.map((m, i) => (
           <JourneyPanel key={m.kind + m.title} m={m} index={i} />
         ))}
       </div>
+
+      {rest.length > 0 && (
+        <div className="relative mx-auto mt-8 w-full max-w-3xl px-6">
+          <h3 className="mb-10 text-center font-mono text-xs uppercase tracking-[0.3em] text-[#93A2B8]">
+            More milestones
+          </h3>
+          <ul className="relative flex flex-col gap-10 before:absolute before:bottom-2 before:left-4 before:top-2 before:w-px before:bg-white/10">
+            {rest.map((m) => (
+              <TimelineItem key={m.kind + m.title} m={m} />
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }

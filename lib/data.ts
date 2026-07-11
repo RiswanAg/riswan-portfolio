@@ -153,6 +153,8 @@ export type Project = {
   /** Optional documentation link. "#" (or omitted) hides the button. */
   docs?: string;
   featured?: boolean;
+  /** Competition/award proof shown as a badge on the card (e.g. "Silver · ITEX 2026"). */
+  award?: string;
   previewVideo?: string;
   gallery?: MediaItem[];
   /** Scannable feature list, shown as a checklist on the detail page. */
@@ -191,7 +193,8 @@ export const PROJECTS: Project[] = [
   {
     slug: "sneak-out",
     title: "Sneak Out",
-    role: "Lead Dev · Multiplayer · 🏆 Silver Award",
+    role: "Lead Dev · Online Multiplayer",
+    award: "Silver · FTMK Innovation Competition",
     kind: "game",
     description:
       "An online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture. Players take on the role of students sneaking out of the dormitory at night, outwitting prefects and wardens in a cat-and-mouse chase built around shared cultural memory. Winner of a Silver Award at the FTMK Workshop 2 Innovation Competition.",
@@ -209,11 +212,13 @@ export const PROJECTS: Project[] = [
     fallbackGradient: "from-indigo-800/50 via-purple-900/30 to-violet-900/50",
     github: "https://github.com/RiswanAg/Sneak-Out",
     demo: "#",
+    featured: true,
   },
   {
     slug: "overtime",
     title: "Overtime",
-    role: "🏆 1st Place · Play Next Game Jam",
+    role: "Programmer · Co-op systems",
+    award: "1st Place · Play Next Game Jam",
     kind: "game",
     description:
       "A fast, chaotic co-op game inspired by Overcooked — but set in the pressure-cooker of an IT company instead of a kitchen. Built for the Play Next Game Jam, where it took 1st place. Playable in the browser on itch.io.",
@@ -232,6 +237,7 @@ export const PROJECTS: Project[] = [
     fallbackGradient: "from-[#F0682E]/40 via-[#7C5CFF]/30 to-[#1C4D8D]/40",
     github: "#",
     demo: "https://symocolon.itch.io/overtime",
+    featured: true,
   },
   {
     slug: "cave-runner",

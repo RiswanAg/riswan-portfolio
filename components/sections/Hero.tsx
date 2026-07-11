@@ -5,8 +5,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { PROFILE, HERO_HIGHLIGHTS } from "@/lib/data";
 import { ArrowRight, ChevronDown, Download } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
+import { useMediaQuery } from "@/lib/use-media-query";
 import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
-import { TypingText } from "@/components/ui/typing-text";
 
 // Cinematic ease-out, shared with the intro curtain for a continuous feel.
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -14,6 +14,11 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function Hero() {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  // Phones never mount the Spline scene (WebGL + ~2 MB runtime) and get a
+  // static background instead of the animated SVG-filter shadow — both are
+  // the main sources of mobile jank. `false` during SSR/hydration, so the
+  // heavy work only ever starts on desktop-sized viewports.
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   // Stagger the text-column entrance. On reduced motion everything is
   // instantly visible (no transforms).
@@ -36,8 +41,10 @@ export function Hero() {
     show: { y: "0%", transition: { duration: 0.9, ease: EASE } },
   };
 
-  // Subtle parallax on the photo cluster — transform only, rAF-throttled.
+  // Subtle parallax on the Spline scene — transform only, rAF-throttled.
+  // Desktop only: the scene doesn't exist on mobile.
   useEffect(() => {
+    if (!isDesktop) return;
     const reduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
@@ -59,7 +66,7 @@ export function Hero() {
       window.removeEventListener("scroll", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [isDesktop]);
 
   return (
     <section
@@ -70,22 +77,27 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0">
         <EtherealShadow
           color="rgba(124, 92, 255, 0.5)"
-          animation={reduceMotion ? undefined : { scale: 60, speed: 80 }}
+          animation={
+            reduceMotion || !isDesktop ? undefined : { scale: 60, speed: 80 }
+          }
           noise={{ opacity: 0.35, scale: 1.2 }}
           sizing="fill"
         />
       </div>
 
-      {/* Interactive Spline scene — right-anchored, full height, wide drag/orbit zone */}
-      <div
-        ref={parallaxRef}
-        className="absolute inset-y-0 right-0 w-full sm:w-[85%] md:w-[72%] lg:w-[62%] xl:w-[58%]"
-      >
-        <SplineScene
-          scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-          className="h-full w-full"
-        />
-      </div>
+      {/* Interactive Spline scene — desktop only. On phones the WebGL robot is
+          the single biggest cause of lag, so it is never mounted there. */}
+      {isDesktop && (
+        <div
+          ref={parallaxRef}
+          className="absolute inset-y-0 right-0 md:w-[72%] lg:w-[62%] xl:w-[58%]"
+        >
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="h-full w-full"
+          />
+        </div>
+      )}
 
       {/* Legibility scrims — sit above the scene, below the text */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
@@ -122,13 +134,6 @@ export function Hero() {
             className="mb-4 text-xl font-bold leading-snug text-white sm:text-2xl lg:text-3xl"
           >
             Unity Developer &amp; Game Technology Student
-          </motion.p>
-
-          <motion.p
-            variants={rise}
-            className="mb-5 min-h-[1.5em] font-mono text-sm uppercase tracking-[0.18em] text-[#2EE6C6]/90 sm:text-base"
-          >
-            <TypingText words={PROFILE.roles} />
           </motion.p>
 
           <motion.p
