@@ -699,8 +699,8 @@ export type ContactLink = {
 export const CONTACTS: ContactLink[] = [
   {
     label: "Email",
-    display: "riswanjunior98@gmail.com",
-    href: "mailto:riswanjunior98@gmail.com",
+    display: "riswanhamua10@gmail.com",
+    href: "mailto:riswanhamua10@gmail.com",
     icon: "✉️",
   },
   {
