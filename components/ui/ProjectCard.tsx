@@ -193,12 +193,12 @@ function ExpandedPanel({
             )}
 
             {hasPrev && (
-              <button onClick={() => setActiveIndex((i) => i - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/60 p-2 text-white backdrop-blur-sm transition-all hover:border-white/40">
+              <button onClick={() => setActiveIndex((i) => i - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/60 p-2 text-white backdrop-blur-sm transition-[border-color,transform] duration-200 hover:border-white/40 active:scale-[0.95]">
                 <ChevronIcon dir="left" />
               </button>
             )}
             {hasNext && (
-              <button onClick={() => setActiveIndex((i) => i + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/60 p-2 text-white backdrop-blur-sm transition-all hover:border-white/40">
+              <button onClick={() => setActiveIndex((i) => i + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/60 p-2 text-white backdrop-blur-sm transition-[border-color,transform] duration-200 hover:border-white/40 active:scale-[0.95]">
                 <ChevronIcon dir="right" />
               </button>
             )}
@@ -212,11 +212,11 @@ function ExpandedPanel({
                 <button
                   key={i}
                   onClick={() => setActiveIndex(i)}
-                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${i === activeIndex ? "border-[#2EE6C6]" : "border-white/10 opacity-40 hover:opacity-70"}`}
+                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-[border-color,opacity] duration-200 ${i === activeIndex ? "border-[#2EE6C6]" : "border-white/10 opacity-40 hover:opacity-70"}`}
                 >
                   {m.type === "youtube" ? (
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-red-950/60 text-slate-300">
-                      <PlayIcon /><span className="text-[8px] font-bold uppercase tracking-widest text-red-400">YT</span>
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-red-950/60 text-white/90">
+                      <PlayIcon /><span className="text-[8px] font-bold uppercase tracking-widest text-red-300">YT</span>
                     </div>
                   ) : m.type === "video" ? (
                     <div className="flex h-full w-full items-center justify-center bg-black/60 text-slate-300"><PlayIcon /></div>
@@ -236,7 +236,7 @@ function ExpandedPanel({
               <StatusBadge status={project.status} />
               <h2 className="mt-3 text-2xl font-black leading-tight text-white">{project.title}</h2>
             </div>
-            <button onClick={onClose} className="mt-1 shrink-0 rounded-full border border-white/10 p-2 text-[#93A2B8] transition-all hover:border-white/30 hover:text-white">
+            <button onClick={onClose} className="mt-1 shrink-0 rounded-full border border-white/10 p-2 text-[#93A2B8] transition-[border-color,color,transform] duration-200 hover:border-white/30 hover:text-white active:scale-[0.95]">
               <CloseIcon />
             </button>
           </div>
@@ -254,12 +254,12 @@ function ExpandedPanel({
 
           <div className="mt-auto flex gap-3 pt-2">
             {project.github !== "#" && (
-              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#93A2B8] transition-all hover:border-white/25 hover:text-white">
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#93A2B8] transition-[border-color,color] duration-200 hover:border-white/25 hover:text-white">
                 <GithubIcon />GitHub
               </a>
             )}
             {project.demo !== "#" && (
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] py-2.5 text-sm font-bold text-[#03140F] transition-all hover:shadow-lg hover:shadow-[#2EE6C6]/30">
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] py-2.5 text-sm font-bold text-[#03140F] transition-[box-shadow,transform] duration-200 hover:shadow-lg hover:shadow-[#2EE6C6]/30 active:scale-[0.98]">
                 {project.demo.includes("itch.io") ? (
                   <><ItchIcon /> Go to itch.io</>
                 ) : project.kind === "video" ? (
@@ -270,7 +270,7 @@ function ExpandedPanel({
               </a>
             )}
             {project.docs && project.docs !== "#" && (
-              <a href={project.docs} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#93A2B8] transition-all hover:border-white/25 hover:text-white">
+              <a href={project.docs} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#93A2B8] transition-[border-color,color] duration-200 hover:border-white/25 hover:text-white">
                 <FileText size={16} />Docs
               </a>
             )}
@@ -358,18 +358,22 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
         {/* Legibility gradient */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0E1626] via-transparent to-black/30" />
 
-        {/* Top row: category (+ award proof) + status */}
-        <div className="absolute inset-x-3 top-3 flex items-start justify-between">
-          <div className="flex flex-col items-start gap-1.5">
+        {/* Top row: category (+ award proof) + status. The left column can
+            shrink and truncate its award text so a long award string never
+            overflows past the image frame on narrow phone widths. */}
+        <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
+          <div className="flex min-w-0 flex-1 flex-col items-start gap-1.5">
             <KindChip kind={project.kind} />
             {project.award && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/30 bg-black/60 px-2.5 py-1 text-[11px] font-semibold text-amber-300 backdrop-blur-md">
-                <Trophy size={12} />
-                {project.award}
+              <span className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-amber-300/30 bg-black/60 px-2.5 py-1 text-[11px] font-semibold text-amber-300 backdrop-blur-md">
+                <Trophy size={12} className="shrink-0" />
+                <span className="truncate">{project.award}</span>
               </span>
             )}
           </div>
-          <StatusBadge status={project.status} />
+          <div className="shrink-0">
+            <StatusBadge status={project.status} />
+          </div>
         </div>
 
         {/* Video projects get a persistent play button */}

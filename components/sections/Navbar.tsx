@@ -76,7 +76,7 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
         scrolled
           ? "border-b border-white/10 bg-black/80 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
@@ -86,9 +86,9 @@ export function Navbar() {
         <Link
           href="/"
           aria-label="Riswan Hamua home"
-          className="bg-gradient-to-r from-[#2EE6C6] to-[#FFFFFF] bg-clip-text text-xl font-black tracking-tight text-transparent font-[family-name:var(--font-heading)]"
+          className="text-xl font-black tracking-tight text-white font-[family-name:var(--font-heading)]"
         >
-          RH
+          RH<span className="text-[#2EE6C6]">.</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
@@ -119,7 +119,7 @@ export function Navbar() {
           })}
           <button
             onClick={() => handleSectionLink("contact")}
-            className="ml-3 rounded-lg bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-4 py-2 text-sm font-bold text-[#03140F] transition-all hover:shadow-lg hover:shadow-[#2EE6C6]/30 hover:brightness-110"
+            className="ml-3 rounded-lg bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-4 py-2 text-sm font-bold text-[#03140F] transition-[box-shadow,filter,transform] duration-200 hover:shadow-lg hover:shadow-[#2EE6C6]/30 hover:brightness-110 active:scale-[0.97]"
           >
             Open to Internships
           </button>
@@ -133,27 +133,29 @@ export function Navbar() {
           className="group flex h-8 w-8 flex-col justify-center gap-[5px] md:hidden"
         >
           <span
-            className={`block h-0.5 bg-slate-300 transition-all duration-300 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`}
+            className={`block h-0.5 bg-slate-300 transition-[transform,opacity] duration-300 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`}
           />
           <span
-            className={`block h-0.5 bg-slate-300 transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}
+            className={`block h-0.5 bg-slate-300 transition-[transform,opacity] duration-300 ${menuOpen ? "opacity-0" : ""}`}
           />
           <span
-            className={`block h-0.5 bg-slate-300 transition-all duration-300 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
+            className={`block h-0.5 bg-slate-300 transition-[transform,opacity] duration-300 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
           />
         </button>
       </div>
 
       <div
         id="mobile-menu"
-        className={`overflow-hidden transition-all duration-300 md:hidden ${menuOpen ? "max-h-72" : "invisible max-h-0"}`}
+        className={`absolute inset-x-0 top-full origin-top transition-[opacity,transform,visibility] duration-200 ease-out md:hidden ${
+          menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
+        }`}
         inert={!menuOpen}
       >
         <div className="flex flex-col gap-1 border-t border-white/10 bg-black/95 px-6 pb-6 pt-4">
           {NAV_LINKS.map((l) => {
             const active = isActive(l.id, l.href);
-            const rowClass = `flex min-h-[44px] items-center gap-3 rounded-lg py-2.5 pl-3 text-left text-sm transition-colors ${
-              active ? "border-l-2 border-[#2EE6C6] text-white" : "border-l-2 border-transparent text-[#93A2B8] hover:text-white"
+            const rowClass = `flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
+              active ? "bg-[#2EE6C6]/10 text-white" : "text-[#93A2B8] hover:text-white"
             }`;
 
             return l.href ? (

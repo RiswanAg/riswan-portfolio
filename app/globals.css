@@ -57,7 +57,6 @@ html {
 :where(a, button, [role="button"], input, textarea, select):focus-visible {
   outline: 2px solid #2EE6C6;
   outline-offset: 2px;
-  border-radius: 4px;
 }
 
 /* ── Skip link: off-screen until focused ───────────────────────────────────── */
@@ -90,6 +89,7 @@ body {
 /* Big display type — hero name, section titles */
 h1, h2, h3 {
   font-family: var(--font-heading);
+  text-wrap: balance;
 }
 
 /* ── Background layers ─────────────────────────────────────────────────────── */

@@ -29,7 +29,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SkillRing } from "@/components/ui/SkillRing";
 
 const TABS = [
-  { id: "projects", label: "All Projects", icon: Code2 },
+  { id: "projects", label: "Projects", icon: Code2 },
   { id: "certificates", label: "Certificates", icon: Award },
   { id: "tech", label: "Tech Stack", icon: Layers },
 ] as const;
@@ -80,8 +80,8 @@ export function PortfolioShowcase() {
           </p>
         </Reveal>
 
-        <Reveal delay={100} className="flex justify-center">
-          <div className="relative inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1.5">
+        <Reveal delay={100} className="flex justify-center overflow-x-auto px-6">
+          <div className="relative inline-flex shrink-0 items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.03] p-1.5 sm:gap-1">
             {TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -89,7 +89,7 @@ export function PortfolioShowcase() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative z-10 flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:px-5 ${
+                  className={`relative z-10 flex min-h-[44px] items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-xs font-semibold transition-[color,transform] duration-200 active:scale-[0.97] sm:gap-2 sm:px-5 sm:text-sm ${
                     isActive ? "text-[#03140F] font-bold" : "text-[#93A2B8] hover:text-white"
                   }`}
                 >
@@ -114,8 +114,8 @@ export function PortfolioShowcase() {
               key={activeTab}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -8, transition: { duration: 0.15, ease: "easeOut" } }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
               {activeTab === "projects" && <ProjectsTab />}
               {activeTab === "certificates" && <CertificatesTab />}
@@ -176,8 +176,8 @@ function ProjectsTab() {
       {/* Sub-filter — Game · Video · Others. Underline tabs, deliberately a
           lighter treatment than the solid-pill primary tabs above so the two
           navigation levels stay visually distinct. */}
-      <div className="mb-10 flex justify-center">
-        <div className="inline-flex items-center gap-7 border-b border-white/10 sm:gap-9">
+      <div className="mb-10 flex justify-center overflow-x-auto px-6">
+        <div className="inline-flex shrink-0 items-center gap-4 border-b border-white/10 sm:gap-9">
           {KIND_SEGMENTS.map((seg) => {
             const Icon = seg.icon;
             const isActive = active === seg.id;
@@ -185,11 +185,11 @@ function ProjectsTab() {
               <button
                 key={seg.id}
                 onClick={() => setActive(seg.id)}
-                className={`relative flex min-h-[44px] items-center gap-2 px-0.5 pb-3 text-sm font-semibold transition-colors duration-200 ${
+                className={`relative flex min-h-[44px] items-center gap-1.5 whitespace-nowrap px-0.5 pb-3 text-xs font-semibold transition-colors duration-200 sm:gap-2 sm:text-sm ${
                   isActive ? "text-[#2EE6C6]" : "text-[#93A2B8] hover:text-white"
                 }`}
               >
-                <Icon size={16} />
+                <Icon size={15} className="shrink-0" />
                 {seg.label}
                 <span
                   className={`rounded-full px-1.5 text-[11px] font-bold tabular-nums transition-colors ${

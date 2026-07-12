@@ -43,7 +43,7 @@ export function Contact() {
               {email && (
                 <a
                   href={email.href}
-                  className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-all duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
+                  className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
                 >
                   <Mail size={16} strokeWidth={2.5} />
                   Email Me
@@ -56,7 +56,7 @@ export function Contact() {
               <a
                 href={PROFILE.cv}
                 download
-                className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
+                className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-[transform,border-color,background-color] duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
               >
                 <Download size={16} strokeWidth={2} />
                 Download CV
@@ -79,7 +79,7 @@ export function Contact() {
                 href={c.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex min-h-[44px] items-center gap-2.5 rounded-full border border-white/10 bg-[#0E1626] py-2.5 pl-3.5 pr-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#2EE6C6]/40 hover:bg-[#2EE6C6]/[0.05]"
+                className="group inline-flex min-h-[44px] items-center gap-2.5 rounded-full border border-white/10 bg-[#0E1626] py-2.5 pl-3.5 pr-5 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-[#2EE6C6]/40 hover:bg-[#2EE6C6]/[0.05] active:translate-y-0 active:scale-[0.98]"
               >
                 <Image
                   src={c.logo!}
