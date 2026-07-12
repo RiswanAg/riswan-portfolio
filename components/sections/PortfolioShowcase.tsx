@@ -238,7 +238,7 @@ function ProjectsTab() {
           </span>
           <h3 className="mt-5 text-lg font-black text-white">Video reel coming soon</h3>
           <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-[#93A2B8]">
-            Trailers, edits and motion work I&apos;ve produced — I&apos;m polishing the
+            Trailers, edits and motion work I&apos;ve produced. I&apos;m polishing the
             showcase now. Check back shortly.
           </p>
         </motion.div>
@@ -334,7 +334,7 @@ function TechStackTab() {
             Core Expertise
           </h3>
           <p className="mx-auto mt-2 max-w-md text-sm text-[#93A2B8]">
-            The tools I reach for first — where I do my strongest work.
+            The tools I reach for first, where I do my strongest work.
           </p>
         </Reveal>
         <Reveal delay={120}>

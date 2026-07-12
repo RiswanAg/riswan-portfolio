@@ -41,7 +41,7 @@ export function Education() {
       <div className="relative mx-auto max-w-3xl">
         <SectionHeading eyebrow="Academic Path" title="Education" />
         <p className="mx-auto -mt-8 mb-12 max-w-xl text-center text-sm leading-relaxed text-[#93A2B8]">
-          The climb — from secondary school to a Game Technology degree, one grade at a time.
+          The climb from secondary school to a Game Technology degree, one grade at a time.
         </p>
 
         {/* Progression rail */}

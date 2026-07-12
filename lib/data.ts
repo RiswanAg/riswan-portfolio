@@ -20,7 +20,7 @@ export const PROFILE = {
 /** Proof points shown directly in the hero — instant recruiter credibility. */
 export const HERO_HIGHLIGHTS = [
   "CGPA 3.80 · Dean's List ×6",
-  "Silver Award — ITEX 2026",
+  "Silver Award, ITEX 2026",
   "10 Shipped Projects",
 ];
 
@@ -94,7 +94,7 @@ export const CERTIFICATES: Certificate[] = [
     url: "https://www.udemy.com/certificate/UC-b24cd80e-2b67-466f-9bf7-692831e2e6f7/",
   },
   {
-    name: "1st Place — Play Next, D'FTMK Technity 2026",
+    name: "1st Place, Play Next, D'FTMK Technity 2026",
     org: "Universiti Teknikal Malaysia Melaka · Faculty of Information & Communication Technology",
     date: "2026",
     image: "/certificates/play-next-game-jam.jpg",
@@ -103,7 +103,7 @@ export const CERTIFICATES: Certificate[] = [
     url: "/certificates/play-next-game-jam.pdf",
   },
   {
-    name: "MYVERSE — Malaysia Creative Technology Competition 2026",
+    name: "MYVERSE, Malaysia Creative Technology Competition 2026",
     org: "TechVerse Production · Supported by MDEC",
     date: "2026",
     image: "/certificates/myverse-2026.jpg",
@@ -174,7 +174,7 @@ export const PROJECTS: Project[] = [
     role: "Final Year Project · Simulation & AI systems",
     kind: "game",
     description:
-      "A cozy smart-farming sim set in an oil-palm nursery — grow smart, farm better, live green. Features IoT soil monitoring, drone scouting, AI disease detection, and a hands-on harvest loop as interactive gameplay.",
+      "A cozy smart-farming sim set in an oil-palm nursery: grow smart, farm better, live green. Features IoT soil monitoring, drone scouting, AI disease detection, and a hands-on harvest loop as interactive gameplay.",
     tech: ["Hologram", "Smart Farming", "Unity", "C#", "IoT", "AI", "Simulation"],
     contribution:
       "Designing the simulation systems, sensor-driven gameplay loop, and interactive learning mechanics.",
@@ -221,7 +221,7 @@ export const PROJECTS: Project[] = [
     award: "1st Place · Play Next Game Jam",
     kind: "game",
     description:
-      "A fast, chaotic co-op game inspired by Overcooked — but set in the pressure-cooker of an IT company instead of a kitchen. Built for the Play Next Game Jam, where it took 1st place. Playable in the browser on itch.io.",
+      "A fast, chaotic co-op game inspired by Overcooked, but set in the pressure-cooker of an IT company instead of a kitchen. Built for the Play Next Game Jam, where it took 1st place. Playable in the browser on itch.io.",
     tech: ["Unity", "C#", "Co-op", "Game Design", "Level Design"],
     contribution:
       "Developed the core gameplay mechanics and handled the majority of the programming in Unity, building the co-op systems under jam time pressure for the team's 1st-place entry.",
@@ -229,8 +229,8 @@ export const PROJECTS: Project[] = [
     image: "/projects/overtime/thumbnail.png",
     imageFit: "contain",
     gallery: [
-      { type: "youtube", src: "L5u_-nXka_4", caption: "Overtime — official trailer" },
-      { type: "youtube", src: "jB-o6vJV1kM", caption: "Overtime — full gameplay" },
+      { type: "youtube", src: "L5u_-nXka_4", caption: "Overtime, official trailer" },
+      { type: "youtube", src: "jB-o6vJV1kM", caption: "Overtime, full gameplay" },
       { type: "image", src: "/projects/overtime/thumbnail.png", caption: "Overtime cover art" },
     ],
     fallbackIcon: "gamepad",
@@ -245,14 +245,14 @@ export const PROJECTS: Project[] = [
     role: "Solo Dev · Multiplatform (PC & Mobile)",
     kind: "game",
     description:
-      "An endless cave-runner built solo in Unreal Engine 5. Its highlight is true multiplatform play — the same game runs on desktop/PC and mobile, with controls and performance tuned for both. Playable in the browser on itch.io.",
+      "An endless cave-runner built solo in Unreal Engine 5. Its highlight is true multiplatform play: the same game runs on desktop/PC and mobile, with controls and performance tuned for both. Playable in the browser on itch.io.",
     tech: ["Unreal Engine 5", "Blueprints", "Multiplatform", "Mobile", "Game Design"],
     contribution:
-      "Built the entire game solo — core runner gameplay, level generation, and cross-platform input and optimization so it plays smoothly on both PC and mobile.",
+      "Built the entire game solo, including core runner gameplay, level generation, and cross-platform input and optimization so it plays smoothly on both PC and mobile.",
     status: { label: "Released", tone: "done" },
     image: "/projects/cave-runner/thumbnail.png",
     gallery: [
-      { type: "youtube", src: "VN3mTIw-K8c", caption: "Cave Runner — gameplay" },
+      { type: "youtube", src: "VN3mTIw-K8c", caption: "Cave Runner, gameplay" },
       { type: "image", src: "/projects/cave-runner/thumbnail.png", caption: "Cave Runner cover art" },
     ],
     fallbackIcon: "gamepad",
@@ -261,66 +261,64 @@ export const PROJECTS: Project[] = [
     demo: "https://riswanag.itch.io/cave-runner",
   },
   {
-    slug: "safety-first",
-    title: "SafetyFirst 3D",
-    role: "Solo Dev · WebGL · 3 game modes",
-    kind: "game",
-    description:
-      "A web-based 3D educational game that transforms mandatory construction safety training for TVET students into an engaging, interactive experience. Built with Three.js, it runs directly in the browser with no installation required. Three gameplay modes cover real-time PPE selection, a 3D hazard hunt, and a fast-paced obstacle runner, all grounded in Malaysian DOSH and OSHA compliance standards.",
-    tech: ["Three.js", "JavaScript", "Web GL", "Game Design", "OSHA"],
-    contribution:
-      "Designed and developed the full game including all three gameplay modes, real-time regulatory feedback system that references DOSH and OSHA standards on incorrect choices, and cross-browser responsive optimization.",
-    status: { label: "Completed", tone: "done" },
-    image: "/projects/safety-first/thumbnail.png",
-    previewVideo: "/projects/safety-first/preview.mp4",
-    gallery: [
-      { type: "image", src: "/projects/safety-first/thumbnail.png" },
-    ],
-    fallbackIcon: "shield-check",
-    fallbackGradient: "from-[#BDE8F5]/20 via-[#4988C4]/30 to-[#1C4D8D]/50",
-    github: "https://github.com/RiswanAg",
-    demo: "#",
-  },
-  {
-    slug: "rabbit-racing",
-    title: "Rabbit Invasion Racing",
-    role: "Solo Dev · Graphics & physics",
-    kind: "game",
-    description:
-      "A 3D racing game built with OpenGL featuring custom GLSL shaders, real-time physics, and dynamic obstacle spawning.",
-    tech: ["OpenGL", "C++", "GLSL", "Physics"],
-    contribution:
-      "Wrote custom vertex & fragment shaders and implemented real-time collision and procedural obstacles.",
-    status: { label: "Completed", tone: "done" },
-    image: "/projects/rabbit-racing/thumbnail.png",
-    previewVideo: "/projects/rabbit-racing/preview.mp4",
-    gallery: [
-      { type: "image", src: "/projects/rabbit-racing/thumbnail.png" },
-    ],
-    fallbackIcon: "rabbit",
-    fallbackGradient: "from-[#0F2854]/60 via-[#1C4D8D]/40 to-[#4988C4]/30",
-    github: "https://github.com/RiswanAg",
-    demo: "#",
-  },
-  {
-    slug: "reyclash",
-    title: "Reyclash",
+    slug: "raylib-platformer",
+    title: "Raylib Platformer",
     role: "Programmer · Team of 4",
     kind: "game",
     description:
-      "A game developed for the MYVERSE Competition — Malaysia Creative Tech Competition 2026. Reyclash teaches children how to sort and use recycling bins correctly through fast-paced, interactive gameplay.",
-    tech: ["Unity", "C#", "Game Design", "Education"],
+      "A 2D platformer built for the Game Engine II course, featuring patrol/chase enemies, a shooting mechanic, hazard tiles, and a built-in campaign system with multiple levels. Developed as a 4-person team project.",
+    tech: ["C++", "Raylib", "Level Editor", "Game Design"],
     contribution:
-      "Programmer in a team of 4 — built the core gameplay systems and recycling mechanics.",
+      "Programmer in a team of 4, built the player movement/physics system and the in-game level editor with level save/load (campaign + custom levels).",
     status: { label: "Completed", tone: "done" },
-    image: "/projects/reyclash/thumbnail.png",
+    image: "/projects/raylib-platformer/thumbnail.png",
     gallery: [
-      { type: "image", src: "/projects/reyclash/thumbnail.png" },
+      { type: "youtube", src: "r5CQDQhmfm4", caption: "Raylib Platformer, gameplay & level editor" },
+      { type: "image", src: "/projects/raylib-platformer/thumbnail.png" },
     ],
-    fallbackIcon: "recycle",
-    fallbackGradient: "from-[#4988C4]/40 via-[#0F2854]/50 to-[#1C4D8D]/40",
+    fallbackIcon: "gamepad",
+    fallbackGradient: "from-[#1C4D8D]/50 via-[#0F2854]/40 to-[#7C5CFF]/30",
+    github: "https://github.com/RiswanAg/raylib-platformer",
+    demo: "https://youtu.be/r5CQDQhmfm4",
+  },
+  {
+    slug: "safety-first",
+    title: "SafetyFirst 3D",
+    role: "Lead Programmer & Game Designer · Team of 4",
+    kind: "game",
+    description:
+      "Construction accidents in Malaysia are still a huge problem, and a lot of it comes down to workers never really internalising their safety training. We built SafetyFirst 3D to fix that: a browser game where you play a site safety officer across three levels, picking the right PPE, hunting for hidden hazards in a 3D construction scene, and racing an obstacle course while answering DOSH safety questions. Every rule in the game is pulled straight from real Malaysian regulations (OSHA 1994, the Factories and Machinery Act, DOSH's HIRARC guidelines), so it lines up with what TVET students are actually meant to learn.",
+    tech: ["Three.js", "JavaScript", "HTML5 Canvas", "Game Design", "DOSH/OSHA Compliance"],
+    contribution:
+      "Lead programmer and game designer in a team of 4. Designed the three-level progression and scoring systems, built the Three.js hazard-identification and obstacle-runner levels, and led the performance pass that cut Level 3's load time from 8 to 15 seconds down to under 2 seconds.",
+    status: { label: "Completed", tone: "done" },
+    image: "/projects/safety-first/thumbnail.png",
+    imageFit: "contain",
+    gallery: [
+      { type: "youtube", src: "9-36LglMajU", caption: "SafetyFirst 3D, gameplay walkthrough" },
+      { type: "image", src: "/projects/safety-first/thumbnail.png", caption: "Main menu, three training levels" },
+      { type: "image", src: "/projects/safety-first/hazard-identification.png", caption: "Level 2, Hazard Identification in an interactive 3D scene" },
+    ],
+    highlights: [
+      "Three progressive levels: PPE Selection, Hazard Identification, Obstacle Course Runner",
+      "3D hazard-hunting scene built with Three.js",
+      "Content aligned to OSHA 1994, DOSH HIRARC and the Factories and Machinery Act 1967",
+      "Load time optimised from 8 to 15 seconds down to under 2 seconds",
+      "Runs at 30+ FPS with no install, straight in the browser",
+      "Responsive layout with touch controls for tablets",
+    ],
+    achievements: [
+      { label: "Levels", value: "3" },
+      { label: "Load Time", value: "<2s" },
+      { label: "Frame Rate", value: "30+ FPS" },
+    ],
+    technicalDetails:
+      "Level 3 was originally taking 8 to 15 seconds to load with an inconsistent frame rate, caused by over 150 objects in the scene graph, expensive shadow calculations, and heavy MeshStandardMaterial lighting. I led the optimisation pass that disabled shadows entirely, switched materials to flat-shaded MeshBasicMaterial, and trimmed the scene down to about 30 essential objects, bringing load time under 2 seconds while keeping full gameplay intact. We also replaced emoji-based icons with CSS-drawn shapes after testing showed they rendered inconsistently across browsers and operating systems.",
+    fallbackIcon: "shield-check",
+    fallbackGradient: "from-[#BDE8F5]/20 via-[#4988C4]/30 to-[#1C4D8D]/50",
     github: "https://github.com/RiswanAg",
-    demo: "#",
+    docs: "/projects/safety-first/report.pdf",
+    demo: "https://youtu.be/9-36LglMajU",
   },
   {
     slug: "library-management",
@@ -328,20 +326,37 @@ export const PROJECTS: Project[] = [
     role: "Solo · Backend & database design",
     kind: "other",
     description:
-      "A full-featured library management system with CRUD operations, user authentication, and a persistent relational database.",
+      "I built this as a Workshop 1 project after noticing how much librarians still do by hand: writing down who borrowed what, chasing overdue books, and calculating late fines on paper. My goal was to take all of that off their plate. It's a console app written in C++ with a MySQL database underneath, and it gives Admins, Staff, and Students their own dedicated portal so each person only sees what's relevant to them.",
     tech: ["C++", "MySQL", "OOP"],
     contribution:
-      "Architected the relational schema and built the CRUD interface with OOP principles and session handling.",
+      "Designed the ERD and relational schema, then built the full CLI application solo, including role-based login for Admin, Staff and Student, book and member CRUD, borrow and return transactions with automatic fine calculation, and report generation, all with input validation and error handling throughout.",
     status: { label: "Completed", tone: "done" },
     image: "/projects/library/thumbnail.png",
-    previewVideo: "/projects/library/preview.mp4",
+    imageFit: "contain",
     gallery: [
-      { type: "image", src: "/projects/library/thumbnail.png" },
+      { type: "image", src: "/projects/library/thumbnail.png", caption: "Book catalog with live search, sort and paging" },
+      { type: "image", src: "/projects/library/main-menu.png", caption: "Main menu, choose your role" },
+      { type: "image", src: "/projects/library/admin-menu.png", caption: "Admin dashboard" },
+      { type: "image", src: "/projects/library/add-book.png", caption: "Adding a new book with full call-number metadata" },
+      { type: "image", src: "/projects/library/confirm-borrowing.png", caption: "Borrowing a book, with an automatic 14-day due date" },
+      { type: "image", src: "/projects/library/reports.png", caption: "Reports & analytics module" },
+      { type: "image", src: "/projects/library/student-portal.png", caption: "Student portal, borrowed books, limits and fines" },
+    ],
+    highlights: [
+      "Role-based portals for Admin, Staff and Student",
+      "Full book catalog with search, sort and paging",
+      "Borrow & return flow with automatic due dates",
+      "Automatic overdue fine calculation",
+      "Staff and student record management (CRUD)",
+      "Borrowing statistics, overdue and top-borrower reports",
+      "Password strength meter and forced reset on first login",
+      "Input validation and error handling throughout",
     ],
     fallbackIcon: "book-open",
     fallbackGradient: "from-[#4988C4]/50 via-[#1C4D8D]/30 to-[#0F2854]/50",
     github: "https://github.com/RiswanAg",
     demo: "#",
+    docs: "/projects/library/report.pdf",
   },
   {
     slug: "signspeak-bim",
@@ -352,7 +367,7 @@ export const PROJECTS: Project[] = [
       "A real-time computer vision application that recognizes custom hand signs through a webcam using MediaPipe and classical machine learning. The project includes a complete ML pipeline from dataset collection to live recognition, and is being developed incrementally with a milestone-driven approach.",
     tech: ["Python", "OpenCV", "MediaPipe", "scikit-learn", "NumPy", "Joblib"],
     contribution:
-      "Designed the full project architecture and computer vision workflow — built the dataset recording system and landmark preprocessing pipeline, the machine learning training pipeline comparing multiple classifiers, and automatic best-model selection with evaluation and metadata generation, all in a modular, unit-tested Python codebase.",
+      "Designed the full project architecture and computer vision workflow, then built the dataset recording system and landmark preprocessing pipeline, the machine learning training pipeline comparing multiple classifiers, and automatic best-model selection with evaluation and metadata generation, all in a modular, unit-tested Python codebase.",
     status: { label: "In Development", tone: "live" },
     image: "/projects/signspeak-bim/thumbnail.png",
     fallbackIcon: "hand",
@@ -374,7 +389,7 @@ export const PROJECTS: Project[] = [
     milestones: [
       { label: "Webcam capture, real-time hand tracking & two-hand detection", done: true },
       { label: "Dataset recorder, landmark preprocessing & CSV session storage", done: true },
-      { label: "ML training pipeline — Random Forest, SVM, KNN + automatic model selection", done: true },
+      { label: "ML training pipeline: Random Forest, SVM, KNN + automatic model selection", done: true },
       { label: "Real-time prediction & sentence builder", done: false },
       { label: "ElevenLabs speech synthesis", done: false },
       { label: "UI polish & performance optimization", done: false },
@@ -385,7 +400,7 @@ export const PROJECTS: Project[] = [
       { label: "F1 Score", value: "98.55%" },
     ],
     technicalDetails:
-      "The pipeline is fully modular: a MediaPipe Hands recognizer streams 21 landmarks per hand in real time, which are normalized for translation and scale invariance before being logged into session-based CSVs by a custom dataset recorder with automatic validation. The training pipeline benchmarks Random Forest, SVM, and KNN classifiers side by side, automatically selecting and persisting the best-performing model via Joblib — currently an SVM at 98.59% accuracy and 98.55% F1. The codebase is unit-tested end to end, from landmark preprocessing through model persistence, so the pipeline stays reliable as new milestones (real-time prediction, sentence building, speech synthesis) are added.",
+      "The pipeline is fully modular: a MediaPipe Hands recognizer streams 21 landmarks per hand in real time, which are normalized for translation and scale invariance before being logged into session-based CSVs by a custom dataset recorder with automatic validation. The training pipeline benchmarks Random Forest, SVM, and KNN classifiers side by side, automatically selecting and persisting the best-performing model via Joblib, currently an SVM at 98.59% accuracy and 98.55% F1. The codebase is unit-tested end to end, from landmark preprocessing through model persistence, so the pipeline stays reliable as new milestones (real-time prediction, sentence building, speech synthesis) are added.",
   },
   {
     slug: "mission-delivered",
@@ -393,14 +408,14 @@ export const PROJECTS: Project[] = [
     role: "Director · Editor · Cameraman",
     kind: "video",
     description:
-      "A 5-minute cinematic ad for Shopee, produced as a motion-graphics project. I directed the piece, ran the camera, and handled almost all of the editing — blending live footage with motion graphics and AI-generated video (Higgsfield) into one polished spot. The project I'm proudest of, and where I fell in love with editing all over again.",
+      "A 5-minute cinematic ad for Shopee, produced as a motion-graphics project. I directed the piece, ran the camera, and handled almost all of the editing, blending live footage with motion graphics and AI-generated video (Higgsfield) into one polished spot. The project I'm proudest of, and where I fell in love with editing all over again.",
     tech: ["Directing", "Video Editing", "Motion Graphics", "AI Video", "Higgsfield", "Cinematography"],
     contribution:
-      "Directed the full production and led editing end to end — shot planning, cinematography, motion graphics, AI-generated sequences with Higgsfield, colour, and the final edit.",
+      "Directed the full production and led editing end to end: shot planning, cinematography, motion graphics, AI-generated sequences with Higgsfield, colour, and the final edit.",
     status: { label: "Released", tone: "done" },
     image: "/projects/mission-delivered/thumbnail.jpg",
     gallery: [
-      { type: "youtube", src: "8B_SRydN_ME", caption: "Mission: Delivered — Shopee ad (full video)" },
+      { type: "youtube", src: "8B_SRydN_ME", caption: "Mission: Delivered, Shopee ad (full video)" },
     ],
     fallbackIcon: "video",
     fallbackGradient: "from-[#7C5CFF]/40 via-[#F0682E]/30 to-[#2EE6C6]/30",
@@ -420,7 +435,7 @@ export const PROJECTS: Project[] = [
     status: { label: "Released", tone: "done" },
     image: "/projects/motion-intro/thumbnail.jpg",
     gallery: [
-      { type: "youtube", src: "17cvcFdY01Q", caption: "Kinetic Typography — After Effects motion piece" },
+      { type: "youtube", src: "17cvcFdY01Q", caption: "Kinetic Typography, After Effects motion piece" },
     ],
     fallbackIcon: "video",
     fallbackGradient: "from-[#2EE6C6]/30 via-[#7C5CFF]/40 to-[#27C7E5]/30",
@@ -433,14 +448,14 @@ export const PROJECTS: Project[] = [
     role: "Video Production · Editor & Cameraman",
     kind: "video",
     description:
-      "A group video for a Critical Thinking course pitching a social-innovation idea. I handled the full video production — shooting all the footage as cameraman and editing the whole piece together into a clear, polished final cut.",
+      "A group video for a Critical Thinking course pitching a social-innovation idea. I handled the full video production, shooting all the footage as cameraman and editing the whole piece together into a clear, polished final cut.",
     tech: ["Video Editing", "Cinematography", "Video Production", "Storytelling"],
     contribution:
       "Owned the entire video production: ran the camera for all footage and edited the complete video from raw clips to final delivery.",
     status: { label: "Released", tone: "done" },
     image: "/projects/inovasi-sosial/thumbnail.jpg",
     gallery: [
-      { type: "youtube", src: "tQFBa98peRI", caption: "Projek Idea Inovasi Sosial — group video" },
+      { type: "youtube", src: "tQFBa98peRI", caption: "Projek Idea Inovasi Sosial, group video" },
     ],
     fallbackIcon: "video",
     fallbackGradient: "from-[#F0682E]/30 via-[#7C5CFF]/40 to-[#2EE6C6]/30",
@@ -530,57 +545,57 @@ export type Achievement = {
 export const ACHIEVEMENTS: Achievement[] = [
   {
     year: "2026",
-    title: "Silver Award — ITEX 2026",
-    summary: "Coordinated the exhibit for one of only two UTeM projects at ITEX — it won Silver.",
+    title: "Silver Award, ITEX 2026",
+    summary: "Coordinated the exhibit for one of only two UTeM projects at ITEX, and it won Silver.",
     highlight: "Silver · International",
     description:
-      "Our project was one of only two selected to represent UTeM at the International Invention, Innovation & Technology Exhibition (ITEX 2026). I coordinated the exhibition floor — operating and demonstrating the Tilt 5 holographic hardware, and explaining the game's innovation and technical structure to judges and visitors. The exhibit won a Silver Award in international competition.",
+      "Our project was one of only two selected to represent UTeM at the International Invention, Innovation & Technology Exhibition (ITEX 2026). I coordinated the exhibition floor, operating and demonstrating the Tilt 5 holographic hardware, and explaining the game's innovation and technical structure to judges and visitors. The exhibit won a Silver Award in international competition.",
     icon: "award",
   },
   {
     year: "2025",
-    title: "Silver Award — FTMK Workshop 2 Innovation Competition",
-    summary: "Silver for Sneak Out — and the project that let underrated teammates prove themselves.",
+    title: "Silver Award, FTMK Workshop 2 Innovation Competition",
+    summary: "Silver for Sneak Out, and the project that let underrated teammates prove themselves.",
     highlight: "Silver Award",
     description:
-      "Won a Silver Award at Workshop 2 of the FTMK Innovation Competition with Sneak Out, an online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture — blending real-time networking, game design, and local storytelling. Beyond building the game, I worked hard to lift my groupmates, teammates many had underestimated, and this project became the moment they showed their real potential.",
+      "Won a Silver Award at Workshop 2 of the FTMK Innovation Competition with Sneak Out, an online multiplayer game rooted in Malaysian school residential (Asrama Sekolah) culture, blending real-time networking, game design, and local storytelling. Beyond building the game, I worked hard to lift my groupmates, teammates many had underestimated, and this project became the moment they showed their real potential.",
     icon: "trophy",
     projectSlug: "sneak-out",
   },
   {
     year: "2024 – 2025",
-    title: "Multiple Game Jam Awards — Game Designer & Developer",
+    title: "Multiple Game Jam Awards, Game Designer & Developer",
     summary: "Repeated wins as both designer and developer across multiple game jams.",
     highlight: "Multiple Wins",
     description:
-      "Recognised across several game jams as both Game Designer and Developer — consistently delivering creative, polished game concepts under tight time constraints and competitive judging.",
+      "Recognised across several game jams as both Game Designer and Developer, consistently delivering creative, polished game concepts under tight time constraints and competitive judging.",
     icon: "gamepad",
   },
   {
     year: "2023 – 2026",
-    title: "Dean's List — All 6 Semesters",
-    summary: "A perfect academic streak — Dean's List in every single semester.",
+    title: "Dean's List, All 6 Semesters",
+    summary: "A perfect academic streak: Dean's List in every single semester.",
     highlight: "6 / 6 Semesters",
     description:
-      "Placed on the Dean's List every semester from Semester 1 through Semester 6 — a full-degree record of academic excellence maintained without interruption.",
+      "Placed on the Dean's List every semester from Semester 1 through Semester 6, a full-degree record of academic excellence maintained without interruption.",
     icon: "star",
   },
   {
     year: "2022",
     title: "National Football Participation",
-    summary: "Represented at national level — teamwork and composure under real pressure.",
+    summary: "Represented at national level, teamwork and composure under real pressure.",
     highlight: "National",
     description:
-      "Selected to compete at the national level in football — demonstrating the same teamwork, discipline, and composure under pressure that drives my work in collaborative development.",
+      "Selected to compete at the national level in football, demonstrating the same teamwork, discipline, and composure under pressure that drives my work in collaborative development.",
     icon: "zap",
   },
   {
     year: "2020",
-    title: "3rd Place — Sabah COVID-19 Infographic Competition",
+    title: "3rd Place, Sabah COVID-19 Infographic Competition",
     summary: "Third place for public-health visual design under a state brief.",
     highlight: "3rd Place",
     description:
-      "Awarded 3rd Place for outstanding visual communication and creative design under a public-health brief — an early signal of the design sensibility that now shapes my game and UI work.",
+      "Awarded 3rd Place for outstanding visual communication and creative design under a public-health brief, an early signal of the design sensibility that now shapes my game and UI work.",
     icon: "pen-tool",
   },
 ];
@@ -621,7 +636,7 @@ export const EXPERIENCES: Experience[] = [
     period: "2024 – 2025",
     role: "Game Designer and Developer",
     organisation: "Various Game Jams",
-    summary: "Designed and shipped complete games under game-jam deadlines — several took home awards.",
+    summary: "Designed and shipped complete games under game-jam deadlines, and several took home awards.",
     highlight: "Award-winning",
     description:
       "Competed in multiple game jams filling both the designer and developer roles. Produced complete, polished game experiences under tight deadlines and earned awards at several events, demonstrating creative problem-solving and the ability to ship under pressure.",
