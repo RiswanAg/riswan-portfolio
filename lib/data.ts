@@ -261,6 +261,36 @@ export const PROJECTS: Project[] = [
     demo: "https://riswanag.itch.io/cave-runner",
   },
   {
+    slug: "royal-run",
+    title: "Royal Run",
+    role: "Solo Dev · Unity",
+    kind: "game",
+    description:
+      "A king in a cape, sprinting down a stone road that keeps crumbling into existence just ahead of his feet. Royal Run is a 3D endless-runner I built in Unity 6 to push past my first \"hello world\" project, weaving between obstacles, grabbing coins and apples, and outrunning a clock that never lets up.",
+    tech: ["Unity 6", "C#", "URP", "Cinemachine", "Input System", "TextMesh Pro"],
+    contribution:
+      "Built it solo, start to finish: a road that generates and recycles itself as the king runs, a hand-scripted jump that feels weighty instead of floaty, a difficulty curve that quietly turns up the pressure the longer you survive, and camera work that zooms and shakes to sell the speed.",
+    status: { label: "Completed", tone: "done" },
+    image: "/projects/royal-run/thumbnail.png",
+    gallery: [
+      { type: "youtube", src: "_QjLt1Op2fU", caption: "Royal Run, gameplay" },
+      { type: "image", src: "/projects/royal-run/thumbnail.png", caption: "Dashing down the procedurally-generated road" },
+      { type: "image", src: "/projects/royal-run/game-over.png", caption: "Game over screen with final score and restart" },
+    ],
+    highlights: [
+      "Procedural level generation — road built and recycled from chunk prefabs in real time",
+      "Periodic checkpoints that add survival time and ramp up difficulty",
+      "Lane-based movement + custom scripted jump on a kinematic Rigidbody",
+      "Dynamic difficulty: obstacle spawn rate and world speed scale up over a run",
+      "Cinemachine speed-based FOV zoom and impact screen shake on collisions",
+      "Full game loop: score, countdown timer, pickup juice, game-over screen, one-click restart",
+    ],
+    fallbackIcon: "gamepad",
+    fallbackGradient: "from-[#F0682E]/40 via-[#1C4D8D]/30 to-[#7C5CFF]/30",
+    github: "https://github.com/RiswanAg/royal-run",
+    demo: "https://youtu.be/_QjLt1Op2fU",
+  },
+  {
     slug: "raylib-platformer",
     title: "Raylib Platformer",
     role: "Programmer · Team of 4",
