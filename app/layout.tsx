@@ -38,7 +38,7 @@ const BASE_URL = "https://riswanhamua.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Riswan Hamua | Game Technology Student & Unity Developer",
+  title: "Riswan Hamua | Game Technology Student & Game Developer",
   description:
     "Portfolio of Riswan Hamua, Game Technology student specializing in Unity development, interactive simulations, and smart farming technologies.",
   keywords: [
@@ -57,14 +57,14 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     siteName: "Riswan Hamua Portfolio",
-    title: "Riswan Hamua | Game Technology Student & Unity Developer",
+    title: "Riswan Hamua | Game Technology Student & Game Developer",
     description:
       "Portfolio of Riswan Hamua, Game Technology student specializing in Unity development, interactive simulations, and smart farming technologies.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Riswan Hamua Portfolio" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Riswan Hamua | Game Technology Student & Unity Developer",
+    title: "Riswan Hamua | Game Technology Student & Game Developer",
     description:
       "Portfolio of Riswan Hamua, Game Technology student specializing in Unity development, interactive simulations, and smart farming technologies.",
     images: ["/og-image.png"],
@@ -84,7 +84,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Riswan Hamua",
   url: BASE_URL,
-  jobTitle: "Game Technology Student & Unity Developer",
+  jobTitle: "Game Technology Student & Game Developer",
   alumniOf: "Universiti Teknikal Malaysia Melaka (UTeM)",
   sameAs: [
     "https://github.com/riswan-hamua",
