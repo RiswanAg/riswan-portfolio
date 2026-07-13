@@ -119,7 +119,7 @@ export function Hero() {
             {PROFILE.availability}
           </motion.div>
 
-          <h1 className="mb-3 font-black leading-[0.9] tracking-tight" aria-label={`${PROFILE.name}, Unity Developer and Game Technology Student`}>
+          <h1 className="mb-3 font-black leading-[0.9] tracking-tight" aria-label={`${PROFILE.name}, Game Developer and Game Technology Student`}>
             <span className="block overflow-hidden pb-1">
               <motion.span variants={nameLine} className="block">
                 <span className="block text-5xl text-white sm:text-6xl md:text-7xl">
@@ -134,7 +134,7 @@ export function Hero() {
             variants={rise}
             className="mb-4 text-xl font-bold leading-snug text-white sm:text-2xl lg:text-3xl"
           >
-            Unity Developer &amp; Game Technology Student
+            Game Developer &amp; Game Technology Student
           </motion.p>
 
           <motion.p
