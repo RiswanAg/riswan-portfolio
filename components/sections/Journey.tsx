@@ -26,6 +26,7 @@ import {
 import { EXPERIENCES, ACHIEVEMENTS, PROJECTS } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 // ── Unified milestone model ───────────────────────────────────────────────────
 // Experience, Education and Awards collapse into one chronological photo story.
@@ -162,7 +163,7 @@ function buildMilestones(): Milestone[] {
 
 function PhotoPlaceholder({ color, label }: { color: string; label: string }) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[#0B1120]">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-surface-2">
       <div
         className="absolute inset-0 opacity-30"
         style={{
@@ -170,7 +171,7 @@ function PhotoPlaceholder({ color, label }: { color: string; label: string }) {
         }}
       />
       <ImageIcon size={26} style={{ color }} className="relative opacity-70" />
-      <span className="relative px-3 text-center font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500">
+      <span className="relative px-3 text-center font-mono text-[10px] uppercase tracking-[0.15em] text-dim">
         {label}
       </span>
     </div>
@@ -226,7 +227,7 @@ function FloatingPhoto({
           delay: floatDelay,
         }}
         style={{ aspectRatio: effectiveRatio }}
-        className="relative w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0B1120] shadow-2xl shadow-black/60"
+        className="relative w-full overflow-hidden rounded-2xl border border-white/15 bg-surface-2 shadow-2xl shadow-black/60"
       >
         <SmartImage
           src={src}
@@ -297,6 +298,11 @@ const ACCENT_BOTTOM_LAYOUT: Record<string, AccentOverride> = {
 function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  // Scroll-linked scale/parallax continuously re-rasterizes a clipped,
+  // shadowed, rounded-corner box — costly on phone GPUs. Desktop only;
+  // mobile gets the plain whileInView fade-in below instead.
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const skipParallax = reduceMotion || !isDesktop;
   const [open, setOpen] = useState(false);
   const meta = KIND_META[m.kind];
   const Icon = m.icon;
@@ -344,12 +350,12 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className={`relative aspect-[16/9] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 lg:w-[82%] ${
+            className={`relative aspect-[3/4] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 sm:aspect-[16/9] lg:w-[82%] ${
               flip ? "lg:ml-auto" : ""
             }`}
           >
             <motion.div
-              style={{ y: reduceMotion ? 0 : heroY, scale: reduceMotion ? 1 : heroScale }}
+              style={{ y: skipParallax ? 0 : heroY, scale: skipParallax ? 1 : heroScale }}
               className="absolute inset-0"
             >
               <SmartImage
@@ -443,8 +449,11 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
             </motion.div>
           </motion.div>
 
-          {/* Floating accent photos — opposite side of the hero */}
-          {accents[0] && (
+          {/* Floating accent photos — opposite side of the hero. Not just
+              CSS-hidden but unmounted below desktop: each one drives a
+              continuous idle-bob animation plus a scroll transform, and
+              those keep running on the main thread even while invisible. */}
+          {isDesktop && accents[0] && (
             <FloatingPhoto
               src={accents[0]}
               y={reduceMotion ? "0%" : accent1Y}
@@ -458,7 +467,7 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
               className={`hidden md:block ${top.position}`}
             />
           )}
-          {accents[1] && (
+          {isDesktop && accents[1] && (
             <FloatingPhoto
               src={accents[1]}
               y={reduceMotion ? "0%" : accent2Y}
@@ -497,14 +506,14 @@ function TimelineItem({ m }: { m: Milestone }) {
       className="relative pl-12"
     >
       <span
-        className="absolute left-0 top-0.5 flex h-8 w-8 items-center justify-center rounded-full border bg-[#0E1626]"
+        className="absolute left-0 top-0.5 flex h-8 w-8 items-center justify-center rounded-full border bg-surface"
         style={{ borderColor: `${meta.color}55`, color: meta.color }}
       >
         <Icon size={14} strokeWidth={2.2} />
       </span>
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span className="font-mono text-xs tracking-[0.15em] text-[#93A2B8]">
+        <span className="font-mono text-xs tracking-[0.15em] text-dim">
           {m.period}
         </span>
         <span
@@ -514,11 +523,11 @@ function TimelineItem({ m }: { m: Milestone }) {
           {m.highlight}
         </span>
       </div>
-      <h4 className="mt-1.5 text-lg font-bold leading-snug text-white">{m.title}</h4>
+      <h4 className="mt-1.5 text-lg font-bold leading-snug text-ink">{m.title}</h4>
       {m.subtitle && (
-        <p className="mt-0.5 text-sm text-[#93A2B8]">{m.subtitle}</p>
+        <p className="mt-0.5 text-sm text-dim">{m.subtitle}</p>
       )}
-      <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#93A2B8]">
+      <p className="mt-1 max-w-xl text-sm leading-relaxed text-dim">
         {m.summary}
       </p>
 
@@ -529,7 +538,7 @@ function TimelineItem({ m }: { m: Milestone }) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-xl overflow-hidden text-sm leading-relaxed text-[#93A2B8]"
+            className="max-w-xl overflow-hidden text-sm leading-relaxed text-dim"
           >
             <span className="mt-2 block">{m.description}</span>
           </motion.p>
@@ -541,7 +550,7 @@ function TimelineItem({ m }: { m: Milestone }) {
           <button
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
-            className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#93A2B8] transition-colors hover:text-white"
+            className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-dim transition-colors hover:text-ink"
           >
             <Plus
               size={13}
@@ -586,8 +595,8 @@ export function Journey() {
 
   return (
     <section id="experience" className="relative overflow-hidden px-0 py-24">
-      <div aria-hidden className="aurora -left-24 top-8 h-72 w-72 bg-[#7C5CFF]/15" />
-      <div aria-hidden className="aurora -right-16 bottom-0 h-64 w-64 bg-[#2EE6C6]/10" />
+      <div aria-hidden className="aurora -left-24 top-8 h-72 w-72 bg-violet/15" />
+      <div aria-hidden className="aurora -right-16 bottom-0 h-64 w-64 bg-accent/10" />
 
       <div className="px-6">
         <SectionHeading eyebrow="Where I've Been" title="My Journey" />
@@ -601,10 +610,10 @@ export function Journey() {
 
       {rest.length > 0 && (
         <div className="relative mx-auto mt-8 w-full max-w-3xl px-6">
-          <h3 className="mb-10 text-center font-mono text-xs uppercase tracking-[0.3em] text-[#93A2B8]">
+          <h3 className="mb-10 text-center font-mono text-xs uppercase tracking-[0.3em] text-dim">
             More milestones
           </h3>
-          <ul className="relative flex flex-col gap-10 before:absolute before:bottom-2 before:left-4 before:top-2 before:w-px before:bg-white/10">
+          <ul className="relative flex flex-col gap-10 before:absolute before:bottom-2 before:left-4 before:top-2 before:w-px before:bg-line">
             {rest.map((m) => (
               <TimelineItem key={m.kind + m.title} m={m} />
             ))}

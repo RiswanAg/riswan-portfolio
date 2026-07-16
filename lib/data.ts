@@ -30,7 +30,7 @@ export const ABOUT_HOME = {
   heading: "About Me",
   greeting: "Hello, I'm",
   bio:
-    "I'm a Game Technology student at UTeM who enjoys turning ideas into things people can play, feel, and remember. I build games, prototypes, and creative projects by experimenting, testing, breaking, fixing, and improving them until they become something interesting.",
+    "I'm a Game Technology student at UTeM who turns ideas into things people can play, feel, and remember. I build games and prototypes by experimenting, breaking things, and fixing them until they click.",
   quote: "Leveraging AI as a professional tool, not a replacement.",
 };
 
@@ -289,6 +289,27 @@ export const PROJECTS: Project[] = [
     fallbackGradient: "from-[#F0682E]/40 via-[#1C4D8D]/30 to-[#7C5CFF]/30",
     github: "https://github.com/RiswanAg/royal-run",
     demo: "https://youtu.be/_QjLt1Op2fU",
+  },
+  {
+    slug: "marblerun",
+    title: "MarbleRun",
+    role: "Solo Dev · Unreal Engine",
+    kind: "game",
+    description:
+      "A small arena adrift in space, where you tilt the whole level to roll a marble past bumper pegs and through laser-wall gates toward a glowing goal. MarbleRun is a physics-based tilt-maze built solo in Unreal Engine Blueprints, where momentum and timing matter more than speed.",
+    tech: ["Unreal Engine 5", "Blueprints", "Physics", "Level Design"],
+    contribution:
+      "Designed and built the tilt-maze mechanics, hazard and pickup blueprints (laser walls, bumper pegs, goal trigger), and the level layout entirely in Unreal Engine Blueprints.",
+    status: { label: "Completed", tone: "done" },
+    image: "https://img.youtube.com/vi/4VF7QWHaGkc/maxresdefault.jpg",
+    gallery: [
+      { type: "youtube", src: "4VF7QWHaGkc", caption: "MarbleRun, gameplay" },
+      { type: "image", src: "https://img.youtube.com/vi/4VF7QWHaGkc/maxresdefault.jpg" },
+    ],
+    fallbackIcon: "gamepad",
+    fallbackGradient: "from-[#7C5CFF]/40 via-[#1C4D8D]/40 to-[#03140F]/60",
+    github: "#",
+    demo: "https://youtu.be/4VF7QWHaGkc",
   },
   {
     slug: "raylib-platformer",

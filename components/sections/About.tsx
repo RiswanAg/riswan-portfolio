@@ -22,7 +22,7 @@ export function About() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h2 className="text-4xl font-black leading-tight text-ink sm:text-5xl lg:text-6xl">
             {ABOUT_HOME.heading}
           </h2>
         </motion.div>
@@ -36,25 +36,25 @@ export function About() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
           >
-            <p className="mb-1 text-3xl font-semibold text-[#2EE6C6]/80 sm:text-4xl">
+            <p className="mb-1 text-3xl font-semibold text-accent-strong/80 sm:text-4xl">
               {ABOUT_HOME.greeting}
             </p>
-            <h3 className="mb-5 text-4xl font-black text-white sm:text-5xl">
+            <h3 className="mb-5 text-4xl font-black text-ink sm:text-5xl">
               {PROFILE.name}
             </h3>
-            <p className="mb-6 text-base leading-relaxed text-[#93A2B8] sm:text-lg">
+            <p className="mb-6 text-base leading-relaxed text-dim sm:text-lg">
               {ABOUT_HOME.bio}
             </p>
 
             <motion.div
-              className="mb-8 flex items-start gap-3 rounded-2xl border border-[#2EE6C6]/20 bg-white/[0.03] px-5 py-4"
+              className="mb-8 flex items-start gap-3 rounded-2xl border border-accent/20 bg-veil px-5 py-4"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.35 }}
             >
-              <Quote size={20} className="mt-0.5 flex-shrink-0 text-[#2EE6C6]" />
-              <p className="text-sm italic leading-relaxed text-slate-300 sm:text-base">
+              <Quote size={20} className="mt-0.5 flex-shrink-0 text-accent-strong" />
+              <p className="text-sm italic leading-relaxed text-dim sm:text-base">
                 {ABOUT_HOME.quote}
               </p>
             </motion.div>
@@ -63,14 +63,14 @@ export function About() {
               <a
                 href={PROFILE.cv}
                 download
-                className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
+                className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-accent to-cyan px-7 py-3 text-sm font-bold text-on-accent shadow-lg shadow-accent/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-accent/40 active:scale-[0.97]"
               >
                 <Download size={16} strokeWidth={2.5} />
                 Download CV
               </a>
               <a
                 href="#portfolio-showcase"
-                className="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-[transform,border-color,background-color] duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
+                className="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-line-2 bg-veil px-7 py-3 text-sm font-semibold text-ink transition-[transform,border-color,background-color] duration-200 hover:scale-[1.04] hover:border-accent/50 hover:bg-veil active:scale-[0.97]"
               >
                 View My Work
                 <ArrowRight
@@ -78,7 +78,7 @@ export function About() {
                   className="transition-transform duration-200 group-hover:translate-x-1"
                 />
               </a>
-              <span className="mx-1 hidden h-6 w-px bg-white/10 sm:block" />
+              <span className="mx-1 hidden h-6 w-px bg-veil-2 sm:block" />
               {CONTACTS.filter(
                 (c) => (c.label === "GitHub" || c.label === "LinkedIn") && c.logo
               ).map((c) => (
@@ -88,7 +88,7 @@ export function About() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={c.label}
-                  className="group flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.03] transition-[transform,border-color] duration-200 hover:scale-110 hover:border-[#2EE6C6]/50 active:scale-[0.97]"
+                  className="group flex h-12 w-12 items-center justify-center rounded-full border border-line bg-veil transition-[transform,border-color] duration-200 hover:scale-110 hover:border-accent/50 active:scale-[0.97]"
                 >
                   <Image
                     src={c.logo!}
@@ -111,9 +111,9 @@ export function About() {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           >
             <div className="relative w-full max-w-sm">
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-[#2EE6C6]/40 via-[#7C5CFF]/30 to-transparent blur-2xl" />
+              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-accent/40 via-violet/30 to-transparent blur-2xl" />
               <CometCard className="relative">
-                <div className="flex w-full flex-col items-stretch rounded-2xl border border-white/10 bg-[#0E1626] p-3">
+                <div className="flex w-full flex-col items-stretch rounded-2xl border border-line bg-surface p-3">
                   <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl">
                     <SmartImage
                       src={PROFILE.image}
@@ -121,18 +121,18 @@ export function About() {
                       eager
                       sizes="(min-width: 640px) 384px, 100vw"
                       fallback={
-                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#0E1626] to-[#0A101E] text-6xl font-black text-white/10">
+                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface to-surface-2 text-6xl font-black text-ink/10">
                           RH
                         </div>
                       }
                     />
                   </div>
-                  <div className="mt-3 flex flex-shrink-0 items-center justify-between px-2 py-1 font-[family-name:var(--font-share-tech-mono)] text-white">
-                    <span className="text-xs tracking-wide text-[#2EE6C6]">
+                  <div className="mt-3 flex flex-shrink-0 items-center justify-between px-2 py-1 font-[family-name:var(--font-share-tech-mono)] text-ink">
+                    <span className="text-xs tracking-wide text-accent-strong">
                       {PROFILE.name}
                     </span>
-                    <span className="flex items-center gap-1.5 text-xs text-white/50">
-                      <span className="h-2 w-2 rounded-full bg-[#2EE6C6] shadow-[0_0_8px_#2EE6C6]" />
+                    <span className="flex items-center gap-1.5 text-xs text-ink/50">
+                      <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_8px_var(--accent)]" />
                       Available
                     </span>
                   </div>
@@ -148,25 +148,25 @@ export function About() {
             const Icon = STAT_ICONS[stat.icon];
             const content = (
               <>
-                <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#2EE6C6]/30 bg-[#2EE6C6]/10">
-                  <Icon size={20} className="text-[#2EE6C6]" />
+                <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-accent/30 bg-accent/10">
+                  <Icon size={20} className="text-accent-strong" />
                 </div>
-                <div className="mb-1 text-3xl font-black text-white">
+                <div className="mb-1 text-3xl font-black text-ink">
                   <CountUp value={stat.value} />
                 </div>
-                <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-slate-200">
+                <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-ink">
                   {stat.label}
                 </div>
-                <p className="font-[family-name:var(--font-share-tech-mono)] text-xs text-[#93A2B8]">
+                <p className="font-[family-name:var(--font-share-tech-mono)] text-xs text-dim">
                   {stat.detail}
                 </p>
               </>
             );
 
             const cardClassName =
-              "rounded-2xl border border-white/15 bg-white/[0.07] p-6 text-center" +
+              "rounded-2xl border border-line-2 bg-veil p-6 text-center" +
               (stat.href
-                ? " cursor-pointer transition-colors hover:border-[#2EE6C6]/50 hover:bg-white/[0.09]"
+                ? " cursor-pointer transition-colors hover:border-accent/50 hover:bg-veil-2"
                 : "");
 
             return stat.href ? (

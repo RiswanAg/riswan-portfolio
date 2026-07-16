@@ -1,33 +1,25 @@
 import type { Project } from "@/lib/data";
 
-/** Mono tech pill. */
+/** Mono tech pill — chrome, sits on card surfaces. */
 export function TechBadge({ children }: { children: string }) {
   return (
-    <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] tracking-wide text-[#93A2B8]">
+    <span className="rounded-md border border-line bg-veil px-2.5 py-0.5 font-mono text-[11px] tracking-wide text-dim">
       {children}
     </span>
   );
 }
 
+// Status badge is used in two contexts — floating over dark project artwork AND
+// on light/dark card surfaces in the detail panel — so it carries its own dark
+// translucent chip and keeps fixed neon accents that read on either background,
+// independent of the active theme.
 const STATUS_STYLES: Record<
   Project["status"]["tone"],
-  { ring: string; dot: string; text: string }
+  { dot: string; text: string }
 > = {
-  live: {
-    ring: "border-[#2EE6C6]/40 bg-[#2EE6C6]/10",
-    dot: "bg-[#2EE6C6]",
-    text: "text-[#2EE6C6]",
-  },
-  done: {
-    ring: "border-white/20 bg-white/5",
-    dot: "bg-white",
-    text: "text-white",
-  },
-  proto: {
-    ring: "border-[#7C5CFF]/50 bg-[#7C5CFF]/20",
-    dot: "bg-[#7C5CFF]",
-    text: "text-[#2EE6C6]",
-  },
+  live: { dot: "bg-[#2EE6C6]", text: "text-[#2EE6C6]" },
+  done: { dot: "bg-white", text: "text-white" },
+  proto: { dot: "bg-[#7C5CFF]", text: "text-[#2EE6C6]" },
 };
 
 /** Status badge with a pulsing dot (pulses only for in-development items). */
@@ -35,7 +27,7 @@ export function StatusBadge({ status }: { status: Project["status"] }) {
   const s = STATUS_STYLES[status.tone];
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] ${s.ring} ${s.text}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/45 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md ${s.text}`}
     >
       <span className="relative flex h-1.5 w-1.5">
         {status.tone === "live" && (

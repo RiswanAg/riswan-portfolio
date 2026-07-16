@@ -16,13 +16,13 @@ export function Footer() {
   );
 
   return (
-    <footer className="relative z-10 border-t border-white/10 px-6 py-10">
+    <footer className="relative z-10 border-t border-line px-6 py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
         <div className="flex flex-col items-center gap-1 md:items-start">
-          <span className="text-lg font-black text-white">
-            Riswan Hamua<span className="text-[#2EE6C6]">.</span>
+          <span className="text-lg font-black text-ink">
+            Riswan Hamua<span className="text-accent-strong">.</span>
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#93A2B8]/70">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-dim/70">
             Build · Break · Fix · Ship
           </span>
         </div>
@@ -35,7 +35,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="group flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-white/[0.04] transition-[border-color,background-color,transform] duration-200 hover:border-[#2EE6C6]/30 hover:bg-[#2EE6C6]/10 active:scale-[0.95]"
+              className="group flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-veil transition-[border-color,background-color,transform] duration-200 hover:border-accent/30 hover:bg-accent/10 active:scale-[0.95]"
             >
               <Image
                 src={s.logo!}
@@ -49,13 +49,13 @@ export function Footer() {
         </div>
 
         <div className="flex items-center gap-4">
-          <p className="font-mono text-xs text-[#93A2B8]">
+          <p className="font-mono text-xs text-dim">
             © 2026 Riswan Hamua · Game Technology
           </p>
           <a
             href="#hero"
             aria-label="Back to top"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-white/[0.04] text-[#93A2B8] transition-[border-color,background-color,color,transform] duration-200 hover:border-[#2EE6C6]/40 hover:bg-[#2EE6C6]/10 hover:text-white active:scale-[0.95]"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-veil text-dim transition-[border-color,background-color,color,transform] duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-ink active:scale-[0.95]"
           >
             <ArrowUp size={16} />
           </a>

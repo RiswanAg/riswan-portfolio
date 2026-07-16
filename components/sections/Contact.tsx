@@ -14,28 +14,28 @@ export function Contact() {
       {/* Closing glow */}
       <div
         aria-hidden
-        className="aurora left-1/2 top-1/2 h-[34vw] w-[34vw] -translate-x-1/2 -translate-y-1/2 bg-[#7C5CFF]/15"
+        className="aurora left-1/2 top-1/2 h-[34vw] w-[34vw] -translate-x-1/2 -translate-y-1/2 bg-violet/15"
       />
 
       <div className="relative mx-auto max-w-3xl text-center">
         <SectionHeading eyebrow="Let's connect" title="Get in Touch" />
 
         <Reveal className="mb-12">
-          <p className="mx-auto max-w-xl text-lg leading-relaxed text-[#93A2B8]">
+          <p className="mx-auto max-w-xl text-lg leading-relaxed text-dim">
             {CONTACT_INTRO}
           </p>
         </Reveal>
 
         {/* Primary CTA — email is the action that gets an internship */}
         <Reveal className="mb-12">
-          <GlowCard className="mx-auto max-w-2xl rounded-3xl border border-[#2EE6C6]/20 bg-[#0E1626] p-8 sm:p-10">
-            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#2EE6C6]/30 bg-[#2EE6C6]/10">
-              <Mail size={24} className="text-[#2EE6C6]" strokeWidth={1.75} />
+          <GlowCard className="mx-auto max-w-2xl rounded-3xl border border-accent/20 bg-surface p-8 sm:p-10">
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/30 bg-accent/10">
+              <Mail size={24} className="text-accent-strong" strokeWidth={1.75} />
             </div>
-            <h3 className="text-2xl font-black text-white sm:text-3xl">
+            <h3 className="text-2xl font-black text-ink sm:text-3xl">
               Have an internship spot open?
             </h3>
-            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#93A2B8]">
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-dim">
               I reply fast. One email and you&apos;ll know exactly what I can
               bring to your team.
             </p>
@@ -43,7 +43,7 @@ export function Contact() {
               {email && (
                 <a
                   href={email.href}
-                  className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
+                  className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-accent to-cyan px-7 py-3 text-sm font-bold text-on-accent shadow-lg shadow-accent/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-accent/40 active:scale-[0.97]"
                 >
                   <Mail size={16} strokeWidth={2.5} />
                   Email Me
@@ -56,14 +56,14 @@ export function Contact() {
               <a
                 href={PROFILE.cv}
                 download
-                className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-[transform,border-color,background-color] duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
+                className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-line-2 bg-veil px-7 py-3 text-sm font-semibold text-ink transition-[transform,border-color,background-color] duration-200 hover:scale-[1.04] hover:border-accent/50 hover:bg-veil active:scale-[0.97]"
               >
                 <Download size={16} strokeWidth={2} />
                 Download CV
               </a>
             </div>
             {email && (
-              <p className="mt-5 break-all font-mono text-xs text-[#93A2B8]">
+              <p className="mt-5 break-all font-mono text-xs text-dim">
                 {email.display}
               </p>
             )}
@@ -79,7 +79,7 @@ export function Contact() {
                 href={c.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex min-h-[44px] items-center gap-2.5 rounded-full border border-white/10 bg-[#0E1626] py-2.5 pl-3.5 pr-5 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-[#2EE6C6]/40 hover:bg-[#2EE6C6]/[0.05] active:translate-y-0 active:scale-[0.98]"
+                className="group inline-flex min-h-[44px] items-center gap-2.5 rounded-full border border-line bg-surface py-2.5 pl-3.5 pr-5 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:bg-accent/[0.05] active:translate-y-0 active:scale-[0.98]"
               >
                 <Image
                   src={c.logo!}
@@ -89,10 +89,10 @@ export function Contact() {
                   className="h-[18px] w-[18px] object-contain opacity-70 transition-opacity group-hover:opacity-100"
                 />
                 <span className="text-left">
-                  <span className="block font-mono text-[9px] uppercase leading-none tracking-[0.18em] text-[#93A2B8]">
+                  <span className="block font-mono text-[9px] uppercase leading-none tracking-[0.18em] text-dim">
                     {c.label}
                   </span>
-                  <span className="block text-sm font-medium leading-tight text-slate-300 transition-colors group-hover:text-white">
+                  <span className="block text-sm font-medium leading-tight text-dim transition-colors group-hover:text-ink">
                     {c.display}
                   </span>
                 </span>

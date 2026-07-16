@@ -14,13 +14,13 @@ export function SectionHeading({
   return (
     <Reveal className={`mb-14 max-w-2xl ${alignment}`}>
       <div className={`mb-4 flex items-center gap-3 ${align === "center" ? "justify-center" : ""}`}>
-        <span className="h-px w-8 bg-gradient-to-r from-[#2EE6C6] to-transparent" />
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-[#2EE6C6]">
+        <span className="h-px w-8 bg-gradient-to-r from-accent to-transparent" />
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent-strong">
           {eyebrow}
         </p>
-        <span className="h-px w-8 bg-gradient-to-l from-[#2EE6C6] to-transparent" />
+        <span className="h-px w-8 bg-gradient-to-l from-accent to-transparent" />
       </div>
-      <h2 className="text-4xl font-black tracking-tight text-white md:text-5xl">
+      <h2 className="text-4xl font-black tracking-tight text-ink md:text-5xl">
         {title}
       </h2>
     </Reveal>

@@ -102,12 +102,20 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} ${shareTechMono.variable} ${roboto.variable} h-full antialiased`}
     >
       <head>
+        {/* No-flash theme init — site is light by default; apply .dark only if
+            the visitor previously opted in. Runs before paint. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-grain min-h-full flex flex-col bg-black">
+      <body className="bg-grain min-h-full flex flex-col bg-canvas">
         {children}
       </body>
     </html>

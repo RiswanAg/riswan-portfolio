@@ -82,13 +82,13 @@ export default async function ProjectPage({
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-black">
+      <main className="min-h-screen bg-canvas">
         <div className="mx-auto max-w-6xl px-6 pb-28 pt-28">
           {/* Back nav */}
           <Reveal>
             <Link
               href="/#portfolio-showcase"
-              className="mb-8 inline-flex items-center gap-2 rounded-lg border border-white/8 bg-white/3 px-4 py-2 text-sm text-slate-400 transition-all hover:border-white/20 hover:text-slate-200"
+              className="mb-8 inline-flex items-center gap-2 rounded-lg border border-line bg-veil px-4 py-2 text-sm text-dim transition-all hover:border-line-2 hover:text-ink"
             >
               <BackArrow /> All Projects
             </Link>
@@ -99,7 +99,7 @@ export default async function ProjectPage({
             <div className="mb-8 flex flex-wrap items-start gap-4">
               <StatusBadge status={project.status} />
             </div>
-            <h1 className="mb-4 text-4xl font-black leading-tight text-white md:text-5xl">
+            <h1 className="mb-4 text-4xl font-black leading-tight text-ink md:text-5xl">
               {project.title}
             </h1>
             <div className="flex flex-wrap gap-2">
@@ -120,21 +120,21 @@ export default async function ProjectPage({
             <div className="flex flex-col gap-6">
               <Reveal delay={150}>
                 <div>
-                  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
                     About
                   </p>
-                  <p className="text-sm leading-relaxed text-slate-300">
+                  <p className="text-sm leading-relaxed text-dim">
                     {project.description}
                   </p>
                 </div>
               </Reveal>
 
               <Reveal delay={180}>
-                <div className="rounded-2xl border border-white/6 bg-white/3 p-5">
-                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#2EE6C6]/80">
+                <div className="rounded-2xl border border-line bg-veil p-5">
+                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-accent-strong/80">
                     What I Did
                   </p>
-                  <p className="text-sm leading-relaxed text-slate-400">
+                  <p className="text-sm leading-relaxed text-dim">
                     {project.contribution}
                   </p>
                 </div>
@@ -148,7 +148,7 @@ export default async function ProjectPage({
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-3 text-sm font-semibold text-slate-300 transition-all hover:border-white/25 hover:text-white"
+                      className="flex items-center justify-center gap-2 rounded-xl border border-line bg-veil py-3 text-sm font-semibold text-dim transition-all hover:border-line-2 hover:text-ink"
                     >
                       <GithubIcon /> View on GitHub
                     </a>
@@ -158,7 +158,7 @@ export default async function ProjectPage({
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] py-3 text-sm font-bold text-[#03140F] transition-all hover:shadow-lg hover:shadow-[#2EE6C6]/30"
+                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-cyan py-3 text-sm font-bold text-on-accent transition-all hover:shadow-lg hover:shadow-accent/30"
                     >
                       {project.demo.includes("itch.io") ? (
                         <><ItchIcon /> Go to itch.io</>
@@ -174,7 +174,7 @@ export default async function ProjectPage({
                       href={project.docs}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-3 text-sm font-semibold text-slate-300 transition-all hover:border-white/25 hover:text-white"
+                      className="flex items-center justify-center gap-2 rounded-xl border border-line bg-veil py-3 text-sm font-semibold text-dim transition-all hover:border-line-2 hover:text-ink"
                     >
                       <FileText size={16} /> Documentation
                     </a>
@@ -189,17 +189,17 @@ export default async function ProjectPage({
             <div className="mt-16 space-y-10">
               {project.achievements && (
                 <Reveal>
-                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
                     Results
                   </p>
                   <div className="grid gap-4 sm:grid-cols-3">
                     {project.achievements.map((a) => (
                       <div
                         key={a.label}
-                        className="rounded-2xl border border-white/6 bg-white/3 p-5 text-center"
+                        className="rounded-2xl border border-line bg-veil p-5 text-center"
                       >
-                        <p className="text-2xl font-black text-[#2EE6C6]">{a.value}</p>
-                        <p className="mt-1 text-xs text-slate-400">{a.label}</p>
+                        <p className="text-2xl font-black text-accent-strong">{a.value}</p>
+                        <p className="mt-1 text-xs text-dim">{a.label}</p>
                       </div>
                     ))}
                   </div>
@@ -208,16 +208,16 @@ export default async function ProjectPage({
 
               {project.highlights && (
                 <Reveal delay={60}>
-                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
                     Highlights
                   </p>
                   <ul className="grid gap-2.5 sm:grid-cols-2">
                     {project.highlights.map((h) => (
                       <li
                         key={h}
-                        className="flex items-start gap-2.5 rounded-xl border border-white/6 bg-white/3 px-4 py-3 text-sm text-slate-300"
+                        className="flex items-start gap-2.5 rounded-xl border border-line bg-veil px-4 py-3 text-sm text-dim"
                       >
-                        <Check size={16} className="mt-0.5 shrink-0 text-[#2EE6C6]" />
+                        <Check size={16} className="mt-0.5 shrink-0 text-accent-strong" />
                         {h}
                       </li>
                     ))}
@@ -227,12 +227,12 @@ export default async function ProjectPage({
 
               {project.milestones && (
                 <Reveal delay={120}>
-                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
                     Development Timeline
                   </p>
-                  <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+                  <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-veil">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] transition-all duration-700"
+                      className="h-full rounded-full bg-gradient-to-r from-accent to-cyan transition-all duration-700"
                       style={{
                         width: `${Math.round(
                           (project.milestones.filter((m) => m.done).length /
@@ -246,14 +246,14 @@ export default async function ProjectPage({
                     {project.milestones.map((m) => (
                       <li
                         key={m.label}
-                        className="flex items-center gap-3 rounded-xl border border-white/6 bg-white/3 px-4 py-3 text-sm"
+                        className="flex items-center gap-3 rounded-xl border border-line bg-veil px-4 py-3 text-sm"
                       >
                         {m.done ? (
-                          <CheckCircle2 size={16} className="shrink-0 text-[#2EE6C6]" />
+                          <CheckCircle2 size={16} className="shrink-0 text-accent-strong" />
                         ) : (
-                          <Circle size={16} className="shrink-0 text-slate-600" />
+                          <Circle size={16} className="shrink-0 text-dim" />
                         )}
-                        <span className={m.done ? "text-slate-300" : "text-slate-500"}>
+                        <span className={m.done ? "text-dim" : "text-dim"}>
                           {m.label}
                         </span>
                       </li>
@@ -264,15 +264,15 @@ export default async function ProjectPage({
 
               {project.technicalDetails && (
                 <Reveal delay={180}>
-                  <details className="group rounded-2xl border border-white/6 bg-white/3 p-5">
-                    <summary className="flex cursor-pointer list-none items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-[#2EE6C6]/80">
+                  <details className="group rounded-2xl border border-line bg-veil p-5">
+                    <summary className="flex cursor-pointer list-none items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-accent-strong/80">
                       Technical Details
                       <ChevronDown
                         size={16}
-                        className="text-slate-500 transition-transform duration-300 group-open:rotate-180"
+                        className="text-dim transition-transform duration-300 group-open:rotate-180"
                       />
                     </summary>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                    <p className="mt-3 text-sm leading-relaxed text-dim">
                       {project.technicalDetails}
                     </p>
                   </details>
@@ -285,10 +285,10 @@ export default async function ProjectPage({
           {related.length > 0 && (
             <div className="mt-24">
               <Reveal>
-                <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
                   More projects
                 </p>
-                <h2 className="mb-8 text-2xl font-black text-white">
+                <h2 className="mb-8 text-2xl font-black text-ink">
                   You might also like
                 </h2>
               </Reveal>

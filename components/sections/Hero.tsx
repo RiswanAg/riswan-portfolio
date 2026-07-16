@@ -99,9 +99,11 @@ export function Hero() {
         </div>
       )}
 
-      {/* Legibility scrims — sit above the scene, below the text */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent md:to-black/0" />
+      {/* Legibility scrims — fade the scene into the page. They track the theme
+          canvas (near-black in dark, light in light) so the text side stays
+          readable whichever way the toggle is set. */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas/40 via-transparent to-canvas" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-canvas/70 via-canvas/20 to-transparent md:to-transparent" />
 
       {/* Text overlay keeps the Spline scene interactive except for the CTA row. */}
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center py-10 sm:py-16 md:items-start">
@@ -113,18 +115,22 @@ export function Hero() {
         >
           <motion.div
             variants={rise}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#2EE6C6]/30 bg-[#2EE6C6]/10 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-[#2EE6C6] sm:mb-7 sm:text-sm"
+            className="hud-chip mb-5 inline-flex items-center gap-2.5 border border-accent/25 bg-gradient-to-br from-accent/[0.12] via-accent/[0.04] to-transparent px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-accent-strong backdrop-blur-sm sm:mb-7 sm:text-sm"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2EE6C6] pulse-soft" />
+            <span className="flex items-end gap-[3px]" aria-hidden="true">
+              <span className="hud-bar h-1.5 w-[3px] bg-accent" />
+              <span className="hud-bar h-2.5 w-[3px] bg-accent" />
+              <span className="hud-bar h-1.5 w-[3px] bg-accent" />
+            </span>
             {PROFILE.availability}
           </motion.div>
 
           <h1 className="mb-3 font-black leading-[0.9] tracking-tight" aria-label={`${PROFILE.name}, Game Developer and Game Technology Student`}>
             <span className="block overflow-hidden pb-1">
               <motion.span variants={nameLine} className="block">
-                <span className="block text-5xl text-white sm:text-6xl md:text-7xl">
+                <span className="block text-5xl text-ink sm:text-6xl md:text-7xl">
                   {PROFILE.name}
-                  <span className="text-[#2EE6C6]">.</span>
+                  <span className="text-accent-strong">.</span>
                 </span>
               </motion.span>
             </span>
@@ -132,14 +138,14 @@ export function Hero() {
 
           <motion.p
             variants={rise}
-            className="mb-4 text-xl font-bold leading-snug text-white sm:text-2xl lg:text-3xl"
+            className="mb-4 text-xl font-bold leading-snug text-ink sm:text-2xl lg:text-3xl"
           >
             Game Developer &amp; Game Technology Student
           </motion.p>
 
           <motion.p
             variants={rise}
-            className="mx-auto max-w-xl text-lg leading-relaxed text-[#93A2B8] md:mx-0 sm:text-xl"
+            className="mx-auto max-w-xl text-lg leading-relaxed text-dim md:mx-0 sm:text-xl"
           >
             {PROFILE.tagline}
           </motion.p>
@@ -150,7 +156,7 @@ export function Hero() {
           >
             <a
               href="#portfolio-showcase"
-              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-7 py-3 text-sm font-bold text-[#03140F] shadow-lg shadow-[#2EE6C6]/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-[#2EE6C6]/40 active:scale-[0.97]"
+              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-accent to-cyan px-7 py-3 text-sm font-bold text-on-accent shadow-lg shadow-accent/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-accent/40 active:scale-[0.97]"
             >
               View Unity Projects
               <ArrowRight
@@ -162,7 +168,7 @@ export function Hero() {
             <a
               href={PROFILE.cv}
               download
-              className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white transition-[transform,border-color,background-color] duration-200 hover:scale-[1.04] hover:border-[#2EE6C6]/50 hover:bg-white/[0.06] active:scale-[0.97]"
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-line-2 bg-veil px-7 py-3 text-sm font-semibold text-ink transition-[transform,border-color,background-color] duration-200 hover:scale-[1.04] hover:border-accent/50 hover:bg-veil-2 active:scale-[0.97]"
             >
               <Download size={16} strokeWidth={2} />
               Download CV
@@ -177,9 +183,9 @@ export function Hero() {
             {HERO_HIGHLIGHTS.map((h) => (
               <span
                 key={h}
-                className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-[#93A2B8]"
+                className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-dim"
               >
-                <span className="h-1 w-1 flex-shrink-0 rounded-full bg-[#2EE6C6]" />
+                <span className="h-1 w-1 flex-shrink-0 rounded-full bg-accent" />
                 {h}
               </span>
             ))}
@@ -189,11 +195,11 @@ export function Hero() {
 
       {/* Scroll cue — hidden on short mobile viewports so it never crowds
           or overlaps the credibility strip above it. */}
-      <div className="absolute bottom-4 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 text-[#93A2B8]/60 min-[400px]:flex sm:bottom-8">
+      <div className="absolute bottom-4 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 text-dim/60 min-[400px]:flex sm:bottom-8">
         <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
           Scroll
         </span>
-        <ChevronDown size={18} className="scroll-bob text-[#2EE6C6]/80" strokeWidth={2} />
+        <ChevronDown size={18} className="scroll-bob text-accent-strong/80" strokeWidth={2} />
       </div>
     </section>
   );

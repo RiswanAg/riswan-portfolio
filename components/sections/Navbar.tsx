@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { NAV_LINKS } from "@/lib/data";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 // Sections tracked by the homepage scrollspy, in document order.
 const SCROLL_SECTION_IDS = ["hero", "about-home", "portfolio-showcase", "experience", "education", "contact"];
@@ -78,7 +79,7 @@ export function Navbar() {
     <nav
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
         scrolled
-          ? "border-b border-white/10 bg-black/80 backdrop-blur-md"
+          ? "border-b border-line bg-canvas/80 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
@@ -86,21 +87,21 @@ export function Navbar() {
         <Link
           href="/"
           aria-label="Riswan Hamua home"
-          className="text-xl font-black tracking-tight text-white font-[family-name:var(--font-heading)]"
+          className="text-xl font-black tracking-tight text-ink font-[family-name:var(--font-heading)]"
         >
-          RH<span className="text-[#2EE6C6]">.</span>
+          RH<span className="text-accent-strong">.</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((l) => {
             const active = isActive(l.id, l.href);
             const labelClass = `relative px-3 py-2 text-sm tracking-wide transition-colors ${
-              active ? "text-white" : "text-[#93A2B8] hover:text-white"
+              active ? "text-ink" : "text-dim hover:text-ink"
             }`;
             const indicator = active && (
               <motion.span
                 layoutId="nav-active-indicator"
-                className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-[#2EE6C6] to-[#7C5CFF]"
+                className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-accent to-violet"
                 transition={{ type: "spring", stiffness: 380, damping: 32 }}
               />
             );
@@ -119,29 +120,33 @@ export function Navbar() {
           })}
           <button
             onClick={() => handleSectionLink("contact")}
-            className="ml-3 rounded-lg bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] px-4 py-2 text-sm font-bold text-[#03140F] transition-[box-shadow,filter,transform] duration-200 hover:shadow-lg hover:shadow-[#2EE6C6]/30 hover:brightness-110 active:scale-[0.97]"
+            className="ml-3 rounded-lg bg-gradient-to-r from-accent to-cyan px-4 py-2 text-sm font-bold text-on-accent transition-[box-shadow,filter,transform] duration-200 hover:shadow-lg hover:shadow-accent/30 hover:brightness-110 active:scale-[0.97]"
           >
             Open to Internships
           </button>
+          <ThemeToggle className="ml-4" />
         </div>
 
-        <button
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label="Toggle menu"
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          className="group flex h-8 w-8 flex-col justify-center gap-[5px] md:hidden"
-        >
-          <span
-            className={`block h-0.5 bg-slate-300 transition-[transform,opacity] duration-300 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`}
-          />
-          <span
-            className={`block h-0.5 bg-slate-300 transition-[transform,opacity] duration-300 ${menuOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`block h-0.5 bg-slate-300 transition-[transform,opacity] duration-300 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
-          />
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            className="group flex h-8 w-8 flex-col justify-center gap-[5px]"
+          >
+            <span
+              className={`block h-0.5 bg-ink transition-[transform,opacity] duration-300 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`}
+            />
+            <span
+              className={`block h-0.5 bg-ink transition-[transform,opacity] duration-300 ${menuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block h-0.5 bg-ink transition-[transform,opacity] duration-300 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
+            />
+          </button>
+        </div>
       </div>
 
       <div
@@ -151,11 +156,11 @@ export function Navbar() {
         }`}
         inert={!menuOpen}
       >
-        <div className="flex flex-col gap-1 border-t border-white/10 bg-black/95 px-6 pb-6 pt-4">
+        <div className="flex flex-col gap-1 border-t border-line bg-canvas/95 px-6 pb-6 pt-4 backdrop-blur-md">
           {NAV_LINKS.map((l) => {
             const active = isActive(l.id, l.href);
             const rowClass = `flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
-              active ? "bg-[#2EE6C6]/10 text-white" : "text-[#93A2B8] hover:text-white"
+              active ? "bg-accent/10 text-ink" : "text-dim hover:text-ink"
             }`;
 
             return l.href ? (

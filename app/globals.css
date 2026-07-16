@@ -1,33 +1,81 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: the site is LIGHT by default; `.dark` on <html> flips it. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Semantic theme tokens ─────────────────────────────────────────────────────
+   Every component references these (bg-canvas, text-ink, text-dim, border-line,
+   bg-surface, text-accent-strong, bg-accent, …) instead of raw hex, so the whole
+   site flips by swapping these values under `.dark`. Light is the default. */
 :root {
   --font-heading: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  /* Canvas — deep blue-black (2026 dark-first, off pure #000) */
-  --background: #070B14;
+
+  /* Neutrals — light */
+  --canvas: #EAEEF5;      /* page background */
+  --surface: #FFFFFF;     /* cards, raised chrome */
+  --surface-2: #E4EAF2;   /* insets, wells */
+  --ink: #0C1626;         /* primary text */
+  --dim: #55647C;         /* secondary text (≥4.5:1 on canvas) */
+  --line: rgba(12, 22, 38, 0.12);   /* hairline borders */
+  --line-2: rgba(12, 22, 38, 0.20); /* stronger borders */
+  --veil: rgba(255, 255, 255, 0.60);   /* raised surface fill (elevation → toward white) */
+  --veil-2: rgba(255, 255, 255, 0.90); /* stronger raised fill */
+
+  /* Accents — light. Fills stay vivid; *-strong are the contrast-safe text tints. */
+  --accent: #12BFA6;         /* teal — fills, borders, glows */
+  --accent-strong: #0A8E7B;  /* teal — as text/icon on light (≥4.5:1) */
+  --cyan: #1AA9CB;           /* gradient partner */
+  --violet: #7C5CFF;         /* violet — fills, glows */
+  --violet-strong: #6A45E8;  /* violet — as text on light */
+  --on-accent: #03140F;      /* dark ink text on accent buttons */
+  --focus: var(--accent-strong);
+
+  /* shadcn/ui tokens repoint to the semantic layer */
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --border: var(--line-2);
+  --muted-foreground: var(--dim);
+}
+
+.dark {
+  /* Neutrals — dark ("Neon Depths": deep blue-black, off pure #000) */
+  --canvas: #070B14;
   --surface: #0E1626;
   --surface-2: #0A101E;
-  --foreground: #EAF1F8;
-  --muted: #93A2B8;
+  --ink: #EAF1F8;
+  --dim: #93A2B8;
+  --line: rgba(234, 241, 248, 0.10);
+  --line-2: rgba(234, 241, 248, 0.16);
+  --veil: rgba(255, 255, 255, 0.04);
+  --veil-2: rgba(255, 255, 255, 0.07);
 
-  /* Signature accents — "Neon Depths": aqua-cyan + electric violet */
-  --accent-primary: #2EE6C6;
-  --accent-cyan: #27C7E5;
-  --accent-secondary: #7C5CFF;
-  --accent-ink: #03140F;
-  --accent-light: #EAF1F8;
-  --accent-mid: #7C5CFF;
-  --accent-dark: #0E1626;
-
-  /* shadcn/ui tokens */
-  --card: #0E1626;
-  --card-foreground: #EAF1F8;
-  --border: #1F2B40;
-  --muted-foreground: #93A2B8;
+  /* Accents — dark (the original neon values) */
+  --accent: #2EE6C6;
+  --accent-strong: #2EE6C6;
+  --cyan: #27C7E5;
+  --violet: #7C5CFF;
+  --violet-strong: #A78BFF;
+  --on-accent: #03140F;
+  --focus: #2EE6C6;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-dim: var(--dim);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-veil: var(--veil);
+  --color-veil-2: var(--veil-2);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-cyan: var(--cyan);
+  --color-violet: var(--violet);
+  --color-violet-strong: var(--violet-strong);
+  --color-on-accent: var(--on-accent);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-border: var(--border);
@@ -55,7 +103,7 @@ html {
 
 /* ── Visible keyboard focus — Tailwind preflight strips the default outline ── */
 :where(a, button, [role="button"], input, textarea, select):focus-visible {
-  outline: 2px solid #2EE6C6;
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -68,11 +116,11 @@ html {
   transform: translateY(-150%);
   transition: transform 0.2s ease;
   border-radius: 0.5rem;
-  background: #2EE6C6;
+  background: var(--accent);
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #03140F;
+  color: var(--on-accent);
 }
 .skip-link:focus-visible {
   transform: translateY(0);
@@ -80,10 +128,11 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--canvas);
+  color: var(--ink);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Big display type — hero name, section titles */
@@ -96,10 +145,14 @@ h1, h2, h3 {
 
 /* Faint dotted mesh */
 .bg-grid {
+  --grid-line: rgba(12, 22, 38, 0.05);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 60px 60px;
+}
+.dark .bg-grid {
+  --grid-line: rgba(255, 255, 255, 0.03);
 }
 
 .bg-grid-tight {
@@ -226,17 +279,233 @@ h1, h2, h3 {
   }
 }
 
+/* ── HUD status chip (Hero availability tag) — notched corners, signal bars ── */
+.hud-chip {
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
+}
+
+@keyframes bar-scan {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.hud-bar {
+  transform-origin: bottom;
+  animation: bar-scan 1.6s ease-in-out infinite;
+}
+.hud-bar:nth-child(1) {
+  animation-delay: 0s;
+}
+.hud-bar:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.hud-bar:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
 /* ── Custom scrollbar ──────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #070B14;
+  background: var(--canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1F3A46;
+  background: var(--line-2);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2EE6C6;
+  background: var(--accent);
+}
+
+/* ── Reduced motion for the HUD signal bars ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hud-bar {
+    animation: none !important;
+  }
+}
+
+/* ── Theme toggle (Galahhad day/night switch, uiverse.io) ──────────────────────
+   Unchecked = day/light (site default); checked = night/dark. */
+.theme-switch {
+  --toggle-size: 15px;
+  --container-width: 5.625em;
+  --container-height: 2.5em;
+  --container-radius: 6.25em;
+  --container-light-bg: #3D7EAE;
+  --container-night-bg: #1D1F2C;
+  --circle-container-diameter: 3.375em;
+  --sun-moon-diameter: 2.125em;
+  --sun-bg: #ECCA2F;
+  --moon-bg: #C4C9D1;
+  --spot-color: #959DB1;
+  --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1);
+  --stars-color: #fff;
+  --clouds-color: #F3FDFF;
+  --back-clouds-color: #AACADF;
+  --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25);
+  --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17);
+}
+
+.theme-switch, .theme-switch *, .theme-switch *::before, .theme-switch *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: var(--toggle-size);
+}
+
+.theme-switch__container {
+  width: var(--container-width);
+  height: var(--container-height);
+  background-color: var(--container-light-bg);
+  border-radius: var(--container-radius);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
+  transition: var(--transition);
+  position: relative;
+}
+
+.theme-switch__container::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
+  border-radius: var(--container-radius);
+}
+
+.theme-switch__checkbox {
+  display: none;
+}
+
+.theme-switch__circle-container {
+  width: var(--circle-container-diameter);
+  height: var(--circle-container-diameter);
+  background-color: rgba(255, 255, 255, 0.1);
+  position: absolute;
+  left: var(--circle-container-offset);
+  top: var(--circle-container-offset);
+  border-radius: var(--container-radius);
+  box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), 0 0 0 0.625em rgba(255, 255, 255, 0.1), 0 0 0 1.25em rgba(255, 255, 255, 0.1);
+  display: flex;
+  transition: var(--circle-transition);
+  pointer-events: none;
+}
+
+.theme-switch__sun-moon-container {
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+  width: var(--sun-moon-diameter);
+  height: var(--sun-moon-diameter);
+  margin: auto;
+  border-radius: var(--container-radius);
+  background-color: var(--sun-bg);
+  box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #a1872a inset;
+  filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.theme-switch__moon {
+  transform: translateX(100%);
+  width: 100%;
+  height: 100%;
+  background-color: var(--moon-bg);
+  border-radius: inherit;
+  box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #969696 inset;
+  transition: var(--transition);
+  position: relative;
+}
+
+.theme-switch__spot {
+  position: absolute;
+  top: 0.75em;
+  left: 0.312em;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: var(--container-radius);
+  background-color: var(--spot-color);
+  box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset;
+}
+
+.theme-switch__spot:nth-of-type(2) {
+  width: 0.375em;
+  height: 0.375em;
+  top: 0.937em;
+  left: 1.375em;
+}
+
+.theme-switch__spot:nth-last-of-type(3) {
+  width: 0.25em;
+  height: 0.25em;
+  top: 0.312em;
+  left: 0.812em;
+}
+
+.theme-switch__clouds {
+  width: 1.25em;
+  height: 1.25em;
+  background-color: var(--clouds-color);
+  border-radius: var(--container-radius);
+  position: absolute;
+  bottom: -0.625em;
+  left: 0.312em;
+  box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color);
+  transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+}
+
+.theme-switch__stars-container {
+  position: absolute;
+  color: var(--stars-color);
+  top: -100%;
+  left: 0.312em;
+  width: 2.75em;
+  height: auto;
+  transition: var(--transition);
+}
+
+/* actions */
+.theme-switch__checkbox:checked + .theme-switch__container {
+  background-color: var(--container-night-bg);
+}
+
+.theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container {
+  left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter));
+}
+
+.theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container:hover {
+  left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em);
+}
+
+.theme-switch__circle-container:hover {
+  left: calc(var(--circle-container-offset) + 0.187em);
+}
+
+.theme-switch__checkbox:checked + .theme-switch__container .theme-switch__moon {
+  transform: translate(0);
+}
+
+.theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds {
+  bottom: -4.062em;
+}
+
+.theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container {
+  top: 50%;
+  transform: translateY(-50%);
 }

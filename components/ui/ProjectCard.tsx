@@ -154,7 +154,7 @@ function ExpandedPanel({
 
       {/* Panel — starts at card rect, expands to full screen */}
       <motion.div
-        className="fixed z-50 flex flex-col overflow-hidden border border-white/10 bg-[#0E1626] shadow-2xl shadow-black/70 lg:flex-row"
+        className="fixed z-50 flex flex-col overflow-hidden border border-line bg-surface shadow-2xl shadow-black/70 lg:flex-row"
         initial={{
           left: originRect.left,
           top: originRect.top,
@@ -204,7 +204,7 @@ function ExpandedPanel({
             )}
           </div>
 
-          {active.caption && <p className="px-4 py-2 text-center text-xs text-[#93A2B8]/60">{active.caption}</p>}
+          {active.caption && <p className="px-4 py-2 text-center text-xs text-dim/60">{active.caption}</p>}
 
           {media.length > 1 && (
             <div className="flex gap-2 overflow-x-auto p-3">
@@ -212,7 +212,7 @@ function ExpandedPanel({
                 <button
                   key={i}
                   onClick={() => setActiveIndex(i)}
-                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-[border-color,opacity] duration-200 ${i === activeIndex ? "border-[#2EE6C6]" : "border-white/10 opacity-40 hover:opacity-70"}`}
+                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-[border-color,opacity] duration-200 ${i === activeIndex ? "border-accent" : "border-white/10 opacity-40 hover:opacity-70"}`}
                 >
                   {m.type === "youtube" ? (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-red-950/60 text-white/90">
@@ -234,9 +234,9 @@ function ExpandedPanel({
           <div className="flex items-start justify-between gap-4">
             <div>
               <StatusBadge status={project.status} />
-              <h2 className="mt-3 text-2xl font-black leading-tight text-white">{project.title}</h2>
+              <h2 className="mt-3 text-2xl font-black leading-tight text-ink">{project.title}</h2>
             </div>
-            <button onClick={onClose} className="mt-1 shrink-0 rounded-full border border-white/10 p-2 text-[#93A2B8] transition-[border-color,color,transform] duration-200 hover:border-white/30 hover:text-white active:scale-[0.95]">
+            <button onClick={onClose} className="mt-1 shrink-0 rounded-full border border-line p-2 text-dim transition-[border-color,color,transform] duration-200 hover:border-line-2 hover:text-ink active:scale-[0.95]">
               <CloseIcon />
             </button>
           </div>
@@ -245,21 +245,21 @@ function ExpandedPanel({
             {project.tech.map((t) => <TechBadge key={t}>{t}</TechBadge>)}
           </div>
 
-          <p className="text-sm leading-relaxed text-[#93A2B8]">{project.description}</p>
+          <p className="text-sm leading-relaxed text-dim">{project.description}</p>
 
-          <div className="rounded-2xl border border-white/6 bg-white/3 p-4">
-            <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#2EE6C6]/80">What I Did</p>
-            <p className="text-sm leading-relaxed text-[#93A2B8]/70">{project.contribution}</p>
+          <div className="rounded-2xl border border-line bg-veil p-4">
+            <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-accent-strong/80">What I Did</p>
+            <p className="text-sm leading-relaxed text-dim/70">{project.contribution}</p>
           </div>
 
           <div className="mt-auto flex gap-3 pt-2">
             {project.github !== "#" && (
-              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#93A2B8] transition-[border-color,color] duration-200 hover:border-white/25 hover:text-white">
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-line bg-veil py-2.5 text-sm font-semibold text-dim transition-[border-color,color] duration-200 hover:border-line-2 hover:text-ink">
                 <GithubIcon />GitHub
               </a>
             )}
             {project.demo !== "#" && (
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2EE6C6] to-[#27C7E5] py-2.5 text-sm font-bold text-[#03140F] transition-[box-shadow,transform] duration-200 hover:shadow-lg hover:shadow-[#2EE6C6]/30 active:scale-[0.98]">
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-cyan py-2.5 text-sm font-bold text-on-accent transition-[box-shadow,transform] duration-200 hover:shadow-lg hover:shadow-accent/30 active:scale-[0.98]">
                 {project.demo.includes("itch.io") ? (
                   <><ItchIcon /> Go to itch.io</>
                 ) : project.kind === "video" ? (
@@ -270,7 +270,7 @@ function ExpandedPanel({
               </a>
             )}
             {project.docs && project.docs !== "#" && (
-              <a href={project.docs} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2.5 text-sm font-semibold text-[#93A2B8] transition-[border-color,color] duration-200 hover:border-white/25 hover:text-white">
+              <a href={project.docs} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-line bg-veil py-2.5 text-sm font-semibold text-dim transition-[border-color,color] duration-200 hover:border-line-2 hover:text-ink">
                 <FileText size={16} />Docs
               </a>
             )}
@@ -320,7 +320,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
   const cardContent = (
     <>
       {/* Media — the hero. 16:9 landscape, video preview on hover. */}
-      <div className="relative w-full aspect-video overflow-hidden bg-[#0A101E]">
+      <div className="relative w-full aspect-video overflow-hidden bg-surface-2">
         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
           <SmartImage
             src={project.image}
@@ -356,7 +356,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
         )}
 
         {/* Legibility gradient */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0E1626] via-transparent to-black/30" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-surface via-transparent to-black/30" />
 
         {/* Top row: category (+ award proof) + status. The left column can
             shrink and truncate its award text so a long award string never
@@ -379,7 +379,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
         {/* Video projects get a persistent play button */}
         {project.kind === "video" && (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/50 pl-1 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:border-[#7C5CFF]/70 group-hover:bg-[#7C5CFF]/25">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/50 pl-1 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:border-violet/70 group-hover:bg-violet/25">
               <PlayIcon />
             </span>
           </div>
@@ -387,7 +387,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
 
         {/* CTA — always visible so touch users know the card is tappable */}
         <div className="absolute inset-x-0 bottom-3 flex justify-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-xs font-semibold text-white/75 backdrop-blur-md transition-colors duration-300 group-hover:border-[#2EE6C6]/50 group-hover:text-white">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-xs font-semibold text-white/75 backdrop-blur-md transition-colors duration-300 group-hover:border-accent/50 group-hover:text-white">
             {project.kind === "video" ? "Watch video" : href ? "View project" : "Quick look"}
             <ArrowUpRight size={14} />
           </span>
@@ -397,15 +397,15 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
       {/* Footer — title + one context line + a few tech tags. No paragraphs. */}
       <div className="flex w-full flex-col gap-3 p-5">
         <div>
-          <h3 className="text-lg font-black leading-snug text-white transition-colors group-hover:text-[#2EE6C6]">
+          <h3 className="text-lg font-black leading-snug text-ink transition-colors group-hover:text-accent-strong">
             {project.title}
           </h3>
-          <p className="mt-1 text-xs text-[#93A2B8]">{project.role}</p>
+          <p className="mt-1 text-xs text-dim">{project.role}</p>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
           {project.tech.slice(0, 3).map((t) => <TechBadge key={t}>{t}</TechBadge>)}
           {extraTech > 0 && (
-            <span className="rounded-full border border-white/8 px-2 py-1 text-[10px] font-medium text-[#93A2B8]/70">
+            <span className="rounded-full border border-line px-2 py-1 text-[10px] font-medium text-dim/70">
               +{extraTech}
             </span>
           )}
@@ -415,7 +415,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
   );
 
   const cardClass =
-    "group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/8 bg-[#0E1626] transition-[border-color,box-shadow] duration-300 hover:border-[#2EE6C6]/40 hover:shadow-2xl hover:shadow-[#2EE6C6]/10";
+    "group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-[border-color,box-shadow] duration-300 hover:border-accent/40 hover:shadow-2xl hover:shadow-accent/10";
 
   if (href) {
     return (
