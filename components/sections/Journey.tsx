@@ -273,7 +273,11 @@ const DEFAULT_BOTTOM = { width: 208, height: 300 };
 
 const ACCENT_TOP_LAYOUT: Record<string, AccentOverride> = {
   "award-1-itex-2026-silver": {width: 400, height: 320, position: "top-0 -right-0"},
-  "award-2-ftmk-sneakout-silver": {width: 200, height: 400},
+  "award-2-ftmk-sneakout-silver": {
+    width: 200,
+    height: 400,
+    position: "-top-24 -right-4 lg:top-2 lg:left-0 lg:right-auto",
+  },
   "award-3-game-jam-wins": {},
   "award-4-deans-list": { width: 350, height: 350},
   "award-5-national-football": {},
@@ -284,7 +288,11 @@ const ACCENT_TOP_LAYOUT: Record<string, AccentOverride> = {
 
 const ACCENT_BOTTOM_LAYOUT: Record<string, AccentOverride> = {
   "award-1-itex-2026-silver": {width: 400, height: 250, position: "bottom-0 -right-20"},
-  "award-2-ftmk-sneakout-silver": {width: 400, height: 250},
+  "award-2-ftmk-sneakout-silver": {
+    width: 300,
+    height: 190,
+    position: "bottom-8 -right-48",
+  },
   "award-3-game-jam-wins": {width: 400, height: 250, position: "top-0 -right-50"},
   "award-4-deans-list": { width: 400, height: 400, position: "bottom-0 -right-30" },
   "award-5-national-football": {width: 400, height: 250, position: "bottom-2 -right-5"},

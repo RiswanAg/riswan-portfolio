@@ -259,7 +259,7 @@ function ExpandedPanel({
               </a>
             )}
             {project.demo !== "#" && (
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-cyan py-2.5 text-sm font-bold text-on-accent transition-[box-shadow,transform] duration-200 hover:shadow-lg hover:shadow-accent/30 active:scale-[0.98]">
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-bold text-on-accent transition-[background-color,box-shadow,transform] duration-200 hover:bg-accent-strong active:scale-[0.98] dark:bg-gradient-to-r dark:from-accent dark:to-cyan dark:hover:shadow-lg dark:hover:shadow-accent/30">
                 {project.demo.includes("itch.io") ? (
                   <><ItchIcon /> Go to itch.io</>
                 ) : project.kind === "video" ? (

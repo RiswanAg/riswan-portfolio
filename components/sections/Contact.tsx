@@ -28,7 +28,7 @@ export function Contact() {
 
         {/* Primary CTA — email is the action that gets an internship */}
         <Reveal className="mb-12">
-          <GlowCard className="mx-auto max-w-2xl rounded-3xl border border-accent/20 bg-surface p-8 sm:p-10">
+          <GlowCard className="mx-auto max-w-2xl rounded-2xl border border-line bg-surface p-8 dark:border-accent/20 sm:p-10">
             <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/30 bg-accent/10">
               <Mail size={24} className="text-accent-strong" strokeWidth={1.75} />
             </div>
@@ -43,7 +43,7 @@ export function Contact() {
               {email && (
                 <a
                   href={email.href}
-                  className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-accent to-cyan px-7 py-3 text-sm font-bold text-on-accent shadow-lg shadow-accent/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-accent/40 active:scale-[0.97]"
+                  className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-accent-strong active:scale-[0.98] dark:bg-gradient-to-r dark:from-accent dark:to-cyan dark:shadow-lg dark:shadow-accent/25 dark:hover:shadow-xl dark:hover:shadow-accent/40"
                 >
                   <Mail size={16} strokeWidth={2.5} />
                   Email Me

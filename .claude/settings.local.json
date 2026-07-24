@@ -30,7 +30,8 @@
       "Bash(disown)",
       "Bash(PORT=3000 npm run dev)",
       "Bash(node *)",
-      "WebFetch(domain:www.dafont.com)"
+      "WebFetch(domain:www.dafont.com)",
+      "Bash(awk '{print}')"
     ]
   },
   "hooks": {

@@ -58,7 +58,7 @@ export function Education() {
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
               >
                 <GlowCard className="group/glow rounded-2xl border border-line bg-surface p-5 transition-colors duration-300 hover:border-violet/35 sm:p-6">
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
+                  <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-5">
                     <InstitutionLogo logo={e.logo} initials={e.logoInitials} />
 
                     <div className="min-w-0 flex-1">
@@ -79,14 +79,17 @@ export function Education() {
                     {/* Grade — the hero credential */}
                     {e.grade && (
                       <div
-                        className="ml-auto flex flex-col items-center justify-center rounded-2xl px-5 py-3 text-center"
+                        className="col-span-2 flex min-h-11 w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left sm:col-span-1 sm:w-auto sm:min-w-24 sm:flex-col sm:justify-center sm:rounded-2xl sm:px-5 sm:py-3 sm:text-center"
                         style={{
                           background: `${VIOLET}12`,
                           boxShadow: `inset 0 0 0 1px ${VIOLET}40`,
                         }}
                       >
-                        <GraduationCap size={16} style={{ color: VIOLET }} />
-                        <span className="mt-1 text-lg font-black tracking-tight text-ink">
+                        <span className="flex items-center gap-2 text-xs font-semibold text-dim sm:flex-col sm:gap-1">
+                          <GraduationCap size={16} style={{ color: VIOLET }} />
+                          Grade
+                        </span>
+                        <span className="text-lg font-black tracking-tight text-ink sm:mt-1">
                           <CountUp value={e.grade} />
                         </span>
                       </div>

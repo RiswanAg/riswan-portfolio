@@ -20,16 +20,14 @@ export function Hero() {
   // heavy work only ever starts on desktop-sized viewports.
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-  // Stagger the text-column entrance. On reduced motion everything is
-  // instantly visible (no transforms).
+  // Essential hero content must remain visible even if motion never starts.
+  // `initial={false}` below keeps the server-rendered and hydrated states safe.
   const container = {
-    hidden: {},
     show: {
       transition: { staggerChildren: 0.09, delayChildren: 0.15 },
     },
   };
   const rise = {
-    hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 22 },
     show: {
       opacity: 1,
       y: 0,
@@ -37,7 +35,6 @@ export function Hero() {
     },
   };
   const nameLine = {
-    hidden: reduceMotion ? { y: "0%" } : { y: "110%" },
     show: { y: "0%", transition: { duration: 0.9, ease: EASE } },
   };
 
@@ -74,7 +71,7 @@ export function Hero() {
       className="relative flex min-h-dvh items-center overflow-hidden px-6 pt-20 sm:pt-24"
     >
       {/* Ambient background — animated shadow drift, tinted to the accent palette */}
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 opacity-40 dark:opacity-100">
         <EtherealShadow
           color="rgba(124, 92, 255, 0.5)"
           animation={
@@ -110,7 +107,7 @@ export function Hero() {
         <motion.div
           className="w-full max-w-2xl text-center md:text-left"
           variants={container}
-          initial="hidden"
+          initial={false}
           animate="show"
         >
           <motion.div
@@ -156,7 +153,7 @@ export function Hero() {
           >
             <a
               href="#portfolio-showcase"
-              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-accent to-cyan px-7 py-3 text-sm font-bold text-on-accent shadow-lg shadow-accent/25 transition-[transform,box-shadow] duration-200 hover:scale-[1.04] hover:shadow-xl hover:shadow-accent/40 active:scale-[0.97]"
+              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-accent-strong active:scale-[0.98] dark:bg-gradient-to-r dark:from-accent dark:to-cyan dark:shadow-lg dark:shadow-accent/25 dark:hover:shadow-xl dark:hover:shadow-accent/40"
             >
               View Unity Projects
               <ArrowRight

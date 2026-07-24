@@ -55,6 +55,12 @@ const item = {
   show: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: "easeOut" as const } },
 };
 
+// Featured work is the recruiter-facing edit. The catalog below contains only
+// additional projects so every card on the homepage earns its scroll space.
+const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured).slice(0, 3);
+const FEATURED_SLUGS = new Set(FEATURED_PROJECTS.map((project) => project.slug));
+const CATALOG_PROJECTS = PROJECTS.filter((project) => !FEATURED_SLUGS.has(project.slug));
+
 export function PortfolioShowcase() {
   const [activeTab, setActiveTab] = useState<TabId>("projects");
 
@@ -76,7 +82,7 @@ export function PortfolioShowcase() {
 
         <Reveal className="mb-4 mt-20 text-center">
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-dim">
-            Browse the full catalog
+            Explore more work
           </p>
         </Reveal>
 
@@ -96,7 +102,7 @@ export function PortfolioShowcase() {
                   {isActive && (
                     <motion.span
                       layoutId="showcase-tab-indicator"
-                      className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-accent to-cyan"
+                      className="absolute inset-0 -z-10 rounded-full bg-accent dark:bg-gradient-to-r dark:from-accent dark:to-cyan"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -129,8 +135,7 @@ export function PortfolioShowcase() {
 }
 
 function FeaturedWork() {
-  const featured = useMemo(() => PROJECTS.filter((p) => p.featured).slice(0, 3), []);
-  if (featured.length === 0) return null;
+  if (FEATURED_PROJECTS.length === 0) return null;
 
   return (
     <div className="mt-14">
@@ -141,7 +146,7 @@ function FeaturedWork() {
         viewport={{ once: true, amount: 0.15 }}
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {featured.map((project) => (
+        {FEATURED_PROJECTS.map((project) => (
           <motion.div key={project.slug} variants={item}>
             <ProjectCard project={project} href={`/projects/${project.slug}`} />
           </motion.div>
@@ -162,12 +167,12 @@ function ProjectsTab() {
 
   const counts = useMemo(() => {
     const c: Record<ProjectKind, number> = { game: 0, video: 0, other: 0 };
-    for (const p of PROJECTS) c[p.kind] += 1;
+    for (const project of CATALOG_PROJECTS) c[project.kind] += 1;
     return c;
   }, []);
 
   const filtered = useMemo(
-    () => PROJECTS.filter((p) => p.kind === active),
+    () => CATALOG_PROJECTS.filter((project) => project.kind === active),
     [active]
   );
 
@@ -201,7 +206,7 @@ function ProjectsTab() {
                 {isActive && (
                   <motion.span
                     layoutId="showcase-filter-indicator"
-                    className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-gradient-to-r from-accent to-cyan"
+                    className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-accent dark:bg-gradient-to-r dark:from-accent dark:to-cyan"
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}
@@ -231,7 +236,7 @@ function ProjectsTab() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="mx-auto max-w-md rounded-3xl border border-dashed border-line bg-veil px-8 py-16 text-center"
+          className="mx-auto max-w-md rounded-2xl border border-dashed border-line bg-veil px-8 py-16 text-center"
         >
           <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet/20 to-accent/20 text-violet-strong">
             <Video size={26} />
@@ -265,7 +270,7 @@ function CertificatesTab() {
           variants={item}
           whileHover={{ y: -4 }}
           transition={{ duration: 0.2 }}
-          className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-colors duration-200 hover:border-accent/40"
+          className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-200 hover:border-accent/40"
         >
           {/* Certificate preview */}
           <div className={`relative aspect-[4/3] overflow-hidden border-b border-line bg-black ${cert.imageFit === "contain" ? "bg-surface" : ""}`}>

@@ -33,12 +33,13 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     <label
       className={`theme-switch ${className}`}
       title="Toggle light and dark theme"
-      aria-label="Toggle light and dark theme"
     >
       <input
         ref={ref}
         type="checkbox"
         className="theme-switch__checkbox"
+        role="switch"
+        aria-label="Toggle light and dark theme"
         onChange={onChange}
       />
       <div className="theme-switch__container">

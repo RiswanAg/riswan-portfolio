@@ -372,6 +372,35 @@ export const PROJECTS: Project[] = [
     demo: "https://youtu.be/9-36LglMajU",
   },
   {
+    slug: "mars-marine",
+    title: "Mars Marine",
+    role: "Solo Dev · Unreal Engine 5 (Blueprints only)",
+    kind: "game",
+    description:
+      "A wave-based survival shooter built in Unreal Engine 5.8. A lone marine holds a position on the surface of Mars against escalating waves of alien creatures, fighting them off with a hitscan assault rifle while staying inside the mission area as the fight grows harder wave after wave.",
+    tech: ["Unreal Engine 5.8", "Blueprints", "Enhanced Input", "Niagara", "UMG"],
+    contribution:
+      "Built entirely solo with zero C++, all gameplay logic in Blueprints: the wave/spawn director, alien AI, hitscan weapon with Niagara muzzle/impact/trail VFX, a mission-area boundary volume with a grace-period warning, health pickups, and the UMG HUD and game-over/restart loop.",
+    status: { label: "Completed", tone: "done" },
+    image: "https://img.youtube.com/vi/Ye5zCM1XKKg/maxresdefault.jpg",
+    gallery: [
+      { type: "youtube", src: "Ye5zCM1XKKg", caption: "Mars Marine, gameplay" },
+      { type: "image", src: "https://img.youtube.com/vi/Ye5zCM1XKKg/maxresdefault.jpg" },
+    ],
+    highlights: [
+      "Wave-based survival combat with a capped difficulty ramp so late waves stay tough but winnable",
+      "Hitscan assault rifle with Niagara-driven muzzle flash, impact, and trail VFX",
+      "Mission-area boundary volume: leaving the play area triggers a warning and grace-period timer before damage",
+      "Health pickups to sustain the marine between engagements",
+      "Game-over summary (wave reached, kill count) that auto-restarts into a fresh run",
+      "Built entirely in Blueprints using Enhanced Input for movement, aiming, and firing",
+    ],
+    fallbackIcon: "gamepad",
+    fallbackGradient: "from-[#C1442B]/50 via-[#7A2E1B]/35 to-[#150A06]/60",
+    github: "https://github.com/RiswanAg/MarsMarine",
+    demo: "https://youtu.be/Ye5zCM1XKKg",
+  },
+  {
     slug: "library-management",
     title: "Library Management System",
     role: "Solo · Backend & database design",

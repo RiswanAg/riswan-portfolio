@@ -120,7 +120,7 @@ export function Navbar() {
           })}
           <button
             onClick={() => handleSectionLink("contact")}
-            className="ml-3 rounded-lg bg-gradient-to-r from-accent to-cyan px-4 py-2 text-sm font-bold text-on-accent transition-[box-shadow,filter,transform] duration-200 hover:shadow-lg hover:shadow-accent/30 hover:brightness-110 active:scale-[0.97]"
+            className="ml-3 rounded-lg bg-accent px-4 py-2 text-sm font-bold text-on-accent transition-[background-color,box-shadow,filter,transform] duration-200 hover:bg-accent-strong active:scale-[0.98] dark:bg-gradient-to-r dark:from-accent dark:to-cyan dark:hover:shadow-lg dark:hover:shadow-accent/30 dark:hover:brightness-110"
           >
             Open to Internships
           </button>
