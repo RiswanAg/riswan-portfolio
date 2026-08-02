@@ -27,7 +27,7 @@ export function StatusBadge({ status }: { status: Project["status"] }) {
   const s = STATUS_STYLES[status.tone];
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/45 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md ${s.text}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/60 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] ${s.text}`}
     >
       <span className="relative flex h-1.5 w-1.5">
         {status.tone === "live" && (

@@ -1,23 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { PROFILE, HERO_HIGHLIGHTS } from "@/lib/data";
 import { ArrowRight, ChevronDown, Download } from "lucide-react";
 import { SplineScene } from "@/components/ui/splite";
 import { useMediaQuery } from "@/lib/use-media-query";
-import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
 
 // Cinematic ease-out, shared with the intro curtain for a continuous feel.
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function Hero() {
   const parallaxRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-  // Phones never mount the Spline scene (WebGL + ~2 MB runtime) and get a
-  // static background instead of the animated SVG-filter shadow — both are
-  // the main sources of mobile jank. `false` during SSR/hydration, so the
-  // heavy work only ever starts on desktop-sized viewports.
+  // Phones never mount the Spline scene (WebGL + ~2 MB runtime). `false`
+  // during SSR/hydration, so the heavy work only ever starts on
+  // desktop-sized viewports.
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   // Essential hero content must remain visible even if motion never starts.
@@ -70,16 +67,18 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-dvh items-center overflow-hidden px-6 pt-20 sm:pt-24"
     >
-      {/* Ambient background — animated shadow drift, tinted to the accent palette */}
-      <div className="pointer-events-none absolute inset-0 opacity-40 dark:opacity-100">
-        <EtherealShadow
-          color="rgba(33, 158, 188, 0.5)"
-          animation={
-            reduceMotion || !isDesktop ? undefined : { scale: 60, speed: 80 }
-          }
-          noise={{ opacity: 0.35, scale: 1.2 }}
-          sizing="fill"
-        />
+      {/* Ambient background — a static accent wash. This replaced an animated
+          SVG-filter shadow (feTurbulence + two feDisplacementMap passes) whose
+          hue was rewritten every frame: it forced a CPU re-rasterization of a
+          viewport-sized filter chain at 60fps for as long as the page was open,
+          and was the hero's single biggest source of jank. Grain already comes
+          from `.bg-grain` on <body>, so nothing else is needed here. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-40 dark:opacity-100"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_22%_38%,rgba(33,158,188,0.30),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(48%_50%_at_78%_68%,rgba(33,158,188,0.16),transparent_72%)]" />
       </div>
 
       {/* Interactive Spline scene — desktop only. On phones the WebGL robot is

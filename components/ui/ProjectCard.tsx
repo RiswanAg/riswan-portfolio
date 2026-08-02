@@ -88,7 +88,7 @@ function KindChip({ kind }: { kind: ProjectKind }) {
   const meta = KIND_META[kind];
   const Icon = meta.icon;
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/60 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-md">
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-2.5 py-1 text-[11px] font-semibold text-white">
       <Icon size={12} style={{ color: meta.dot }} />
       {meta.label}
     </span>
@@ -329,10 +329,19 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
             className={project.imageFit === "contain" ? "object-contain" : "object-cover"}
             fallback={
               project.imageFit === "contain" ? (
-                // No-crop thumbnails: fill the letterbox bars with a blurred copy
-                <div
-                  className="h-full w-full scale-125 bg-cover bg-center opacity-45 blur-2xl"
-                  style={{ backgroundImage: `url(${project.image})` }}
+                // No-crop thumbnails: fill the letterbox bars with a blurred
+                // copy. This must go through next/image at a tiny size — as a
+                // raw CSS `url()` it fetched the unoptimized original (1.7 MB
+                // for Overtime) on top of the optimized one the card already
+                // loads. At `blur-2xl` a 64px source is indistinguishable.
+                <Image
+                  src={project.image}
+                  alt=""
+                  aria-hidden
+                  fill
+                  sizes="64px"
+                  loading="lazy"
+                  className="scale-125 object-cover opacity-45 blur-2xl"
                 />
               ) : (
                 <div className={`relative h-full w-full bg-gradient-to-br ${project.fallbackGradient}`}>
@@ -365,7 +374,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
           <div className="flex min-w-0 flex-1 flex-col items-start gap-1.5">
             <KindChip kind={project.kind} />
             {project.award && (
-              <span className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-amber-300/30 bg-black/60 px-2.5 py-1 text-[11px] font-semibold text-amber-300 backdrop-blur-md">
+              <span className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-amber-300/30 bg-black/70 px-2.5 py-1 text-[11px] font-semibold text-amber-300">
                 <Trophy size={12} className="shrink-0" />
                 <span className="truncate">{project.award}</span>
               </span>
@@ -379,7 +388,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
         {/* Video projects get a persistent play button */}
         {project.kind === "video" && (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/50 pl-1 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:border-amber/70 group-hover:bg-amber/25">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/60 pl-1 text-white transition-all duration-300 group-hover:scale-110 group-hover:border-amber/70 group-hover:bg-amber/25">
               <PlayIcon />
             </span>
           </div>
@@ -387,7 +396,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
 
         {/* CTA — always visible so touch users know the card is tappable */}
         <div className="absolute inset-x-0 bottom-3 flex justify-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-xs font-semibold text-white/75 backdrop-blur-md transition-colors duration-300 group-hover:border-accent/50 group-hover:text-white">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/60 px-4 py-2 text-xs font-semibold text-white/75 transition-colors duration-300 group-hover:border-accent/50 group-hover:text-white">
             {project.kind === "video" ? "Watch video" : href ? "View project" : "Quick look"}
             <ArrowUpRight size={14} />
           </span>
