@@ -17,9 +17,9 @@ const STATUS_STYLES: Record<
   Project["status"]["tone"],
   { dot: string; text: string }
 > = {
-  live: { dot: "bg-[#2EE6C6]", text: "text-[#2EE6C6]" },
+  live: { dot: "bg-[#8ECAE6]", text: "text-[#8ECAE6]" },
   done: { dot: "bg-white", text: "text-white" },
-  proto: { dot: "bg-[#7C5CFF]", text: "text-[#2EE6C6]" },
+  proto: { dot: "bg-[#FFB703]", text: "text-[#FFB703]" },
 };
 
 /** Status badge with a pulsing dot (pulses only for in-development items). */

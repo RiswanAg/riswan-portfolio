@@ -10,24 +10,25 @@
 :root {
   --font-heading: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
-  /* Neutrals — light */
-  --canvas: #EAEEF5;      /* page background */
+  /* Neutrals — light (cool navy-tinted) */
+  --canvas: #EAF1F6;      /* page background */
   --surface: #FFFFFF;     /* cards, raised chrome */
-  --surface-2: #E4EAF2;   /* insets, wells */
-  --ink: #0C1626;         /* primary text */
-  --dim: #55647C;         /* secondary text (≥4.5:1 on canvas) */
-  --line: rgba(12, 22, 38, 0.12);   /* hairline borders */
-  --line-2: rgba(12, 22, 38, 0.20); /* stronger borders */
+  --surface-2: #E1EAF1;   /* insets, wells */
+  --ink: #023047;         /* primary text — deep navy (palette anchor) */
+  --dim: #47606F;         /* secondary text (≥4.5:1 on canvas) */
+  --line: rgba(2, 48, 71, 0.12);   /* hairline borders */
+  --line-2: rgba(2, 48, 71, 0.20); /* stronger borders */
   --veil: rgba(255, 255, 255, 0.60);   /* raised surface fill (elevation → toward white) */
   --veil-2: rgba(255, 255, 255, 0.90); /* stronger raised fill */
 
   /* Accents — light. Fills stay vivid; *-strong are the contrast-safe text tints. */
-  --accent: #12BFA6;         /* teal — fills, borders, glows */
-  --accent-strong: #0A8E7B;  /* teal — as text/icon on light (≥4.5:1) */
-  --cyan: #1AA9CB;           /* gradient partner */
-  --violet: #7C5CFF;         /* violet — fills, glows */
-  --violet-strong: #6A45E8;  /* violet — as text on light */
-  --on-accent: #03140F;      /* dark ink text on accent buttons */
+  --accent: #219EBC;         /* teal — fills, borders, glows */
+  --accent-strong: #136F87;  /* teal — as text/icon on light (≥4.5:1) */
+  --cyan: #8ECAE6;           /* sky — gradient partner */
+  --amber: #FFB703;          /* amber — warm fills, glows */
+  --amber-strong: #B45900;   /* burnt amber — as text on light (≥4.5:1) */
+  --orange: #FB8500;         /* orange — CTA gradient partner */
+  --on-accent: #012230;      /* deep navy ink on amber/teal buttons */
   --focus: var(--accent-strong);
 
   /* shadcn/ui tokens repoint to the semantic layer */
@@ -38,25 +39,26 @@
 }
 
 .dark {
-  /* Neutrals — dark ("Neon Depths": deep blue-black, off pure #000) */
-  --canvas: #070B14;
-  --surface: #0E1626;
-  --surface-2: #0A101E;
+  /* Neutrals — dark ("Deep Harbor": palette navy #023047 as the canvas) */
+  --canvas: #023047;
+  --surface: #0A3B54;
+  --surface-2: #04283B;
   --ink: #EAF1F8;
-  --dim: #93A2B8;
+  --dim: #93AEC2;
   --line: rgba(234, 241, 248, 0.10);
   --line-2: rgba(234, 241, 248, 0.16);
   --veil: rgba(255, 255, 255, 0.04);
   --veil-2: rgba(255, 255, 255, 0.07);
 
-  /* Accents — dark (the original neon values) */
-  --accent: #2EE6C6;
-  --accent-strong: #2EE6C6;
-  --cyan: #27C7E5;
-  --violet: #7C5CFF;
-  --violet-strong: #A78BFF;
-  --on-accent: #03140F;
-  --focus: #2EE6C6;
+  /* Accents — dark (bright on navy) */
+  --accent: #219EBC;         /* teal */
+  --accent-strong: #8ECAE6;  /* sky — text/icon on navy */
+  --cyan: #8ECAE6;           /* sky — gradient partner */
+  --amber: #FFB703;          /* amber */
+  --amber-strong: #FFC02E;   /* bright amber — text on navy */
+  --orange: #FB8500;         /* orange — CTA gradient partner */
+  --on-accent: #012230;      /* deep navy ink on amber/teal buttons */
+  --focus: #8ECAE6;
 }
 
 @theme inline {
@@ -72,8 +74,9 @@
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
   --color-cyan: var(--cyan);
-  --color-violet: var(--violet);
-  --color-violet-strong: var(--violet-strong);
+  --color-amber: var(--amber);
+  --color-amber-strong: var(--amber-strong);
+  --color-orange: var(--orange);
   --color-on-accent: var(--on-accent);
 
   --color-card: var(--card);
@@ -162,8 +165,8 @@ h1, h2, h3 {
 
 .bg-grid-tight {
   background-image:
-    linear-gradient(rgba(46, 230, 198, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(46, 230, 198, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(33, 158, 188, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 158, 188, 0.08) 1px, transparent 1px);
   background-size: 34px 34px;
 }
 

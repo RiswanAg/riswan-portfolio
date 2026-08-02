@@ -38,8 +38,8 @@ const PROJECT_FALLBACK_ICONS: Record<string, LucideIcon> = {
 };
 
 const KIND_META: Record<ProjectKind, { label: string; icon: LucideIcon; dot: string }> = {
-  game: { label: "Game", icon: Gamepad2, dot: "#2EE6C6" },
-  video: { label: "Video", icon: Video, dot: "#7C5CFF" },
+  game: { label: "Game", icon: Gamepad2, dot: "#219EBC" },
+  video: { label: "Video", icon: Video, dot: "#FFB703" },
   other: { label: "Others", icon: Layers, dot: "#4988C4" },
 };
 
@@ -259,7 +259,7 @@ function ExpandedPanel({
               </a>
             )}
             {project.demo !== "#" && (
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-bold text-on-accent transition-[background-color,box-shadow,transform] duration-200 hover:bg-accent-strong active:scale-[0.98] dark:bg-gradient-to-r dark:from-accent dark:to-cyan dark:hover:shadow-lg dark:hover:shadow-accent/30">
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-amber py-2.5 text-sm font-bold text-on-accent transition-[background-color,box-shadow,transform] duration-200 hover:bg-orange active:scale-[0.98] dark:bg-gradient-to-r dark:from-amber dark:to-orange dark:hover:shadow-lg dark:hover:shadow-amber/30">
                 {project.demo.includes("itch.io") ? (
                   <><ItchIcon /> Go to itch.io</>
                 ) : project.kind === "video" ? (
@@ -379,7 +379,7 @@ export function ProjectCard({ project, href }: { project: Project; featured?: bo
         {/* Video projects get a persistent play button */}
         {project.kind === "video" && (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/50 pl-1 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:border-violet/70 group-hover:bg-violet/25">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/50 pl-1 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:border-amber/70 group-hover:bg-amber/25">
               <PlayIcon />
             </span>
           </div>

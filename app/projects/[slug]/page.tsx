@@ -158,7 +158,7 @@ export default async function ProjectPage({
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent to-cyan py-3 text-sm font-bold text-on-accent transition-all hover:shadow-lg hover:shadow-accent/30"
+                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber to-orange py-3 text-sm font-bold text-on-accent transition-all hover:shadow-lg hover:shadow-amber/30"
                     >
                       {project.demo.includes("itch.io") ? (
                         <><ItchIcon /> Go to itch.io</>

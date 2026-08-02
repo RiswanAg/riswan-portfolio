@@ -63,8 +63,8 @@ type Milestone = {
 const NO_PHOTOS_YET = new Set<string>(["award-6-covid-infographic"]);
 
 const KIND_META: Record<Kind, { label: string; color: string }> = {
-  work: { label: "Experience", color: "#2EE6C6" },
-  award: { label: "Award", color: "#27C7E5" },
+  work: { label: "Experience", color: "#219EBC" },
+  award: { label: "Award", color: "#FFB703" },
 };
 
 const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
@@ -603,7 +603,7 @@ export function Journey() {
 
   return (
     <section id="experience" className="relative overflow-hidden px-0 py-24">
-      <div aria-hidden className="aurora -left-24 top-8 h-72 w-72 bg-violet/15" />
+      <div aria-hidden className="aurora -left-24 top-8 h-72 w-72 bg-amber/15" />
       <div aria-hidden className="aurora -right-16 bottom-0 h-64 w-64 bg-accent/10" />
 
       <div className="px-6">

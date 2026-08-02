@@ -3,7 +3,7 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 
 /**
- * Thin violet→aqua bar pinned to the top of the page that fills as the user
+ * Thin amber→aqua bar pinned to the top of the page that fills as the user
  * scrolls. Uses the native scroll progress (0→1) smoothed by a spring.
  * Transform-only, so it's cheap; framer disables the spring under
  * prefers-reduced-motion.
@@ -20,7 +20,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-violet via-accent to-accent"
+      className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-amber via-accent to-accent"
     />
   );
 }

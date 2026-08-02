@@ -7,7 +7,7 @@ export function Backdrop() {
     <div aria-hidden className="fixed inset-0 z-0 pointer-events-none">
       <div className="absolute inset-0 bg-grid" />
       <div
-        className="aurora top-[-10%] left-[-5%] h-[42vw] w-[42vw] bg-violet/20"
+        className="aurora top-[-10%] left-[-5%] h-[42vw] w-[42vw] bg-amber/20"
         style={{ animationDelay: "0s" }}
       />
       <div

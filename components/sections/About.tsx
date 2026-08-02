@@ -63,7 +63,7 @@ export function About() {
               <a
                 href={PROFILE.cv}
                 download
-                className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-accent-strong active:scale-[0.98] dark:bg-gradient-to-r dark:from-accent dark:to-cyan dark:shadow-lg dark:shadow-accent/25 dark:hover:shadow-xl dark:hover:shadow-accent/40"
+                className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-amber px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-orange active:scale-[0.98] dark:bg-gradient-to-r dark:from-amber dark:to-orange dark:shadow-lg dark:shadow-amber/25 dark:hover:shadow-xl dark:hover:shadow-amber/40"
               >
                 <Download size={16} strokeWidth={2.5} />
                 Download CV
@@ -111,7 +111,7 @@ export function About() {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           >
             <div className="relative w-full max-w-sm">
-              <div className="absolute -inset-4 rounded-2xl bg-gradient-to-br from-accent/15 via-violet/10 to-transparent blur-xl dark:rounded-3xl dark:from-accent/40 dark:via-violet/30 dark:blur-2xl" />
+              <div className="absolute -inset-4 rounded-2xl bg-gradient-to-br from-accent/15 via-amber/10 to-transparent blur-xl dark:rounded-3xl dark:from-accent/40 dark:via-amber/30 dark:blur-2xl" />
               <CometCard className="relative">
                 <div className="flex w-full flex-col items-stretch rounded-2xl border border-line bg-surface p-3">
                   <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl">

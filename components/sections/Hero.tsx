@@ -73,7 +73,7 @@ export function Hero() {
       {/* Ambient background — animated shadow drift, tinted to the accent palette */}
       <div className="pointer-events-none absolute inset-0 opacity-40 dark:opacity-100">
         <EtherealShadow
-          color="rgba(124, 92, 255, 0.5)"
+          color="rgba(33, 158, 188, 0.5)"
           animation={
             reduceMotion || !isDesktop ? undefined : { scale: 60, speed: 80 }
           }
@@ -153,7 +153,7 @@ export function Hero() {
           >
             <a
               href="#portfolio-showcase"
-              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-accent-strong active:scale-[0.98] dark:bg-gradient-to-r dark:from-accent dark:to-cyan dark:shadow-lg dark:shadow-accent/25 dark:hover:shadow-xl dark:hover:shadow-accent/40"
+              className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-amber px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-orange active:scale-[0.98] dark:bg-gradient-to-r dark:from-amber dark:to-orange dark:shadow-lg dark:shadow-amber/25 dark:hover:shadow-xl dark:hover:shadow-amber/40"
             >
               View Unity Projects
               <ArrowRight

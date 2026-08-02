@@ -14,7 +14,7 @@ export function Contact() {
       {/* Closing glow */}
       <div
         aria-hidden
-        className="aurora left-1/2 top-1/2 h-[34vw] w-[34vw] -translate-x-1/2 -translate-y-1/2 bg-violet/15"
+        className="aurora left-1/2 top-1/2 h-[34vw] w-[34vw] -translate-x-1/2 -translate-y-1/2 bg-amber/15"
       />
 
       <div className="relative mx-auto max-w-3xl text-center">
@@ -43,7 +43,7 @@ export function Contact() {
               {email && (
                 <a
                   href={email.href}
-                  className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-accent-strong active:scale-[0.98] dark:bg-gradient-to-r dark:from-accent dark:to-cyan dark:shadow-lg dark:shadow-accent/25 dark:hover:shadow-xl dark:hover:shadow-accent/40"
+                  className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-amber px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-orange active:scale-[0.98] dark:bg-gradient-to-r dark:from-amber dark:to-orange dark:shadow-lg dark:shadow-amber/25 dark:hover:shadow-xl dark:hover:shadow-amber/40"
                 >
                   <Mail size={16} strokeWidth={2.5} />
                   Email Me

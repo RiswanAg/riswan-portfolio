@@ -238,7 +238,7 @@ function ProjectsTab() {
           transition={{ duration: 0.4 }}
           className="mx-auto max-w-md rounded-2xl border border-dashed border-line bg-veil px-8 py-16 text-center"
         >
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet/20 to-accent/20 text-violet-strong">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber/20 to-accent/20 text-amber-strong">
             <Video size={26} />
           </span>
           <h3 className="mt-5 text-lg font-black text-ink">Video reel coming soon</h3>
@@ -285,8 +285,8 @@ function CertificatesTab() {
                 }`}
               />
             ) : (
-              <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-violet/20 via-surface to-accent/10 transition-transform duration-500 group-hover:scale-105">
-                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet/30 to-accent/30 text-ink">
+              <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-amber/20 via-surface to-accent/10 transition-transform duration-500 group-hover:scale-105">
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber/30 to-accent/30 text-ink">
                   <FileText size={26} />
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-dim">
@@ -302,7 +302,7 @@ function CertificatesTab() {
 
           {/* Meta */}
           <div className="flex items-start gap-3 p-6">
-            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-violet/20 text-accent-strong">
+            <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-amber/20 text-accent-strong">
               <BadgeCheck size={18} />
             </span>
             <div>
@@ -358,7 +358,7 @@ function TechStackTab() {
           return (
             <Reveal key={group.category} delay={gi * 80}>
               <div className="mb-7 flex items-center justify-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-violet/20 text-accent-strong">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-amber/20 text-accent-strong">
                   <Icon size={16} />
                 </span>
                 <h4 className="text-base font-bold text-ink">
