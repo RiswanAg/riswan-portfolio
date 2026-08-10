@@ -118,10 +118,10 @@ export function Hero() {
               <span className="hud-bar h-2.5 w-[3px] bg-accent" />
               <span className="hud-bar h-1.5 w-[3px] bg-accent" />
             </span>
-            {PROFILE.availability}
+            {PROFILE.status}
           </motion.div>
 
-          <h1 className="mb-3 font-black leading-[0.9] tracking-tight" aria-label={`${PROFILE.name}, Game Developer and Game Technology Student`}>
+          <h1 className="mb-3 font-black leading-[0.9] tracking-tight" aria-label={`${PROFILE.name}, Game and Immersive Tech Developer`}>
             <span className="block overflow-hidden pb-1">
               <motion.span variants={nameLine} className="block">
                 <span className="block text-5xl text-ink sm:text-6xl md:text-7xl">
@@ -136,7 +136,7 @@ export function Hero() {
             variants={rise}
             className="mb-4 text-xl font-bold leading-snug text-ink sm:text-2xl lg:text-3xl"
           >
-            Game Developer &amp; Game Technology Student
+            Game &amp; Immersive Tech Developer
           </motion.p>
 
           <motion.p
@@ -154,7 +154,7 @@ export function Hero() {
               href="#portfolio-showcase"
               className="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-amber px-7 py-3 text-sm font-bold text-on-accent transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:bg-orange active:scale-[0.98] dark:bg-gradient-to-r dark:from-amber dark:to-orange dark:shadow-lg dark:shadow-amber/25 dark:hover:shadow-xl dark:hover:shadow-amber/40"
             >
-              View Unity Projects
+              View My Work
               <ArrowRight
                 size={16}
                 className="transition-transform duration-200 group-hover:translate-x-1"

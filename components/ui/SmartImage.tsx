@@ -42,6 +42,18 @@ export function SmartImage({
           className={className}
           onError={() => setFailed(true)}
           onLoad={onLoad ? (e) => onLoad(e.currentTarget) : undefined}
+          // A cached image can finish decoding before React attaches onLoad,
+          // in which case that handler never fires. Catch the already-complete
+          // case on mount so callers relying on natural dimensions (e.g. the
+          // Journey accent frames, which size themselves to the photo's aspect
+          // ratio) don't get stuck on their fallback ratio.
+          ref={
+            onLoad
+              ? (img) => {
+                  if (img?.complete && img.naturalWidth) onLoad(img);
+                }
+              : undefined
+          }
         />
       )}
     </>

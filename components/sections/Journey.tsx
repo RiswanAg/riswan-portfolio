@@ -83,6 +83,7 @@ const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
 const EXPERIENCE_FOLDERS = [
   "experience-1-nextgen-digital-ninja",
   "experience-2-game-jams",
+  "experience-3-pencak-dice",
 ];
 
 const AWARD_FOLDERS = [
@@ -101,11 +102,14 @@ const galleryPaths = (folder: string): string[] => [
 ];
 
 function buildMilestones(): Milestone[] {
-  const expSort = [2025.1, 2024.9];
+  const expSort = [2025.1, 2024.9, 2026.5];
   const achSort = [2026.4, 2025.4, 2025.2, 2026.3, 2022.1, 2020.1];
 
   const work: Milestone[] = EXPERIENCES.map((e, i) => {
     const folder = EXPERIENCE_FOLDERS[i] ?? `experience-${i + 1}`;
+    const project = e.projectSlug
+      ? PROJECTS.find((p) => p.slug === e.projectSlug)
+      : undefined;
     return {
       kind: "work",
       sort: expSort[i] ?? 2000,
@@ -117,12 +121,17 @@ function buildMilestones(): Milestone[] {
       highlight: e.highlight,
       description: e.description,
       // Real uploaded photos win when available; otherwise fall back to the
-      // project thumbnails, then a predictable placeholder folder.
+      // project thumbnails, then a predictable placeholder folder. A supplied
+      // `gallery` is taken literally, so a milestone with only two photos
+      // renders hero + one accent instead of leaving an empty third slot.
       gallery: e.gallery
-        ? [...e.gallery, `/journey/${folder}/3.jpg`]
+        ? e.gallery
         : e.bgImages
           ? [e.bgImages.left, e.bgImages.right, `/journey/${folder}/3.jpg`]
           : galleryPaths(folder),
+      link: project
+        ? { href: `/projects/${project.slug}`, label: `Explore ${project.title}` }
+        : undefined,
       key: folder,
       hasPhotos: !NO_PHOTOS_YET.has(folder),
     };
@@ -268,18 +277,22 @@ function FloatingPhoto({
 type AccentSpot = { width: number; height: number; position: string; rotate: number };
 type AccentOverride = Partial<AccentSpot>;
 
-const DEFAULT_TOP = { width: 288, height: 280 };
-const DEFAULT_BOTTOM = { width: 208, height: 300 };
+// Heights are tuned so the two accents can't collide: the hero is ~587px tall,
+// the top photo ends around y=270 and the bottom one starts around y=380.
+const DEFAULT_TOP = { width: 280, height: 260 };
+const DEFAULT_BOTTOM = { width: 230, height: 240 };
 
+// NOTE ON `position`: the defaults below are flip-aware — odd-numbered panels
+// put the hero on the right and the photos in the left gutter, and vice versa.
+// A hardcoded side here (e.g. "-right-20") overrides that for BOTH orientations,
+// so on a flipped panel the photo lands on top of the hero and its text instead
+// of in the empty gutter. Prefer size-only overrides; only set `position` if
+// you also handle the flipped case.
 const ACCENT_TOP_LAYOUT: Record<string, AccentOverride> = {
-  "award-1-itex-2026-silver": {width: 400, height: 320, position: "top-0 -right-0"},
-  "award-2-ftmk-sneakout-silver": {
-    width: 200,
-    height: 400,
-    position: "-top-24 -right-4 lg:top-2 lg:left-0 lg:right-auto",
-  },
+  "award-1-itex-2026-silver": { width: 300, height: 300 },
+  "award-2-ftmk-sneakout-silver": { width: 220, height: 360 },
   "award-3-game-jam-wins": {},
-  "award-4-deans-list": { width: 350, height: 350},
+  "award-4-deans-list": { width: 300, height: 300 },
   "award-5-national-football": {},
   "award-6-covid-infographic": {},
   "experience-1-nextgen-digital-ninja": {},
@@ -287,18 +300,14 @@ const ACCENT_TOP_LAYOUT: Record<string, AccentOverride> = {
 };
 
 const ACCENT_BOTTOM_LAYOUT: Record<string, AccentOverride> = {
-  "award-1-itex-2026-silver": {width: 400, height: 250, position: "bottom-0 -right-20"},
-  "award-2-ftmk-sneakout-silver": {
-    width: 300,
-    height: 190,
-    position: "bottom-8 -right-48",
-  },
-  "award-3-game-jam-wins": {width: 400, height: 250, position: "top-0 -right-50"},
-  "award-4-deans-list": { width: 400, height: 400, position: "bottom-0 -right-30" },
-  "award-5-national-football": {width: 400, height: 250, position: "bottom-2 -right-5"},
+  "award-1-itex-2026-silver": { width: 260, height: 200 },
+  "award-2-ftmk-sneakout-silver": { width: 250, height: 200 },
+  "award-3-game-jam-wins": {},
+  "award-4-deans-list": { width: 260, height: 260 },
+  "award-5-national-football": { width: 260, height: 200 },
   "award-6-covid-infographic": {},
   "experience-1-nextgen-digital-ninja": {},
-  "experience-2-game-jams": {width: 400, height: 250, position: "bottom-2 -right-5"},
+  "experience-2-game-jams": { width: 260, height: 200 },
 };
 
 // ── One cinematic panel ────────────────────────────────────────────────────────
@@ -338,7 +347,7 @@ function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
   };
   const bottom: AccentSpot = {
     ...DEFAULT_BOTTOM,
-    position: flip ? "bottom-10 left-8 lg:left-10" : "bottom-10 right-8 lg:right-10",
+    position: flip ? "-bottom-8 left-6 lg:left-8" : "-bottom-8 right-6 lg:right-8",
     rotate: flip ? -5 : 5,
     ...ACCENT_BOTTOM_LAYOUT[m.key],
   };
@@ -587,6 +596,7 @@ function TimelineItem({ m }: { m: Milestone }) {
 // Headline moments that earn the full-height cinematic photo treatment.
 // Everything else collapses into the compact timeline below them.
 const CINEMATIC_KEYS = new Set<string>([
+  "experience-3-pencak-dice",
   "award-1-itex-2026-silver",
   "award-2-ftmk-sneakout-silver",
   "experience-1-nextgen-digital-ninja",

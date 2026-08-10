@@ -122,7 +122,7 @@ export function Navbar() {
             onClick={() => handleSectionLink("contact")}
             className="ml-3 rounded-lg bg-amber px-4 py-2 text-sm font-bold text-on-accent transition-[background-color,box-shadow,filter,transform] duration-200 hover:bg-orange active:scale-[0.98] dark:bg-gradient-to-r dark:from-amber dark:to-orange dark:hover:shadow-lg dark:hover:shadow-amber/30 dark:hover:brightness-110"
           >
-            Open to Internships
+            Get in Touch
           </button>
           <ThemeToggle className="ml-4" />
         </div>

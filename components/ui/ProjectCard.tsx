@@ -21,6 +21,7 @@ import {
   Layers,
   ArrowUpRight,
   Hand,
+  Footprints,
   FileText,
   LucideIcon,
 } from "lucide-react";
@@ -35,6 +36,7 @@ const PROJECT_FALLBACK_ICONS: Record<string, LucideIcon> = {
   gamepad: Gamepad2,
   video: Video,
   hand: Hand,
+  footprints: Footprints,
 };
 
 const KIND_META: Record<ProjectKind, { label: string; icon: LucideIcon; dot: string }> = {

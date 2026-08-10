@@ -10,8 +10,8 @@ export const PROFILE = {
     "Systems Thinker",
   ],
   tagline:
-    "I don't just imagine things. I build them. Mostly games, sometimes something else entirely.",
-  availability: "Open to Internship Opportunities",
+    "I don't just imagine things. I build them — games, VR and AR simulations, and whatever else the problem actually calls for.",
+  status: "Currently Building in Unity & Unreal",
   image: "/profile.png",
   imageFallback: "/profile.svg",
   cv: "/cv.pdf",
@@ -21,7 +21,7 @@ export const PROFILE = {
 export const HERO_HIGHLIGHTS = [
   "CGPA 3.80 · Dean's List ×6",
   "Silver Award, ITEX 2026",
-  "10 Shipped Projects",
+  "12 Shipped Projects",
 ];
 
 // ─── Home "About Me" section ────────────────────────────────────────────────
@@ -30,7 +30,7 @@ export const ABOUT_HOME = {
   heading: "About Me",
   greeting: "Hello, I'm",
   bio:
-    "I'm a Game Technology student at UTeM who turns ideas into things people can play, feel, and remember. I build games and prototypes by experimenting, breaking things, and fixing them until they click.",
+    "I'm a Game Technology student at UTeM who turns ideas into things people can play, feel, and remember. I build games, VR and AR simulations, and interactive tools by experimenting, breaking things, and fixing them until they click.",
   quote: "Leveraging AI as a professional tool, not a replacement.",
 };
 
@@ -51,9 +51,9 @@ export const ABOUT_STATS: AboutStat[] = [
   },
   {
     icon: "code",
-    value: "11",
+    value: "15",
     label: "Total Projects",
-    detail: "Games, video production & more",
+    detail: "Games, VR/AR simulation, video & tools",
     href: "#portfolio-showcase",
   },
   {
@@ -176,6 +176,74 @@ export type Project = {
 };
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "pencak",
+    title: "PENCAK",
+    role: "Lead Programmer · Full-body VR tracking",
+    award: "UTeM Representative · DICE 4.0",
+    kind: "game",
+    description:
+      "A living archive of Silat Seni Gayong: a full-body VR trainer built in Unity for Meta Quest 3. Existing VR martial arts apps track only arms and hands, which breaks down for Silat, where evasion is entirely footwork — so PENCAK pairs the headset with HTC Vive trackers to read stance, stepping and foot position, and validates placement live on a grid mat.",
+    tech: ["Unity", "C#", "Meta Quest 3", "HTC Vive Trackers", "Convai", "VR"],
+    contribution:
+      "Leading the programming for Team IMMERSA: extending Quest 3 with Vive trackers for below-the-waist coverage, building the grid-mat system that validates foot placement in real time, and integrating Convai to turn onboarding into a conversation with a virtual Guru instead of a setup form.",
+    status: { label: "In Development", tone: "live" },
+    image: "/projects/pencak/thumbnail.png",
+    // Pitch-deck boards, not in-engine captures — captions say so.
+    gallery: [
+      {
+        type: "image",
+        src: "/projects/pencak/thumbnail.png",
+        caption: "PENCAK — a living archive of Silat Seni Gayong",
+      },
+      {
+        type: "image",
+        src: "/projects/pencak/problem-oral-tradition.png",
+        caption:
+          "The problem: Silat lives in bodies, not in books — when a master dies, whatever he never taught in person goes with him",
+      },
+      {
+        type: "image",
+        src: "/projects/pencak/solution-key-features.png",
+        caption:
+          "The solution: full-body interaction, a virtual Guru, and action-based learning",
+      },
+      {
+        type: "image",
+        src: "/projects/pencak/full-body-tracking.png",
+        caption:
+          "Vive trackers extend Quest 3 below the waist to read stance, stepping and foot position",
+      },
+      {
+        type: "image",
+        src: "/projects/pencak/virtual-guru-convai.png",
+        caption:
+          "Convai powers a virtual Guru players can ask for guidance, replacing manual setup with conversation",
+      },
+      {
+        type: "image",
+        src: "/projects/pencak/game-flow.png",
+        caption: "Game flow: Explore → Converse → Learn → Practise → Apply",
+      },
+    ],
+    fallbackIcon: "footprints",
+    fallbackGradient: "from-[#219EBC]/40 via-[#0F2854]/30 to-[#1C4D8D]/50",
+    github: "https://github.com/RiswanAg",
+    demo: "#",
+    featured: true,
+    highlights: [
+      "Lower-body tracking via HTC Vive trackers on Meta Quest 3",
+      "Grid mat that validates stance and foot placement in real time",
+      "Next step shown as a yellow footprint, turning green when landed",
+      "Conversational AI Guru built on Convai for voice onboarding",
+      "Guru answers questions and repeats demonstrations mid-session",
+      "Spoken name, age and height drive body calibration and difficulty",
+      "Three modules: Asas Serangan, Asas Elakkan, Elak & Serang",
+      "Scoring across hand movement, footwork, stance, timing and accuracy",
+    ],
+    technicalDetails:
+      "Silat Seni Gayong lives in muscle memory — its forms were never meaningfully written down, and correction only happens when a teacher is watching from the right angle at the right moment, so a student can drill a wrong stance a thousand times and never know. Benchmarking the closest VR reference points exposed two fatal gaps for this discipline: KungFu VR teaches through movement but tracks the upper body only, and FitXR's virtual instructor demonstrates without ever being able to answer a question. Both are disqualifying here, because evasion is footwork and correction has to be conversational. The build answers each directly: Vive trackers extend Quest 3 below the waist to supply real stance and stepping data, feeding a grid mat that marks the player's position, projects the next step as a yellow footprint, and turns it green once landed — so a wrong placement flags immediately instead of being silently reinforced. Convai powers a virtual Guru who gathers the player's details by voice, then stays available through the session. The two halves have to agree: the Guru's correction is only credible if the tracking underneath is genuinely reading the stance right, so calibration and feedback logic can't be developed independently — a false positive on foot placement turns the Guru into a liar, which is worse than giving no feedback at all.",
+  },
   {
     slug: "smart-farming",
     title: "Agrileap",
@@ -701,6 +769,8 @@ export type Experience = {
   description: string;
   tags: string[];
   bgImages?: { left: string; right: string };
+  /** Optional linked portfolio project slug (e.g. "pencak"). */
+  projectSlug?: string;
   /** Optional real photos to use in the Journey gallery instead of the placeholder folder. */
   gallery?: string[];
 };
@@ -718,6 +788,7 @@ export const EXPERIENCES: Experience[] = [
     gallery: [
       "/journey/experience-1-nextgen-digital-ninja/1.jpg",
       "/journey/experience-1-nextgen-digital-ninja/2.jpg",
+      "/journey/experience-1-nextgen-digital-ninja/3.jpg",
     ],
   },
   {
@@ -733,6 +804,22 @@ export const EXPERIENCES: Experience[] = [
       left: "/projects/rabbit-racing/thumbnail.png",
       right: "/projects/reyclash/thumbnail.png",
     },
+  },
+  {
+    period: "2026",
+    role: "Lead Programmer",
+    organisation: "PENCAK · Team IMMERSA, DICE 4.0",
+    summary:
+      "Building a full-body VR Silat trainer that tracks the one thing other martial arts apps ignore: your feet.",
+    highlight: "UTeM Representative",
+    description:
+      "PENCAK is a VR trainer for Silat Seni Gayong, built in Unity for Meta Quest 3 by Team IMMERSA. Existing VR martial arts apps track only arms and hands, which breaks down for Silat, where evasion is entirely footwork — so I pair the headset with HTC Vive trackers to read stance, stepping and foot position, and validate placement live on a grid mat that marks the next step and confirms it once the player lands it. Onboarding runs through a conversational AI Guru built on Convai instead of a setup form, gathering the details that drive body calibration and difficulty, then staying available mid-session to repeat a demonstration or answer a question. The pitch was approved at the UniSZA startup bootcamp, and our four-person team was selected to represent UTeM at DICE 4.0 (Digital Innovation Creativepreneur), the Ministry of Higher Education's national competition for student digital startups, held at UniSZA from 31 July to 3 August 2026.",
+    tags: ["Unity", "Meta Quest 3", "Vive Trackers", "Convai", "VR"],
+    projectSlug: "pencak",
+    gallery: [
+      "/journey/experience-3-pencak-dice/1.jpg",
+      "/journey/experience-3-pencak-dice/2.jpg",
+    ],
   },
 ];
 
@@ -795,7 +882,7 @@ export const EDUCATION: Education[] = [
 // ─── Contact ──────────────────────────────────────────────────────────────
 
 export const CONTACT_INTRO =
-  "Open to internship opportunities, junior developer roles, and collaboration. Let's build something interactive together.";
+  "Interested in game development roles and collaborations on interactive projects. If you're building something worth playing, I'd like to hear about it.";
 
 export type ContactLink = {
   label: string;

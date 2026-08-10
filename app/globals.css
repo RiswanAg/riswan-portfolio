@@ -296,7 +296,7 @@ h1, h2, h3 {
   }
 }
 
-/* ── HUD status chip (Hero availability tag) — notched corners, signal bars ── */
+/* ── HUD status chip (Hero status tag) — notched corners, signal bars ── */
 .hud-chip {
   clip-path: polygon(
     10px 0,

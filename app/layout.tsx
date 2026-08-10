@@ -38,16 +38,18 @@ const BASE_URL = "https://riswanhamua.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Riswan Hamua | Game Technology Student & Game Developer",
+  title: "Riswan Hamua | Game & Immersive Tech Developer",
   description:
-    "Portfolio of Riswan Hamua, Game Technology student specializing in Unity development, interactive simulations, and smart farming technologies.",
+    "Portfolio of Riswan Hamua, Game Technology student building games, VR and AR simulations, and interactive tools in Unity, Unreal and the browser.",
   keywords: [
     "Riswan Hamua",
     "Game Developer",
     "Unity Developer",
+    "Unreal Engine Developer",
+    "VR Developer",
+    "AR Developer",
     "Game Technology",
     "Interactive Simulation",
-    "Smart Farming Game",
     "C# Developer",
     "Portfolio",
   ],
@@ -57,16 +59,16 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     siteName: "Riswan Hamua Portfolio",
-    title: "Riswan Hamua | Game Technology Student & Game Developer",
+    title: "Riswan Hamua | Game & Immersive Tech Developer",
     description:
-      "Portfolio of Riswan Hamua, Game Technology student specializing in Unity development, interactive simulations, and smart farming technologies.",
+      "Portfolio of Riswan Hamua, Game Technology student building games, VR and AR simulations, and interactive tools in Unity, Unreal and the browser.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Riswan Hamua Portfolio" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Riswan Hamua | Game Technology Student & Game Developer",
+    title: "Riswan Hamua | Game & Immersive Tech Developer",
     description:
-      "Portfolio of Riswan Hamua, Game Technology student specializing in Unity development, interactive simulations, and smart farming technologies.",
+      "Portfolio of Riswan Hamua, Game Technology student building games, VR and AR simulations, and interactive tools in Unity, Unreal and the browser.",
     images: ["/og-image.png"],
   },
   alternates: {
@@ -84,7 +86,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Riswan Hamua",
   url: BASE_URL,
-  jobTitle: "Game Technology Student & Game Developer",
+  jobTitle: "Game & Immersive Tech Developer",
   alumniOf: "Universiti Teknikal Malaysia Melaka (UTeM)",
   sameAs: [
     "https://github.com/riswan-hamua",

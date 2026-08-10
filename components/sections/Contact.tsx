@@ -26,18 +26,18 @@ export function Contact() {
           </p>
         </Reveal>
 
-        {/* Primary CTA — email is the action that gets an internship */}
+        {/* Primary CTA — email is the action worth optimising for */}
         <Reveal className="mb-12">
           <GlowCard className="mx-auto max-w-2xl rounded-2xl border border-line bg-surface p-8 dark:border-accent/20 sm:p-10">
             <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/30 bg-accent/10">
               <Mail size={24} className="text-accent-strong" strokeWidth={1.75} />
             </div>
             <h3 className="text-2xl font-black text-ink sm:text-3xl">
-              Have an internship spot open?
+              Let&apos;s talk
             </h3>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-dim">
-              I reply fast. One email and you&apos;ll know exactly what I can
-              bring to your team.
+              Roles, collaborations, or a question about the work — my inbox is
+              open.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               {email && (
