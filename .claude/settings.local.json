@@ -31,7 +31,9 @@
       "Bash(PORT=3000 npm run dev)",
       "Bash(node *)",
       "WebFetch(domain:www.dafont.com)",
-      "Bash(awk '{print}')"
+      "Bash(awk '{print}')",
+      "Bash(awk '{printf \"%.0f KB\\\\t%s\\\\n\", $1/1024, $2}')",
+      "Bash(awk '{s+=$1} END {printf \"%.1f MB\\\\n\", s/1048576}')"
     ]
   },
   "hooks": {
