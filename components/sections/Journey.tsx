@@ -84,6 +84,7 @@ const EXPERIENCE_FOLDERS = [
   "experience-1-nextgen-digital-ninja",
   "experience-2-game-jams",
   "experience-3-pencak-dice",
+  "experience-4-msn-agrileap",
 ];
 
 const AWARD_FOLDERS = [
@@ -102,7 +103,7 @@ const galleryPaths = (folder: string): string[] => [
 ];
 
 function buildMilestones(): Milestone[] {
-  const expSort = [2025.1, 2024.9, 2026.5];
+  const expSort = [2025.1, 2024.9, 2026.5, 2026.6];
   const achSort = [2026.4, 2025.4, 2025.2, 2026.3, 2022.1, 2020.1];
 
   const work: Milestone[] = EXPERIENCES.map((e, i) => {
@@ -596,6 +597,7 @@ function TimelineItem({ m }: { m: Milestone }) {
 // Headline moments that earn the full-height cinematic photo treatment.
 // Everything else collapses into the compact timeline below them.
 const CINEMATIC_KEYS = new Set<string>([
+  "experience-4-msn-agrileap",
   "experience-3-pencak-dice",
   "award-1-itex-2026-silver",
   "award-2-ftmk-sneakout-silver",

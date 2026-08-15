@@ -89,8 +89,8 @@ const jsonLd = {
   jobTitle: "Game & Immersive Tech Developer",
   alumniOf: "Universiti Teknikal Malaysia Melaka (UTeM)",
   sameAs: [
-    "https://github.com/riswan-hamua",
-    "https://linkedin.com/in/riswan-hamua",
+    "https://github.com/RiswanAg",
+    "https://www.linkedin.com/in/riswanhamua",
   ],
   knowsAbout: ["Unity", "C#", "C++", "Game Development", "Interactive Simulation"],
 };

@@ -10,7 +10,7 @@ export const PROFILE = {
     "Systems Thinker",
   ],
   tagline:
-    "I don't just imagine things. I build them — games, VR and AR simulations, and whatever else the problem actually calls for.",
+    "I don't just imagine things. I build them especially games, VR and AR simulations, and whatever else the problem actually calls for.",
   status: "Currently Building in Unity & Unreal",
   image: "/profile.png",
   imageFallback: "/profile.svg",
@@ -118,6 +118,15 @@ export const CERTIFICATES: Certificate[] = [
     imageFit: "contain",
     pdf: "/certificates/myverse-2026.pdf",
     url: "/certificates/myverse-2026.pdf",
+  },
+  {
+    name: "Participation, Digital Creative Camp, DICE 4.0 2026",
+    org: "Universiti Sultan Zainal Abidin · Ministry of Higher Education Malaysia",
+    date: "2026",
+    image: "/certificates/dice-4-0-2026.jpg",
+    imageFit: "contain",
+    pdf: "/certificates/dice-4-0-2026.pdf",
+    url: "/certificates/dice-4-0-2026.pdf",
   },
 ];
 
@@ -821,6 +830,23 @@ export const EXPERIENCES: Experience[] = [
       "/journey/experience-3-pencak-dice/2.jpg",
     ],
   },
+  {
+    period: "August 2026",
+    role: "Exhibitor",
+    organisation: "Minggu Sains Negara (MSN) 2026 · Dewan Canselor UTeM",
+    summary:
+      "Represented UTeM at national science week, demoing AgriLeap on Tilt 5 to the public across two days.",
+    highlight: "National Exhibition",
+    description:
+      "Selected to represent UTeM at Minggu Sains Negara 2026, the national science week exhibition held at Dewan Canselor UTeM. Over two days I demoed AgriLeap — a holographic serious game built in Unity for the Tilt 5 tabletop AR platform, raising awareness of smart palm oil farming among Malaysian youth — running the booth and handling the live hardware setup. Engagement ran strongest with younger visitors, who picked up the two-player asymmetric gameplay with no instruction at all.",
+    tags: ["AR", "Unity", "Tilt 5", "Serious Games", "Exhibition"],
+    projectSlug: "smart-farming",
+    gallery: [
+      "/journey/experience-4-msn-agrileap/1.jpg",
+      "/journey/experience-4-msn-agrileap/2.jpg",
+      "/journey/experience-4-msn-agrileap/3.jpg",
+    ],
+  },
 ];
 
 // ─── Education ───────────────────────────────────────────────────────────────
@@ -901,15 +927,15 @@ export const CONTACTS: ContactLink[] = [
   },
   {
     label: "GitHub",
-    display: "github.com/riswan-hamua",
-    href: "https://github.com/riswan-hamua",
+    display: "github.com/RiswanAg",
+    href: "https://github.com/RiswanAg",
     icon: "🐙",
     logo: "/socials/github.png",
   },
   {
     label: "LinkedIn",
-    display: "linkedin.com/in/riswan-hamua",
-    href: "https://linkedin.com/in/riswan-hamua",
+    display: "linkedin.com/in/riswanhamua",
+    href: "https://www.linkedin.com/in/riswanhamua",
     icon: "💼",
     logo: "/socials/linkedin.png",
   },
