@@ -58,9 +58,10 @@ export const ABOUT_STATS: AboutStat[] = [
   },
   {
     icon: "award",
-    value: "2",
-    label: "Certificate",
-    detail: "Silver Award ITEX 2026, Silver Award FTMK Innovation",
+    value: "6",
+    label: "Certificates",
+    detail: "Unity & Unreal coursework, competition and innovation awards",
+    href: "#portfolio-showcase",
   },
 ];
 
@@ -268,6 +269,26 @@ export const PROJECTS: Project[] = [
     previewVideo: "/projects/smart-farming/preview.mp4",
     gallery: [
       { type: "image", src: "/projects/smart-farming/thumbnail.png" },
+      {
+        type: "image",
+        src: "/projects/smart-farming/main-menu.jpg",
+        caption: "Main menu, with the whole nursery running live behind it — playable in BM and EN",
+      },
+      {
+        type: "image",
+        src: "/projects/smart-farming/nursery-polybags.jpg",
+        caption: "The nursery stage: polybag seedlings the player tends, some already showing disease",
+      },
+      {
+        type: "image",
+        src: "/projects/smart-farming/iot-monitoring.jpg",
+        caption: "Mature plot wired with solar IoT soil sensors, a fertigation rig and a live monitoring terminal",
+      },
+      {
+        type: "image",
+        src: "/projects/smart-farming/drone-scouting.jpg",
+        caption: "Drone scouting: flying the survey path that feeds the AI disease-detection pass",
+      },
     ],
     fallbackIcon: "sprout",
     fallbackGradient: "from-[#1C4D8D]/50 via-[#0F2854]/30 to-[#0c2248]/50",
