@@ -269,6 +269,7 @@ export const PROJECTS: Project[] = [
     previewVideo: "/projects/smart-farming/preview.mp4",
     gallery: [
       { type: "image", src: "/projects/smart-farming/thumbnail.png" },
+      { type: "youtube", src: "XwBSwe6mKOk", caption: "Agrileap gameplay" },
       {
         type: "image",
         src: "/projects/smart-farming/main-menu.jpg",
