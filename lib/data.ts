@@ -12,7 +12,7 @@ export const PROFILE = {
   tagline:
     "I don't just imagine things. I build them especially games, VR and AR simulations, and whatever else the problem actually calls for.",
   status: "Currently Building in Unity & Unreal",
-  image: "/profile.png",
+  image: "/riswan-portrait.png",
   imageFallback: "/profile.svg",
   cv: "/cv.pdf",
 };

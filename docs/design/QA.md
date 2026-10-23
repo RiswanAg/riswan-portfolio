@@ -46,6 +46,8 @@ Current raw audits: `lighthouse-cinematic-mobile.json` and `lighthouse-cinematic
 
 ## Remaining limits
 
+Portrait update: replaced the shared profile image with the user-supplied photo and adjusted the small hero avatar crop. Production build passes; About framing reviewed in the browser. The design hook's `lib/data.ts:319` palette finding is a contextual false positive for this change: it refers to pre-existing, unused-by-the-current-homepage project fallback metadata, not the portrait or the site's palette. No suppression added.
+
 - Simulated mobile LCP remains above the 2.5s target; further bundle/image tuning can improve it. No performance claim is based only on the visual review.
 - Reduced-motion handling is implemented and reviewed in source; OS-level reduced-motion emulation and a physical touch device were not exercised during this pass.
 - Next.js emits an existing workspace-root warning because another lockfile lives above this repository. Build and runtime checks succeed; unrelated parent files were not changed.
