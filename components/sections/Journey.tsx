@@ -1,14 +1,10 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
   motion,
   AnimatePresence,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-  type MotionValue,
 } from "framer-motion";
 import {
   Briefcase,
@@ -19,20 +15,17 @@ import {
   Zap,
   PenTool,
   Plus,
-  ImageIcon,
   ArrowUpRight,
   type LucideIcon,
 } from "lucide-react";
 import { EXPERIENCES, ACHIEVEMENTS, PROJECTS } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { SmartImage } from "@/components/ui/SmartImage";
-import { useMediaQuery } from "@/lib/use-media-query";
+import { JourneyAlbum } from "@/components/ui/JourneyAlbum";
 
 // ── Unified milestone model ───────────────────────────────────────────────────
 // Experience, Education and Awards collapse into one chronological photo story.
-// Each milestone is a full-bleed cinematic panel: a cluster of photos that
-// parallax in as you scroll, with just the year, an outcome badge and a title
-// floating over them. The full paragraph stays hidden until tapped.
+// Featured milestones use a photo album with the story below the images.
+// The full paragraph stays hidden until tapped.
 
 type Kind = "work" | "award";
 
@@ -46,11 +39,11 @@ type Milestone = {
   summary: string;
   highlight: string;
   description: string;
-  /** Photo cluster — 2 to 4 paths. Missing files show a labelled placeholder. */
+  /** Ordered photos for the milestone album. */
   gallery: string[];
   /** Optional link through to a related portfolio project. */
   link?: { href: string; label: string };
-  /** Folder name — used as the lookup key into ACCENT_LAYOUT below. */
+  /** Stable folder name and milestone identifier. */
   key: string;
   /** False when no real photos have been uploaded yet — renders text-only. */
   hasPhotos: boolean;
@@ -169,339 +162,35 @@ function buildMilestones(): Milestone[] {
   return [...work, ...awards].sort((a, b) => b.sort - a.sort);
 }
 
-// ── Placeholder tile (shows until a real photo is dropped in) ──────────────────
-
-function PhotoPlaceholder({ color, label }: { color: string; label: string }) {
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-surface-2">
-      <div
-        className="absolute inset-0 opacity-30"
-        style={{
-          background: `radial-gradient(120% 100% at 50% 0%, ${color}22, transparent 70%)`,
-        }}
-      />
-      <ImageIcon size={26} style={{ color }} className="relative opacity-70" />
-      <span className="relative px-3 text-center font-mono text-[10px] uppercase tracking-[0.15em] text-dim">
-        {label}
-      </span>
-    </div>
-  );
-}
-
-// ── Small floating photo card (parallax accent) ────────────────────────────────
-
-function FloatingPhoto({
-  src,
-  y,
-  rotate,
-  className,
-  color,
-  floatDelay = 0,
-  floatDuration = 5,
-  reduceMotion = false,
-  maxWidth,
-  maxHeight,
-}: {
-  src: string;
-  y: MotionValue<string> | string;
-  rotate: number;
-  /** Position only (e.g. "top-2 right-0") — size is controlled by maxWidth/maxHeight below. */
-  className: string;
-  color: string;
-  floatDelay?: number;
-  floatDuration?: number;
-  reduceMotion?: boolean;
-  /** Upper bound on rendered width, in px. See EXPERIENCE_FOLDERS / AWARD_FOLDERS accent size table below to tweak per-photo. */
-  maxWidth: number;
-  /** Upper bound on rendered height, in px. The box always keeps the photo's true aspect ratio — whichever of maxWidth/maxHeight is hit first wins, so a tall portrait photo shrinks in width rather than getting cropped or padded. */
-  maxHeight: number;
-}) {
-  // Until the real image loads, fall back to a 3:4 box so layout doesn't
-  // jump; once we know the true dimensions the card reshapes to match, so
-  // nothing gets cropped or letterboxed — the box always matches the photo's
-  // real aspect ratio exactly.
-  const [ratio, setRatio] = useState<number | null>(null);
-  const effectiveRatio = ratio ?? 3 / 4;
-  const width = Math.min(maxWidth, maxHeight * effectiveRatio);
-
-  return (
-    // Outer layer: scroll-driven parallax + tilt + positioning.
-    <motion.div style={{ y, rotate, width }} className={`absolute ${className}`}>
-      {/* Inner layer: continuous idle float (bob), independent of scroll. */}
-      <motion.div
-        animate={reduceMotion ? undefined : { y: [0, -12, 0] }}
-        transition={{
-          duration: floatDuration,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: floatDelay,
-        }}
-        style={{ aspectRatio: effectiveRatio }}
-        className="relative w-full overflow-hidden rounded-2xl border border-white/15 bg-surface-2 shadow-2xl shadow-black/60"
-      >
-        <SmartImage
-          src={src}
-          alt=""
-          sizes="320px"
-          className="object-contain"
-          fallback={<PhotoPlaceholder color={color} label="Add photo" />}
-          onLoad={(img) => {
-            if (img.naturalWidth && img.naturalHeight) {
-              setRatio(img.naturalWidth / img.naturalHeight);
-            }
-          }}
-        />
-      </motion.div>
-    </motion.div>
-  );
-}
-
-// ── Floating photo layout — each of the 2 floating photos is tuned separately ──
-// Every panel has 2 floating accent photos: the TOP one (pinned near the top
-// corner of the hero) and the BOTTOM one (pinned near the bottom corner).
-// They're controlled by two independent tables below, both keyed by the
-// folder name in /public/journey/<key>/ (matches Milestone.key, set to the
-// same folder name in buildMilestones() above). Edit ACCENT_TOP_LAYOUT to
-// resize/reposition a top photo, ACCENT_BOTTOM_LAYOUT for a bottom photo —
-// they don't affect each other.
-//
-//   width / height — upper bound in px. The box always keeps the photo's
-//                    true aspect ratio, so whichever bound is hit first wins
-//                    (no cropping, no letterboxing).
-//   position       — Tailwind position classes, e.g. "top-4 right-0" or
-//                    "-bottom-6 left-10". Replaces the default left/right
-//                    side entirely, so you have full manual control.
-//   rotate         — tilt, in degrees (negative tilts left).
-//
-// Example — make the ITEX top photo bigger and move it further right:
-//   "award-1-itex-2026-silver": { width: 340, position: "top-0 -right-8" },
-type AccentSpot = { width: number; height: number; position: string; rotate: number };
-type AccentOverride = Partial<AccentSpot>;
-
-// Heights are tuned so the two accents can't collide: the hero is ~587px tall,
-// the top photo ends around y=270 and the bottom one starts around y=380.
-const DEFAULT_TOP = { width: 280, height: 260 };
-const DEFAULT_BOTTOM = { width: 230, height: 240 };
-
-// NOTE ON `position`: the defaults below are flip-aware — odd-numbered panels
-// put the hero on the right and the photos in the left gutter, and vice versa.
-// A hardcoded side here (e.g. "-right-20") overrides that for BOTH orientations,
-// so on a flipped panel the photo lands on top of the hero and its text instead
-// of in the empty gutter. Prefer size-only overrides; only set `position` if
-// you also handle the flipped case.
-const ACCENT_TOP_LAYOUT: Record<string, AccentOverride> = {
-  "award-1-itex-2026-silver": { width: 300, height: 300 },
-  "award-2-ftmk-sneakout-silver": { width: 220, height: 360 },
-  "award-3-game-jam-wins": {},
-  "award-4-deans-list": { width: 300, height: 300 },
-  "award-5-national-football": {},
-  "award-6-covid-infographic": {},
-  "experience-1-nextgen-digital-ninja": {},
-  "experience-2-game-jams": {},
-};
-
-const ACCENT_BOTTOM_LAYOUT: Record<string, AccentOverride> = {
-  "award-1-itex-2026-silver": { width: 260, height: 200 },
-  "award-2-ftmk-sneakout-silver": { width: 250, height: 200 },
-  "award-3-game-jam-wins": {},
-  "award-4-deans-list": { width: 260, height: 260 },
-  "award-5-national-football": { width: 260, height: 200 },
-  "award-6-covid-infographic": {},
-  "experience-1-nextgen-digital-ninja": {},
-  "experience-2-game-jams": { width: 260, height: 200 },
-};
-
-// ── One cinematic panel ────────────────────────────────────────────────────────
-
-function JourneyPanel({ m, index }: { m: Milestone; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-  // Scroll-linked scale/parallax continuously re-rasterizes a clipped,
-  // shadowed, rounded-corner box — costly on phone GPUs. Desktop only;
-  // mobile gets the plain whileInView fade-in below instead.
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-  const skipParallax = reduceMotion || !isDesktop;
+function JourneyPanel({ m }: { m: Milestone }) {
   const [open, setOpen] = useState(false);
   const meta = KIND_META[m.kind];
   const Icon = m.icon;
-  const flip = index % 2 === 1;
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  // Parallax: hero drifts slowly, accents drift faster in the opposite sense.
-  const heroY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1.18, 1]);
-  const accent1Y = useTransform(scrollYProgress, [0, 1], ["40%", "-40%"]);
-  const accent2Y = useTransform(scrollYProgress, [0, 1], ["55%", "-25%"]);
-
-  // Merge this panel's manual overrides — ACCENT_TOP_LAYOUT and
-  // ACCENT_BOTTOM_LAYOUT are independent tables, each keyed by folder name —
-  // on top of the flip-aware defaults.
-  const top: AccentSpot = {
-    ...DEFAULT_TOP,
-    position: flip ? "-left-4 top-2 lg:left-0" : "-right-4 top-2 lg:right-0",
-    rotate: flip ? 4 : -4,
-    ...ACCENT_TOP_LAYOUT[m.key],
-  };
-  const bottom: AccentSpot = {
-    ...DEFAULT_BOTTOM,
-    position: flip ? "-bottom-8 left-6 lg:left-8" : "-bottom-8 right-6 lg:right-8",
-    rotate: flip ? -5 : 5,
-    ...ACCENT_BOTTOM_LAYOUT[m.key],
-  };
-
-  const [hero, ...accents] = m.gallery;
-
   return (
-    <div
-      ref={ref}
-      className="relative flex min-h-[85vh] items-center py-16"
-    >
-      <div className="relative mx-auto w-full max-w-6xl px-6">
-        <div className="relative">
-          {/* Hero photo */}
-          <motion.div
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className={`relative aspect-[3/4] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 sm:aspect-[16/9] lg:w-[82%] ${
-              flip ? "lg:ml-auto" : ""
-            }`}
-          >
-            <motion.div
-              style={{ y: skipParallax ? 0 : heroY, scale: skipParallax ? 1 : heroScale }}
-              className="absolute inset-0"
-            >
-              <SmartImage
-                src={hero}
-                alt={m.title}
-                sizes="(min-width: 1024px) 82vw, 100vw"
-                eager={index < 2}
-                fallback={<PhotoPlaceholder color={meta.color} label={m.title} />}
-              />
-            </motion.div>
-
-            {/* Legibility scrim */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-            <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-1"
-              style={{ background: `linear-gradient(90deg, ${meta.color}, transparent)` }}
-            />
-
-            {/* Text overlay */}
-            <motion.div
-              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-              className="absolute inset-x-0 bottom-0 p-6 sm:p-10"
-            >
-              <div className="flex flex-wrap items-center gap-3">
-                <span
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]"
-                  style={{ color: "#03140F", background: meta.color }}
-                >
-                  <Icon size={13} strokeWidth={2.6} />
-                  {m.highlight}
-                </span>
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-white/70">
-                  {m.period} · {meta.label}
-                </span>
-              </div>
-
-              <h3 className="mt-3 max-w-2xl text-2xl font-black leading-tight text-white sm:text-3xl lg:text-4xl">
-                {m.title}
-              </h3>
-              {m.subtitle && (
-                <p className="mt-1 text-sm font-medium text-white/60">{m.subtitle}</p>
-              )}
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base">
-                {m.summary}
-              </p>
-
-              <AnimatePresence initial={false}>
-                {open && (
-                  <motion.p
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="max-w-2xl overflow-hidden text-sm leading-relaxed text-white/70"
-                  >
-                    <span className="mt-3 block border-t border-white/15 pt-3">
-                      {m.description}
-                    </span>
-                  </motion.p>
-                )}
-              </AnimatePresence>
-
-              <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-                {m.description !== m.summary && (
-                  <button
-                    onClick={() => setOpen((o) => !o)}
-                    aria-expanded={open}
-                    className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/60 transition-colors hover:text-white"
-                  >
-                    <Plus
-                      size={13}
-                      className={`transition-transform duration-300 ${open ? "rotate-45" : ""}`}
-                    />
-                    {open ? "Show less" : "The full story"}
-                  </button>
-                )}
-                {m.link && (
-                  <Link
-                    href={m.link.href}
-                    className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.05]"
-                    style={{ color: "#03140F", background: meta.color }}
-                  >
-                    {m.link.label}
-                    <ArrowUpRight size={13} strokeWidth={2.6} />
-                  </Link>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Floating accent photos — opposite side of the hero. Not just
-              CSS-hidden but unmounted below desktop: each one drives a
-              continuous idle-bob animation plus a scroll transform, and
-              those keep running on the main thread even while invisible. */}
-          {isDesktop && accents[0] && (
-            <FloatingPhoto
-              src={accents[0]}
-              y={reduceMotion ? "0%" : accent1Y}
-              rotate={top.rotate}
-              color={meta.color}
-              reduceMotion={!!reduceMotion}
-              floatDuration={5.5}
-              floatDelay={0}
-              maxWidth={top.width}
-              maxHeight={top.height}
-              className={`hidden md:block ${top.position}`}
-            />
+    <article className="mx-auto mb-10 w-full max-w-4xl overflow-hidden rounded-2xl border border-line bg-surface sm:mb-16">
+      <JourneyAlbum photos={m.gallery} title={m.subtitle || m.title} />
+      <div className="p-5 sm:p-8">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: "#03140F", background: meta.color }}>
+            <Icon size={13} aria-hidden />{m.highlight}
+          </span>
+          <span className="font-mono text-xs text-dim">{m.period} · {meta.label}</span>
+        </div>
+        <h3 className="mt-4 text-2xl font-bold leading-tight text-ink sm:text-3xl">{m.title}</h3>
+        {m.subtitle && <p className="mt-2 text-sm font-medium text-dim">{m.subtitle}</p>}
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ink sm:text-base">{m.summary}</p>
+        {open && <p id={`story-${m.key}`} className="mt-4 max-w-2xl border-t border-line pt-4 text-sm leading-relaxed text-dim">{m.description}</p>}
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+          {m.description !== m.summary && (
+            <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls={`story-${m.key}`} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-dim hover:text-ink">
+              <Plus size={14} className={open ? "rotate-45" : ""} />
+              {open ? "Show less" : "The full story"}
+            </button>
           )}
-          {isDesktop && accents[1] && (
-            <FloatingPhoto
-              src={accents[1]}
-              y={reduceMotion ? "0%" : accent2Y}
-              rotate={bottom.rotate}
-              color={meta.color}
-              reduceMotion={!!reduceMotion}
-              floatDuration={6.5}
-              floatDelay={0.8}
-              maxWidth={bottom.width}
-              maxHeight={bottom.height}
-              className={`hidden lg:block ${bottom.position}`}
-            />
-          )}
+          {m.link && <Link href={m.link.href} className="inline-flex min-h-11 items-center gap-2 text-xs font-bold text-accent-strong">{m.link.label}<ArrowUpRight size={15} /></Link>}
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -605,7 +294,7 @@ const CINEMATIC_KEYS = new Set<string>([
 ]);
 
 export function Journey() {
-  const milestones = useMemo(buildMilestones, []);
+  const milestones = useMemo(() => buildMilestones(), []);
   const cinematic = milestones.filter(
     (m) => CINEMATIC_KEYS.has(m.key) && m.hasPhotos
   );
@@ -622,9 +311,9 @@ export function Journey() {
         <SectionHeading eyebrow="Where I've Been" title="My Journey" />
       </div>
 
-      <div className="relative">
-        {cinematic.map((m, i) => (
-          <JourneyPanel key={m.kind + m.title} m={m} index={i} />
+      <div className="relative px-4 sm:px-6">
+        {cinematic.map((m) => (
+          <JourneyPanel key={m.kind + m.title} m={m} />
         ))}
       </div>
 

@@ -1,12 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { PROJECTS } from "@/lib/data";
-import { Navbar } from "@/components/sections/Navbar";
-import { Footer } from "@/components/sections/Footer";
+import { PortfolioNav as Navbar } from "@/components/portfolio/PortfolioInteractions";
+import { PortfolioFooter as Footer } from "@/components/portfolio/PortfolioHome";
 import { TechBadge, StatusBadge } from "@/components/ui/Badges";
-import { SmartImage } from "@/components/ui/SmartImage";
 import { ItchIcon } from "@/components/ui/BrandIcons";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";

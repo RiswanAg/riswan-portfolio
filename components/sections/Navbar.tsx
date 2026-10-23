@@ -151,7 +151,7 @@ export function Navbar() {
 
       <div
         id="mobile-menu"
-        className={`absolute inset-x-0 top-full origin-top transition-[opacity,transform,visibility] duration-200 ease-out md:hidden ${
+        className={`absolute inset-x-0 top-full max-h-[calc(100dvh-5rem)] overflow-y-auto origin-top transition-[opacity,transform,visibility] duration-200 ease-out md:hidden ${
           menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
         }`}
         inert={!menuOpen}

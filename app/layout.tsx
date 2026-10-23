@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Anton, Share_Tech_Mono, Roboto } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Space_Grotesk,
+  Caveat,
+  Barlow_Condensed,
+} from "next/font/google";
 import "./globals.css";
+import "./portfolio.css";
+import "./cinematic.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,25 +20,20 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Coolvetica isn't on Google Fonts (foundry-only license) — Anton is the
-// closest free, redistributable condensed-impact alternative.
-const anton = Anton({
-  variable: "--font-anton",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+});
+
+const caveat = Caveat({
+  variable: "--font-handwritten",
   weight: "400",
   subsets: ["latin"],
 });
 
-// Monofonto isn't on Google Fonts either — Share Tech Mono is a similar
-// geometric/technical monospace, and matches the site's existing HUD look.
-const shareTechMono = Share_Tech_Mono({
-  variable: "--font-share-tech-mono",
-  weight: "400",
-  subsets: ["latin"],
-});
-
-const roboto = Roboto({
-  variable: "--font-roboto",
-  weight: ["400", "700"],
+const display = Barlow_Condensed({
+  variable: "--font-display",
+  weight: ["600", "700"],
   subsets: ["latin"],
 });
 
@@ -62,7 +65,14 @@ export const metadata: Metadata = {
     title: "Riswan Hamua | Game & Immersive Tech Developer",
     description:
       "Portfolio of Riswan Hamua, Game Technology student building games, VR and AR simulations, and interactive tools in Unity, Unreal and the browser.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Riswan Hamua Portfolio" }],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Riswan Hamua Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -92,7 +102,13 @@ const jsonLd = {
     "https://github.com/RiswanAg",
     "https://www.linkedin.com/in/riswanhamua",
   ],
-  knowsAbout: ["Unity", "C#", "C++", "Game Development", "Interactive Simulation"],
+  knowsAbout: [
+    "Unity",
+    "C#",
+    "C++",
+    "Game Development",
+    "Interactive Simulation",
+  ],
 };
 
 export default function RootLayout({
@@ -101,15 +117,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} ${shareTechMono.variable} ${roboto.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${caveat.variable} ${display.variable} h-full antialiased`}
     >
       <head>
-        {/* No-flash theme init — site is light by default; apply .dark only if
-            the visitor previously opted in. Runs before paint. */}
+        {/* Apply the saved choice, falling back to system preference before paint. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();",
+              "(function(){try{var theme=localStorage.getItem('theme');document.documentElement.classList.toggle('dark',theme==='dark'||(!theme&&matchMedia('(prefers-color-scheme: dark)').matches));}catch(e){document.documentElement.classList.toggle('dark',matchMedia('(prefers-color-scheme: dark)').matches);}})();",
           }}
         />
         <script

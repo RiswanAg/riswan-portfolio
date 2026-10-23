@@ -86,8 +86,8 @@ export function PortfolioShowcase() {
           </p>
         </Reveal>
 
-        <Reveal delay={100} className="flex justify-center overflow-x-auto px-6">
-          <div className="relative inline-flex shrink-0 items-center gap-0.5 rounded-full border border-line bg-veil p-1.5 sm:gap-1">
+        <Reveal delay={100} className="flex overflow-x-auto pb-2">
+          <div className="relative mx-auto inline-flex shrink-0 items-center gap-0.5 rounded-full border border-line bg-veil p-1.5 sm:gap-1">
             {TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;

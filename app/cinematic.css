@@ -1,0 +1,954 @@
+/* Motion-led game portfolio. The dark hero is a framed game scene; the rest
+   of the site follows the visitor's selected light/dark theme. */
+.cinematic-portfolio {
+  --stack-top: 100px;
+}
+.cinematic-portfolio .portfolio-nav {
+  background: #161916;
+  color: #f5f3e9;
+  border-color: #f5f3e921;
+}
+.cinematic-portfolio .portfolio-nav-link {
+  color: #c0c2b6;
+}
+.cinematic-portfolio .portfolio-nav-link:hover {
+  color: #f5f3e9;
+}
+.cinematic-portfolio .portfolio-mobile-toggle {
+  color: #f5f3e9;
+  border-color: #f5f3e940;
+}
+.cinematic-portfolio .portfolio-mobile-toggle:hover {
+  background: #f5f3e912;
+}
+.cinematic-portfolio .portfolio-mobile-menu {
+  background: #161916;
+}
+.cinematic-portfolio .portfolio-logo span {
+  color: #ef7047;
+}
+.cinematic-scroll-progress {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  height: 3px;
+  background: #ef7047;
+  z-index: 45;
+  transform-origin: left;
+}
+
+/* Magic UI / 21st.dev expanding-dot button. Duplicate hover text is hidden
+   from assistive technology; focus receives the same feedback as hover. */
+.interactive-hover-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  width: max-content;
+  padding: 0 27px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.interactive-button-rest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.interactive-button-rest > span:last-child {
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms;
+}
+.interactive-button-dot {
+  display: block;
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+.interactive-button-hover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--canvas);
+  opacity: 0;
+  transform: translateX(22px);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms;
+}
+.interactive-hover-button:is(:hover, :focus-visible) .interactive-button-dot {
+  transform: scale(100);
+}
+.interactive-hover-button:is(:hover, :focus-visible)
+  .interactive-button-rest
+  > span:last-child {
+  transform: translateX(24px);
+  opacity: 0;
+}
+.interactive-hover-button:is(:hover, :focus-visible) .interactive-button-hover {
+  opacity: 1;
+  transform: translateX(0);
+}
+.interactive-hover-button:active {
+  transform: scale(0.97);
+}
+.interactive-hover-button.button-hot {
+  background: #ef7047;
+  border-color: #ef7047;
+  color: #171b15;
+}
+.button-hot .interactive-button-dot {
+  background: #171b15;
+}
+.button-hot .interactive-button-hover {
+  color: #f6f3e9;
+}
+.interactive-hover-button.button-clear {
+  color: #f6f3e9;
+  border-color: #f6f3e94a;
+  background: transparent;
+}
+.button-clear .interactive-button-dot {
+  background: #f6f3e9;
+}
+.button-clear .interactive-button-hover {
+  color: #171b15;
+}
+.interactive-hover-button.nav-21st-button {
+  min-height: 42px;
+  background: #f0eee4;
+  border-color: #f0eee4;
+  color: #1c2018;
+  padding-inline: 20px;
+}
+.nav-21st-button .interactive-button-dot {
+  background: #ef7047;
+}
+.nav-21st-button .interactive-button-hover {
+  color: #171b15;
+}
+
+.card-3d-body {
+  width: 100%;
+  position: relative;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-3d-content {
+  width: 100%;
+  transform-style: preserve-3d;
+}
+.card-3d-item {
+  position: relative;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+}
+.archive-3d-container,
+.archive-3d-body {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+}
+.archive-grid .work-card-image {
+  border-radius: 12px;
+}
+.archive-grid .work-card-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+.cinematic-hero {
+  position: relative;
+  min-height: 125svh;
+  background: #161916;
+  color: #f6f3e9;
+}
+.cinematic-hero-scene {
+  position: sticky;
+  top: 0;
+  height: calc(100svh - 80px);
+  min-height: 580px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.cinematic-hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  transform-origin: 65% 55%;
+}
+.cinematic-hero-background img {
+  object-position: 70% center;
+}
+.cinematic-hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(
+      90deg,
+      #101510f5 0%,
+      #101510de 32%,
+      #10151073 69%,
+      #101510a1 100%
+    ),
+    linear-gradient(0deg, #161916 0%, transparent 35%);
+}
+.cinematic-hero-content {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  align-items: center;
+  gap: 3%;
+  height: 100%;
+  padding-block: 45px 75px;
+}
+.cinematic-hero-copy {
+  position: relative;
+  z-index: 2;
+}
+.cinematic-intro {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  font-size: 13px;
+}
+.cinematic-intro > span:last-child > span {
+  display: block;
+  font-size: 10px;
+  color: #b9c1af;
+  margin-top: 5px;
+}
+.cinematic-avatar {
+  position: relative;
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #4b5148;
+}
+.cinematic-avatar img {
+  object-position: 50% 25%;
+}
+.cinematic-hero h1 {
+  margin-top: 26px;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(92px, 10vw, 152px);
+  line-height: 0.88;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+}
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.11em;
+  margin-bottom: -0.055em;
+  white-space: nowrap;
+}
+.hero-line > span {
+  display: block;
+}
+.hero-line-accent {
+  color: #ef7047;
+}
+.hero-period {
+  color: #c4d3a8;
+}
+.cinematic-hero-description {
+  margin-top: 25px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #c6cdbc;
+}
+.cinematic-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+.hero-game-deck {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 25px 0 40px;
+}
+.hero-deck-back {
+  position: absolute;
+  inset: 17px 12px 60px -15px;
+  border: 8px solid #f0ece2;
+  border-radius: 13px;
+  overflow: hidden;
+  transform: rotate(-7deg);
+}
+.hero-3d-container {
+  transform: rotate(7deg);
+}
+.hero-3d-card {
+  border-radius: 13px;
+  background: #1b241b;
+  border: 1px solid #c4d3a84d;
+}
+.hero-3d-card .card-3d-content {
+  border-radius: inherit;
+}
+.hero-card-top {
+  min-height: 47px;
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding-inline: 18px;
+  color: #d0d9c7;
+  font-size: 10px;
+}
+.hero-card-top > svg {
+  color: #c4d3a8;
+}
+.hero-card-cross {
+  margin-left: auto;
+  font-size: 22px;
+}
+.hero-deck-image {
+  width: 100%;
+  aspect-ratio: 1.35;
+}
+.hero-deck-image a {
+  position: absolute;
+  inset: 0;
+}
+.hero-deck-image img {
+  object-position: center;
+}
+.hero-card-footer {
+  display: flex;
+  padding: 17px 20px;
+  gap: 18px;
+  justify-content: space-between;
+  align-items: center;
+}
+.hero-card-footer > div > span {
+  display: block;
+  font-size: 10px;
+  color: #bac6af;
+}
+.hero-card-footer strong {
+  display: block;
+  font-family: var(--font-heading);
+  margin-top: 5px;
+  font-size: 25px;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+}
+.hero-card-link {
+  display: grid;
+  place-items: center;
+  background: #c4d3a8;
+  color: #1a2217;
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+}
+.hero-deck-caption {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 29px;
+  font-family: var(--font-handwritten);
+  font-size: 24px;
+  transform: rotate(-3deg);
+  color: #ced3c3;
+}
+.cinematic-hero-bottom {
+  position: absolute;
+  bottom: 21px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #adb7a3;
+  font-size: 10px;
+}
+.cinematic-hero-bottom > a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #cad4bd40;
+  border-radius: 50%;
+}
+
+.scroll-manifesto {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 24px 6%;
+  padding-block: 110px 60px;
+}
+.manifesto-symbol {
+  color: var(--accent);
+  padding-top: 10px;
+}
+.scroll-manifesto > p {
+  max-width: 1000px;
+  font-family: var(--font-heading);
+  font-size: clamp(30px, 4.6vw, 64px);
+  line-height: 1.16;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+}
+.manifesto-proof {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px 45px;
+  margin-top: 28px;
+}
+.manifesto-proof > span {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  color: var(--dim);
+  font-size: 11px;
+}
+.manifesto-proof strong {
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.06em;
+}
+.cinematic-portfolio .portfolio-work {
+  padding-top: 80px;
+}
+.cinematic-portfolio .portfolio-work > .section-label {
+  font-size: 12px;
+}
+.cinematic-portfolio .portfolio-work > .section-heading {
+  align-items: flex-end;
+  margin-block: 25px 55px;
+}
+.cinematic-portfolio .portfolio-work > .section-heading > h2 {
+  font-family: var(--font-display);
+  font-size: clamp(65px, 9.3vw, 128px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+.cinematic-portfolio .portfolio-work > .section-heading > h2 > span {
+  color: var(--accent-strong);
+}
+.project-scroll-stack {
+  position: relative;
+  padding-bottom: 30px;
+}
+.project-stack-panel {
+  position: sticky;
+  margin-bottom: 42px;
+  padding: 0;
+}
+.project-stack-motion {
+  transform-origin: center top;
+}
+.project-stack-panel:focus-within {
+  z-index: 8 !important;
+}
+.stack-3d-container {
+  width: 100%;
+}
+.project-stack-content {
+  display: grid;
+  grid-template-columns: 0.85fr 1.5fr;
+  min-height: 500px;
+  gap: 32px;
+  padding: 34px;
+  border: 1px solid var(--line-2);
+  border-radius: 15px;
+  background: var(--surface);
+}
+.project-stack-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding-block: 10px;
+}
+.project-discipline {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 10px;
+  color: var(--dim);
+}
+.project-discipline > span:first-child {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.project-stack-copy h3 {
+  margin-top: 30px;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5vw, 73px);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+.project-stack-copy > p {
+  margin-top: 20px;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--dim);
+  max-width: 330px;
+}
+.project-stack-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 20px;
+}
+.project-stack-tools > span {
+  font-size: 10px;
+  padding: 7px 9px;
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+}
+.project-stack-copy > .project-stack-award {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--accent-strong);
+}
+.project-stack-award svg {
+  flex-shrink: 0;
+}
+.project-stack-action {
+  margin-top: auto;
+  padding-top: 24px;
+}
+.project-stack-art {
+  min-width: 0;
+  min-height: 400px;
+  background: var(--surface-2);
+  border-radius: 9px;
+}
+.project-stack-art > a {
+  display: block;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.project-stack-art img {
+  border-radius: inherit;
+}
+.project-art-pencak img {
+  object-fit: contain;
+  background: #e8e5dd;
+}
+.project-art-overtime {
+  background: #cab8e5;
+}
+.project-art-overtime img {
+  padding: 25px;
+}
+.project-stack-open {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #21251c;
+  background: #f2efe5;
+  pointer-events: none;
+}
+.discipline-marquee {
+  overflow: hidden;
+  padding-block: 25px;
+  background: #ef7047;
+  color: #1c2218;
+  transform: rotate(-2deg) scale(1.03);
+  margin-block: 20px 70px;
+}
+.discipline-marquee > div {
+  display: flex;
+  width: max-content;
+}
+.marquee-group {
+  display: flex;
+  gap: 35px;
+  align-items: center;
+  padding-right: 35px;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(37px, 5.6vw, 80px);
+  line-height: 1;
+}
+.marquee-group > svg {
+  width: 40px;
+  height: 40px;
+}
+.cinematic-portfolio .portfolio-about {
+  padding-block: 90px 110px;
+}
+.cinematic-portfolio .about-copy h2,
+.cinematic-portfolio .education-intro h2 {
+  font-family: var(--font-display);
+  font-size: clamp(50px, 6vw, 83px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 0.98;
+}
+.cinematic-portfolio .about-photo {
+  border-radius: 12px;
+}
+.cinematic-portfolio .education-list > div {
+  padding-block: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.cinematic-portfolio .education-list article {
+  border: none;
+  padding: 0;
+}
+.cinematic-portfolio .education-list > div:first-child {
+  padding-top: 0;
+}
+.cinematic-portfolio .portfolio-contact {
+  position: relative;
+  overflow: hidden;
+  background: #ef7047;
+  color: #1b2117;
+}
+.cinematic-portfolio .contact-headline h2 {
+  font-family: var(--font-display);
+  font-size: clamp(75px, 11vw, 156px);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+.cinematic-portfolio .contact-headline h2 span {
+  color: #66321f;
+}
+.cinematic-portfolio .portfolio-contact .section-label,
+.cinematic-portfolio .contact-bottom p {
+  color: #3c2c1c;
+}
+.cinematic-portfolio .portfolio-contact .label-line {
+  background: #3c2c1c;
+}
+
+@media (max-width: 1100px) and (min-width: 768px) {
+  .cinematic-hero-content {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 4%;
+  }
+  .cinematic-hero h1 {
+    font-size: clamp(79px, 10vw, 110px);
+  }
+  .hero-game-deck {
+    max-width: 360px;
+  }
+  .hero-deck-image {
+    aspect-ratio: 1.3;
+  }
+  .hero-card-footer {
+    padding: 15px;
+  }
+  .hero-deck-caption {
+    font-size: 20px;
+  }
+  .project-stack-content {
+    min-height: 460px;
+    gap: 23px;
+    padding: 25px;
+    grid-template-columns: 0.9fr 1.2fr;
+  }
+  .project-stack-art {
+    min-height: 400px;
+  }
+  .project-stack-copy h3 {
+    font-size: 54px;
+  }
+}
+@media (min-width: 768px) and (max-height: 760px) {
+  .cinematic-hero-scene {
+    min-height: 550px;
+  }
+  .cinematic-hero-content {
+    padding-block: 28px 65px;
+  }
+  .cinematic-hero h1 {
+    font-size: clamp(85px, 9vw, 125px);
+    margin-top: 20px;
+  }
+  .cinematic-hero-description {
+    margin-top: 19px;
+  }
+  .cinematic-hero-actions {
+    margin-top: 18px;
+  }
+  .hero-game-deck {
+    max-width: 385px;
+  }
+  .hero-deck-image {
+    aspect-ratio: 1.55;
+  }
+  .project-stack-content {
+    min-height: 445px;
+  }
+  .project-stack-art {
+    min-height: 360px;
+  }
+}
+@media (max-width: 767px) {
+  .project-stack-motion {
+    transform: none !important;
+  }
+  .cinematic-portfolio {
+    --stack-top: 85px;
+  }
+  .interactive-hover-button {
+    min-height: 49px;
+    font-size: 11px;
+    padding-inline: 20px;
+  }
+  .nav-21st-button {
+    display: none;
+  }
+  .cinematic-hero {
+    min-height: auto;
+  }
+  .cinematic-hero-scene {
+    height: auto;
+    min-height: 850px;
+    position: relative;
+  }
+  .cinematic-hero-content {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-block: 32px 80px;
+  }
+  .cinematic-hero h1 {
+    font-size: clamp(68px, 19vw, 124px);
+    margin-top: 25px;
+  }
+  .cinematic-hero-background img {
+    object-position: 75% center;
+  }
+  .cinematic-hero-shade {
+    background: linear-gradient(180deg, #101510e6, #10151099 55%, #161916f5);
+  }
+  .cinematic-hero-description {
+    font-size: 13px;
+    margin-top: 21px;
+  }
+  .cinematic-hero-actions {
+    margin-top: 20px;
+    gap: 10px;
+  }
+  .cinematic-intro {
+    font-size: 12px;
+  }
+  .cinematic-intro > span:last-child > span {
+    font-size: 10px;
+  }
+  .hero-game-deck {
+    max-width: 350px;
+    width: 87%;
+    padding-block: 16px 20px;
+  }
+  .hero-deck-back {
+    inset: 10px 10px 30px -10px;
+    border-width: 5px;
+  }
+  .hero-deck-image {
+    aspect-ratio: 1.8;
+  }
+  .hero-card-top {
+    min-height: 38px;
+    padding-inline: 12px;
+    font-size: 9px;
+  }
+  .hero-card-footer {
+    padding: 13px 15px;
+  }
+  .hero-card-footer strong {
+    font-size: 22px;
+  }
+  .hero-deck-caption {
+    font-size: 20px;
+    margin-top: 18px;
+  }
+  .cinematic-hero-bottom {
+    bottom: 15px;
+    font-size: 8px;
+  }
+  .cinematic-hero-bottom > span {
+    max-width: 240px;
+  }
+  .scroll-manifesto {
+    padding-block: 65px 20px;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .manifesto-symbol {
+    padding: 0;
+  }
+  .manifesto-symbol > svg {
+    width: 35px;
+    height: 35px;
+  }
+  .scroll-manifesto > p {
+    font-size: clamp(31px, 7.9vw, 44px);
+  }
+  .manifesto-proof {
+    grid-column: 1;
+    gap: 15px 24px;
+    margin-top: 5px;
+  }
+  .manifesto-proof > span {
+    font-size: 9px;
+    gap: 6px;
+  }
+  .manifesto-proof strong {
+    font-size: 22px;
+  }
+  .cinematic-portfolio .portfolio-work {
+    padding-top: 55px;
+  }
+  .cinematic-portfolio .portfolio-work > .section-heading {
+    margin-block: 20px 30px;
+  }
+  .cinematic-portfolio .portfolio-work > .section-heading > h2 {
+    font-size: clamp(54px, 13vw, 90px);
+  }
+  .project-stack-panel {
+    position: relative;
+    top: auto !important;
+    margin-bottom: 28px;
+  }
+  .project-stack-content {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 25px;
+    border-radius: 12px;
+  }
+  .project-stack-copy {
+    padding: 0;
+  }
+  .project-stack-copy h3 {
+    font-size: 55px;
+    margin-top: 20px;
+  }
+  .project-stack-copy > p {
+    max-width: none;
+    font-size: 12px;
+    margin-top: 16px;
+  }
+  .project-stack-art {
+    min-height: 0;
+    aspect-ratio: 1.3;
+  }
+  .project-stack-action {
+    padding-top: 20px;
+  }
+  .project-stack-tools {
+    margin-top: 16px;
+  }
+  .project-stack-open {
+    width: 42px;
+    height: 42px;
+    right: 12px;
+    bottom: 12px;
+  }
+  .project-stack-open svg {
+    width: 24px;
+    height: 24px;
+  }
+  .discipline-marquee {
+    margin-block: 0 40px;
+    padding-block: 19px;
+  }
+  .marquee-group {
+    gap: 24px;
+    padding-right: 24px;
+  }
+  .marquee-group > svg {
+    width: 25px;
+    height: 25px;
+  }
+  .cinematic-portfolio .portfolio-about {
+    padding-block: 55px 65px;
+  }
+  .cinematic-portfolio .about-copy h2,
+  .cinematic-portfolio .education-intro h2 {
+    font-size: 55px;
+  }
+  .cinematic-portfolio .contact-headline h2 {
+    font-size: clamp(58px, 14vw, 85px);
+  }
+}
+@media (hover: none) {
+  .card-3d-body,
+  .card-3d-item {
+    transform: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-hero {
+    min-height: auto;
+  }
+  .cinematic-hero-scene {
+    position: relative;
+  }
+  .card-3d-body,
+  .card-3d-item,
+  .project-stack-motion {
+    transform: none !important;
+  }
+  .project-stack-panel {
+    position: relative;
+    top: auto !important;
+  }
+  .hero-game-deck,
+  .cinematic-hero-copy,
+  .cinematic-hero-background {
+    transform: none !important;
+  }
+  .interactive-hover-button:is(:hover, :focus-visible) .interactive-button-dot {
+    transform: none;
+  }
+  .interactive-hover-button:is(:hover, :focus-visible)
+    .interactive-button-rest
+    > span:last-child {
+    transform: none;
+    opacity: 1;
+  }
+  .interactive-button-hover {
+    display: none;
+  }
+  .cinematic-scroll-progress {
+    display: none;
+  }
+}

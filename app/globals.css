@@ -102,6 +102,17 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+/* Keep long labels within narrow grid tracks and zoomed layouts. */
+main { overflow-wrap: anywhere; }
+main :where(.grid) > * { min-width: 0; }
+.journey-album-track { scrollbar-width: none; }
+.journey-album-track::-webkit-scrollbar { display: none; }
+
+@media (max-height: 700px) {
+  #hero > .absolute.bottom-4 { display: none; }
 }
 
 /* ── Visible keyboard focus — Tailwind preflight strips the default outline ── */
