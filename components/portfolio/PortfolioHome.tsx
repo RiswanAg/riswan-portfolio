@@ -6,8 +6,8 @@ import {
   ArrowUpRight,
   Asterisk,
   Download,
-  Gamepad2,
-  MoveUpRight,
+  Code2,
+  BrainCircuit,
 } from "lucide-react";
 import {
   PROFILE,
@@ -16,6 +16,7 @@ import {
   EDUCATION,
   CONTACTS,
   CONTACT_INTRO,
+  FEATURED_PROJECT_SLUGS,
 } from "@/lib/data";
 import {
   CinematicHero,
@@ -33,7 +34,7 @@ import {
   SectionAnchor,
 } from "./PortfolioInteractions";
 
-const featured = ["pencak", "smart-farming", "sneak-out", "overtime"].map(
+const featured = FEATURED_PROJECT_SLUGS.map(
   (slug) => PROJECTS.find((project) => project.slug === slug)!,
 );
 
@@ -60,9 +61,9 @@ export function PortfolioHome() {
           </div>
           <ScrollReveal className="section-heading">
             <h2>
-              BUILT TO
+              IDEAS INTO
               <br />
-              <span>BE PLAYED.</span>
+              <span>WORKING CODE.</span>
             </h2>
             <a href="#work-archive" className="portfolio-text-link">
               Browse everything <ArrowDownRight size={17} />
@@ -81,7 +82,7 @@ export function PortfolioHome() {
               <div className="about-photo">
                 <Image
                   src={PROFILE.image}
-                  alt="Riswan Hamua, game and immersive technology developer"
+                  alt="Riswan Hamua, web developer and AI engineer"
                   fill
                   sizes="(min-width: 1024px) 36vw, 90vw"
                   className="object-cover object-[center_30%]"
@@ -90,16 +91,16 @@ export function PortfolioHome() {
               <div className="about-photo-note">
                 <Asterisk size={30} strokeWidth={1.5} />
                 <span>
-                  Always a player.
+                  Stay curious.
                   <br />
-                  Now a maker, too.
+                  Keep building.
                 </span>
               </div>
             </ScrollReveal>
             <ScrollReveal className="about-copy" delay={0.12}>
               <div className="section-label">
                 <span className="label-line" />
-                The person behind the pixels
+                The person behind the code
               </div>
               <h2>
                 Curious mind.
@@ -108,18 +109,19 @@ export function PortfolioHome() {
               </h2>
               <p>{ABOUT_HOME.bio}</p>
               <p>
-                I’m drawn to the space where code meets experience: a game that
-                gets everyone shouting, a familiar place turned into a level, or
-                a tradition you can step into through VR.
+                I started with games and immersive projects, where I learned to
+                build responsive interfaces, connect systems and work through
+                difficult technical problems. I’m now taking that experience
+                into web development and AI engineering.
               </p>
               <div className="about-disciplines">
                 <span>
-                  <Gamepad2 size={17} />
-                  Game development
+                  <Code2 size={17} />
+                  Web development
                 </span>
                 <span>
-                  <MoveUpRight size={17} />
-                  VR &amp; AR experiences
+                  <BrainCircuit size={17} />
+                  AI engineering
                 </span>
                 <span>
                   <Asterisk size={17} />
@@ -153,7 +155,7 @@ export function PortfolioHome() {
             </h2>
             <p>
               A foundation in engineering.
-              <br />A degree in making things playable.
+              <br />A background in interactive technology.
             </p>
             <Asterisk
               className="education-asterisk"
@@ -202,9 +204,9 @@ export function PortfolioHome() {
             </div>
             <a href={email.href} className="contact-headline">
               <h2>
-                Let’s make
+                Let’s build
                 <br />
-                something <span>play.</span>
+                something <span>useful.</span>
               </h2>
               <span className="contact-arrow">
                 <ArrowUpRight strokeWidth={1.2} />

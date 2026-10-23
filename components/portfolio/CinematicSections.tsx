@@ -7,7 +7,8 @@ import {
   ArrowDownRight,
   ArrowUpRight,
   Asterisk,
-  Gamepad2,
+  BrainCircuit,
+  Hand,
   MoveUpRight,
 } from "lucide-react";
 import {
@@ -23,6 +24,27 @@ import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button
 import { PROFILE, PROJECTS, type Project } from "@/lib/data";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+function MLPipelineGraphic() {
+  return (
+    <div
+      className="ml-pipeline-graphic"
+      role="img"
+      aria-label="SignSpeak BIM pipeline overview: collect hand landmarks, compare Random Forest, SVM and KNN classifiers, then save the selected SVM model."
+    >
+      <div className="ml-graphic-label">SIGNSPEAK / PIPELINE OVERVIEW</div>
+      <div className="ml-graphic-hand"><Hand strokeWidth={1} aria-hidden /></div>
+      <div className="ml-graphic-landmarks">21 landmarks per hand</div>
+      <div className="ml-graphic-flow" aria-hidden>
+        <span>COLLECT</span><span>TRAIN</span><span>SELECT</span>
+      </div>
+      <div className="ml-graphic-models">
+        <span>Random Forest</span><strong>SVM</strong><span>KNN</span>
+      </div>
+      <div className="ml-graphic-note">Python · MediaPipe · scikit-learn</div>
+    </div>
+  );
+}
 
 export function CinematicHero() {
   const section = useRef<HTMLElement>(null);
@@ -44,7 +66,7 @@ export function CinematicHero() {
           style={reduce ? undefined : { scale: sceneScale }}
         >
           <Image
-            src="/projects/sneak-out/thumbnail.png"
+            src="/projects/library/thumbnail.png"
             alt=""
             fill
             sizes="100vw"
@@ -74,17 +96,17 @@ export function CinematicHero() {
                 />
               </span>
               <span>
-                Riswan Hamua<span>Game &amp; Immersive Tech Developer</span>
+                Riswan Hamua<span>Web Developer &amp; AI Engineer</span>
               </span>
             </motion.p>
-            <h1 aria-label="Beyond the screen.">
+            <h1 aria-label="Web meets AI.">
               <span className="hero-line">
                 <motion.span
                   initial={reduce ? false : { y: "110%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.9, ease: EASE }}
                 >
-                  BEYOND
+                  WEB
                 </motion.span>
               </span>
               <span className="hero-line hero-line-accent">
@@ -93,14 +115,14 @@ export function CinematicHero() {
                   animate={{ y: 0 }}
                   transition={{ duration: 1, delay: 0.1, ease: EASE }}
                 >
-                  THE SCREEN<span className="hero-period">.</span>
+                  MEETS AI<span className="hero-period">.</span>
                 </motion.span>
               </span>
             </h1>
             <p className="cinematic-hero-description">
-              I build games you can play.
+              Websites. AI tools. Useful software.
               <br />
-              And worlds you can step into.
+              From the interface to the intelligence behind it.
             </p>
             <div className="cinematic-hero-actions">
               <InteractiveHoverButton
@@ -140,34 +162,28 @@ export function CinematicHero() {
             >
               <CardBody>
                 <div className="hero-card-top">
-                  <Gamepad2 size={17} />
-                  <span>Made by me. Ready for you.</span>
+                  <BrainCircuit size={17} />
+                  <span>Computer vision / In development</span>
                   <span className="hero-card-cross" aria-hidden>
                     +
                   </span>
                 </div>
                 <CardItem translateZ={45} className="hero-deck-image">
                   <Link
-                    href="/projects/smart-farming"
-                    aria-label="Explore AgriLeap"
+                    href="/projects/signspeak-bim"
+                    aria-label="Explore SignSpeak BIM"
                   >
-                    <Image
-                      src="/projects/smart-farming/thumbnail.png"
-                      alt="AgriLeap, a holographic smart-farming game"
-                      fill
-                      sizes="(min-width: 1024px) 420px, (min-width: 768px) 320px, 85vw"
-                      className="object-cover"
-                    />
+                    <MLPipelineGraphic />
                   </Link>
                 </CardItem>
                 <CardItem translateZ={25} className="hero-card-footer">
                   <div>
-                    <span>Holographic simulation</span>
-                    <strong>AgriLeap</strong>
+                    <span>Python / MediaPipe / scikit-learn</span>
+                    <strong>SignSpeak BIM</strong>
                   </div>
                   <Link
-                    href="/projects/smart-farming"
-                    aria-label="View AgriLeap project"
+                    href="/projects/signspeak-bim"
+                    aria-label="View SignSpeak BIM project"
                     className="hero-card-link"
                   >
                     <ArrowUpRight size={24} />
@@ -176,12 +192,12 @@ export function CinematicHero() {
               </CardBody>
             </CardContainer>
             <span className="hero-deck-caption">
-              A few of the worlds I’m building <ArrowUpRight size={19} />
+              From an idea to a working system <ArrowUpRight size={19} />
             </span>
           </motion.div>
         </div>
         <div className="cinematic-hero-bottom portfolio-container">
-          <span>Code is the medium. Experience is the point.</span>
+          <span>Thoughtful interfaces. Practical intelligence.</span>
           <a href="#portfolio-showcase" aria-label="Explore projects below">
             <ArrowDownRight size={23} />
           </a>
@@ -222,7 +238,7 @@ export function ScrollManifesto() {
     offset: ["start .9", "end .3"],
   });
   const words =
-    "A good game starts with curiosity. A great one makes you forget the screen.".split(
+    "Good software starts with a real problem. I build the interface, connect the systems and work through the details.".split(
       " ",
     );
   return (
@@ -283,10 +299,28 @@ const PROJECT_DETAILS: Record<
   string,
   { label: string; summary: string; accent: string; image?: string }
 > = {
-  pencak: {
-    label: "Virtual reality / Cultural heritage",
+  "signspeak-bim": {
+    label: "AI engineering / Computer vision",
     summary:
-      "Silat is more than what your hands do. A full-body VR trainer that brings stance, footwork, and a virtual Guru into the experience.",
+      "From hand landmarks to a trained model. A modular Python pipeline for dataset collection, preprocessing and classifier comparison. Live prediction is the next milestone.",
+    accent: "#becf8a",
+  },
+  "safety-first": {
+    label: "Web development / Interactive 3D",
+    summary:
+      "A browser-based safety training experience built with JavaScript and Three.js, with interactive scenes and a focused performance pass.",
+    accent: "#eb633d",
+  },
+  "library-management": {
+    label: "Software engineering / Database systems",
+    summary:
+      "A C++ and MySQL application with role-based access, borrowing workflows, fine calculations and reports. Built solo, from schema to interface.",
+    accent: "#a8c6e3",
+  },
+  pencak: {
+    label: "AI integration / Virtual reality",
+    summary:
+      "A full-body VR Silat trainer with a conversational Guru powered by Convai, connecting voice interaction with movement and calibration systems.",
     accent: "#eb633d",
   },
   "smart-farming": {
@@ -404,17 +438,21 @@ function StackedProject({
                 prefetch={false}
                 aria-label={`Explore ${project.title}`}
               >
-                <Image
-                  src={details.image ?? project.image}
-                  alt={project.title}
-                  fill
-                  sizes="(min-width: 1440px) 760px, (min-width: 768px) 57vw, calc(100vw - 48px)"
-                  className={
-                    project.imageFit === "contain"
-                      ? "object-contain"
-                      : "object-cover"
-                  }
-                />
+                {project.slug === "signspeak-bim" ? (
+                  <MLPipelineGraphic />
+                ) : (
+                  <Image
+                    src={details.image ?? project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(min-width: 1440px) 760px, (min-width: 768px) 57vw, calc(100vw - 48px)"
+                    className={
+                      project.imageFit === "contain"
+                        ? "object-contain"
+                        : "object-cover"
+                    }
+                  />
+                )}
               </Link>
               <span className="project-stack-open" aria-hidden>
                 <MoveUpRight size={30} />
@@ -438,16 +476,16 @@ export function ScrollMarquee() {
   return (
     <div className="discipline-marquee" ref={target}>
       <span className="sr-only">
-        Game development, immersive worlds, creative experiments
+        Web development, AI engineering, creative technology
       </span>
       <motion.div style={reduce ? undefined : { x }} aria-hidden>
         {[0, 1].map((index) => (
           <span className="marquee-group" key={index}>
-            <span>GAME DEVELOPMENT</span>
+            <span>WEB DEVELOPMENT</span>
             <Asterisk />
-            <span>IMMERSIVE WORLDS</span>
+            <span>AI ENGINEERING</span>
             <Asterisk />
-            <span>CREATIVE EXPERIMENTS</span>
+            <span>CREATIVE TECHNOLOGY</span>
             <Asterisk />
           </span>
         ))}

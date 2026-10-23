@@ -4,14 +4,14 @@
 export const PROFILE = {
   name: "Riswan Hamua",
   roles: [
-    "Game Developer",
-    "Unity Programmer",
-    "Immersive Tech Builder",
+    "Web Developer",
+    "AI Engineer",
+    "Creative Technologist",
     "Systems Thinker",
   ],
   tagline:
-    "I don't just imagine things. I build them especially games, VR and AR simulations, and whatever else the problem actually calls for.",
-  status: "Currently Building in Unity & Unreal",
+    "I build websites, interactive applications and AI tools, from the interface people use to the systems behind it.",
+  status: "Building for the web. Working with AI.",
   image: "/riswan-portrait.png",
   imageFallback: "/profile.svg",
   cv: "/cv.pdf",
@@ -30,7 +30,7 @@ export const ABOUT_HOME = {
   heading: "About Me",
   greeting: "Hello, I'm",
   bio:
-    "I'm a Game Technology student at UTeM who turns ideas into things people can play, feel, and remember. I build games, VR and AR simulations, and interactive tools by experimenting, breaking things, and fixing them until they click.",
+    "I'm a web developer and AI engineer studying Information Technology at UTeM. My focus is building useful web experiences and practical AI applications, with hands-on work in computer vision, machine learning pipelines and interactive software.",
   quote: "Leveraging AI as a professional tool, not a replacement.",
 };
 
@@ -150,6 +150,13 @@ export type MediaItem = {
 };
 
 export type ProjectKind = "game" | "video" | "other";
+
+export const FEATURED_PROJECT_SLUGS = [
+  "signspeak-bim",
+  "safety-first",
+  "library-management",
+  "pencak",
+] as const;
 
 export type Project = {
   slug: string;
@@ -930,7 +937,7 @@ export const EDUCATION: Education[] = [
 // ─── Contact ──────────────────────────────────────────────────────────────
 
 export const CONTACT_INTRO =
-  "Interested in game development roles and collaborations on interactive projects. If you're building something worth playing, I'd like to hear about it.";
+  "Open to web development and AI engineering opportunities. If you need a website, an interactive application or help bringing an AI idea into a working product, I'd like to hear about it.";
 
 export type ContactLink = {
   label: string;

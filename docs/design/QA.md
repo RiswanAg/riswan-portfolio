@@ -52,3 +52,11 @@ Portrait update: replaced the shared profile image with the user-supplied photo 
 - Reduced-motion handling is implemented and reviewed in source; OS-level reduced-motion emulation and a physical touch device were not exercised during this pass.
 - Next.js emits an existing workspace-root warning because another lockfile lives above this repository. Build and runtime checks succeed; unrelated parent files were not changed.
 - Automated accessibility scoring does not replace a full assistive-technology audit.
+
+## Web and AI positioning update
+
+- Updated the hero, About, contact, shared profile, metadata and Person structured data to Web Developer & AI Engineer. Education and historical project facts remain accurate.
+- Featured SignSpeak BIM, SafetyFirst 3D, Library Management System and PENCAK using one shared slug list. The library system is identified as C++/MySQL software, not a web app. SignSpeak's remaining live-prediction milestone is explicit.
+- Used a labelled, code-rendered pipeline overview for SignSpeak rather than inventing an application screenshot. Verified compact hero card layout at 390px and desktop at 1280px.
+- Production build, TypeScript, scoped ESLint and diff checks pass. Earlier Lighthouse scores above apply to their recorded revision; this update has no new Lighthouse score.
+- Re-reviewed hook findings: the pre-existing Sneak Out fallback palette is not used by the current homepage; the rounded `globals.css` border is the functional Spline loading spinner. Both are contextual false positives for this update; no suppression or unrelated palette edits added.

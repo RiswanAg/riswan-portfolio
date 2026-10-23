@@ -41,19 +41,18 @@ const BASE_URL = "https://riswanhamua.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Riswan Hamua | Game & Immersive Tech Developer",
+  title: "Riswan Hamua | Web Developer & AI Engineer",
   description:
-    "Portfolio of Riswan Hamua, Game Technology student building games, VR and AR simulations, and interactive tools in Unity, Unreal and the browser.",
+    "Riswan Hamua's portfolio: web development, AI engineering, computer vision and interactive applications. Explore selected projects and get in touch.",
   keywords: [
     "Riswan Hamua",
-    "Game Developer",
-    "Unity Developer",
-    "Unreal Engine Developer",
-    "VR Developer",
-    "AR Developer",
-    "Game Technology",
-    "Interactive Simulation",
-    "C# Developer",
+    "Web Developer",
+    "AI Engineer",
+    "Web Development",
+    "Machine Learning",
+    "Computer Vision",
+    "Python Developer",
+    "Interactive Applications",
     "Portfolio",
   ],
   authors: [{ name: "Riswan Hamua", url: BASE_URL }],
@@ -62,9 +61,9 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     siteName: "Riswan Hamua Portfolio",
-    title: "Riswan Hamua | Game & Immersive Tech Developer",
+    title: "Riswan Hamua | Web Developer & AI Engineer",
     description:
-      "Portfolio of Riswan Hamua, Game Technology student building games, VR and AR simulations, and interactive tools in Unity, Unreal and the browser.",
+      "Web development, AI engineering and interactive applications by Riswan Hamua. Explore selected projects and get in touch.",
     images: [
       {
         url: "/og-image.png",
@@ -76,9 +75,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Riswan Hamua | Game & Immersive Tech Developer",
+    title: "Riswan Hamua | Web Developer & AI Engineer",
     description:
-      "Portfolio of Riswan Hamua, Game Technology student building games, VR and AR simulations, and interactive tools in Unity, Unreal and the browser.",
+      "Web development, AI engineering and interactive applications by Riswan Hamua. Explore selected projects and get in touch.",
     images: ["/og-image.png"],
   },
   alternates: {
@@ -96,18 +95,19 @@ const jsonLd = {
   "@type": "Person",
   name: "Riswan Hamua",
   url: BASE_URL,
-  jobTitle: "Game & Immersive Tech Developer",
+  jobTitle: "Web Developer & AI Engineer",
   alumniOf: "Universiti Teknikal Malaysia Melaka (UTeM)",
   sameAs: [
     "https://github.com/RiswanAg",
     "https://www.linkedin.com/in/riswanhamua",
   ],
   knowsAbout: [
-    "Unity",
-    "C#",
-    "C++",
-    "Game Development",
-    "Interactive Simulation",
+    "Web Development",
+    "AI Engineering",
+    "Python",
+    "Machine Learning",
+    "Computer Vision",
+    "Interactive Applications",
   ],
 };
 

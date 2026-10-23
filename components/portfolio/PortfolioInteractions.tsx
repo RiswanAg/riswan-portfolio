@@ -13,6 +13,7 @@ import {
   NAV_LINKS,
   PROJECTS,
   SKILL_GROUPS,
+  FEATURED_PROJECT_SLUGS,
   type Project,
 } from "@/lib/data";
 
@@ -236,13 +237,11 @@ const FILTERS = [
   { value: "all", label: "All work" },
   { value: "game", label: "Games & immersive" },
   { value: "video", label: "Motion & film" },
-  { value: "other", label: "Experiments" },
+  { value: "other", label: "Software & experiments" },
 ];
 const ARCHIVE_PROJECTS = PROJECTS.filter(
   (project) =>
-    !["pencak", "smart-farming", "sneak-out", "overtime"].includes(
-      project.slug,
-    ),
+    !FEATURED_PROJECT_SLUGS.some((slug) => slug === project.slug),
 );
 
 export function WorkArchive() {
@@ -332,7 +331,10 @@ export function WorkArchive() {
       </TabsContent>
       <TabsContent value="stack" className="pt-10">
         <div className="toolkit-grid">
-          {SKILL_GROUPS.map((group) => (
+          {[...SKILL_GROUPS].sort((a, b) => {
+            const order = ["Development", "AI Tools", "Game Development", "Creative Tools"];
+            return order.indexOf(a.category) - order.indexOf(b.category);
+          }).map((group) => (
             <div key={group.category}>
               <h3 className="mb-6 text-lg font-semibold">{group.category}</h3>
               <ul className="space-y-4">
