@@ -1,16 +1,16 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowLeft, ArrowUpRight, Award, Check, CheckCircle2, ChevronDown, Circle, FileText, PlayCircle } from "lucide-react";
 import { PROJECTS } from "@/lib/data";
-import { PortfolioNav as Navbar } from "@/components/portfolio/PortfolioInteractions";
-import { PortfolioFooter as Footer } from "@/components/portfolio/PortfolioHome";
-import { TechBadge, StatusBadge } from "@/components/ui/Badges";
-import { ItchIcon } from "@/components/ui/BrandIcons";
-import { ProjectCard } from "@/components/ui/ProjectCard";
-import { Reveal } from "@/components/ui/Reveal";
+import { GithubIcon, ItchIcon } from "@/components/ui/BrandIcons";
 import { Gallery } from "@/components/ui/Gallery";
-import { FileText, Check, CheckCircle2, Circle, ChevronDown } from "lucide-react";
 import { SITE_NAME, jsonLdScript, metaDescription, projectJsonLd } from "@/lib/site";
+import { Reveal } from "@/components/motion/reveal";
+import { SiteNav } from "@/components/site/site-nav";
+import { SiteFooter } from "@/components/site/site-footer";
+import { Container, Eyebrow } from "@/components/site/section-header";
+import { ProjectCard, StatusPill, TechChip } from "@/components/site/project-bits";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -49,30 +49,7 @@ export async function generateMetadata({
   };
 }
 
-function BackArrow() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="15 18 9 12 15 6" />
-    </svg>
-  );
-}
-
-function GithubIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .268.18.58.688.482C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z" />
-    </svg>
-  );
-}
-
-function ExternalIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-      <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
-    </svg>
-  );
-}
+const isSet = (url?: string) => Boolean(url && url !== "#");
 
 export default async function ProjectPage({
   params,
@@ -84,12 +61,12 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   const related = PROJECTS.filter(
-    (p) =>
-      p.slug !== slug &&
-      p.tech.some((t) => project.tech.includes(t))
+    (p) => p.slug !== slug && p.tech.some((t) => project.tech.includes(t)),
   ).slice(0, 3);
 
   const media = project.gallery ?? [{ type: "image" as const, src: project.image }];
+  const milestonesDone = project.milestones?.filter((m) => m.done).length ?? 0;
+  const progress = project.milestones ? Math.round((milestonesDone / project.milestones.length) * 100) : 0;
 
   return (
     <>
@@ -97,125 +74,109 @@ export default async function ProjectPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(projectJsonLd(project)) }}
       />
-      <Navbar />
-      <main className="min-h-screen bg-canvas">
-        <div className="mx-auto max-w-6xl px-6 pb-28 pt-28">
-          {/* Back nav */}
-          <Reveal>
-            <Link
-              href="/#portfolio-showcase"
-              className="mb-8 inline-flex items-center gap-2 rounded-lg border border-line bg-veil px-4 py-2 text-sm text-dim transition-all hover:border-line-2 hover:text-ink"
-            >
-              <BackArrow /> All Projects
-            </Link>
-          </Reveal>
+      <SiteNav />
+      <main id="main" className="relative flex-1 overflow-hidden pb-24 pt-28 sm:pt-32">
+        <div aria-hidden className="bg-grid absolute inset-x-0 top-0 -z-10 h-[34rem]" />
+        <div aria-hidden className="absolute -right-24 top-10 -z-10 h-72 w-72 rounded-full bg-accent/15 blur-3xl" />
+        <Container>
+          <Link
+            href="/#portfolio-showcase"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-surface/70 px-4 text-sm font-medium text-dim backdrop-blur transition-colors hover:text-ink"
+          >
+            <ArrowLeft size={16} aria-hidden /> All projects
+          </Link>
 
-          {/* Header */}
-          <Reveal delay={60}>
-            <div className="mb-8 flex flex-wrap items-start gap-4">
-              <StatusBadge status={project.status} />
+          <header className="mt-10 max-w-4xl animate-rise">
+            <div className="flex flex-wrap items-center gap-3">
+              <StatusPill status={project.status} />
+              <span className="font-mono text-sm text-dim">{project.role}</span>
             </div>
-            <h1 className="mb-4 text-4xl font-black leading-tight text-ink md:text-5xl">
+            <h1 className="mt-5 text-5xl font-semibold leading-[1.02] tracking-tighter text-ink sm:text-7xl">
               {project.title}
             </h1>
-            <div className="flex flex-wrap gap-2">
+            {project.award && (
+              <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-amber/15 px-4 py-1.5 text-sm font-semibold text-amber-strong">
+                <Award size={16} aria-hidden /> {project.award}
+              </p>
+            )}
+            <div className="mt-6 flex flex-wrap gap-2">
               {project.tech.map((t) => (
-                <TechBadge key={t}>{t}</TechBadge>
+                <TechChip key={t}>{t}</TechChip>
               ))}
             </div>
-          </Reveal>
+          </header>
 
-          {/* Main content: gallery + sidebar */}
-          <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_360px]">
-            {/* Gallery */}
-            <Reveal delay={120}>
+          <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_22rem]">
+            <Reveal>
               <Gallery project={project} media={media} />
             </Reveal>
 
-            {/* Sidebar */}
-            <div className="flex flex-col gap-6">
-              <Reveal delay={150}>
-                <div>
-                  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
-                    About
-                  </p>
-                  <p className="text-sm leading-relaxed text-dim">
-                    {project.description}
-                  </p>
-                </div>
+            <aside className="flex flex-col gap-5">
+              <Reveal className="rounded-3xl border border-line bg-surface p-6">
+                <Eyebrow>About</Eyebrow>
+                <p className="mt-4 text-base leading-relaxed text-ink">{project.description}</p>
               </Reveal>
-
-              <Reveal delay={180}>
-                <div className="rounded-2xl border border-line bg-veil p-5">
-                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-accent-strong/80">
-                    What I Did
-                  </p>
-                  <p className="text-sm leading-relaxed text-dim">
-                    {project.contribution}
-                  </p>
-                </div>
+              <Reveal delay={0.05} className="rounded-3xl border border-line bg-surface p-6">
+                <Eyebrow>What I did</Eyebrow>
+                <p className="mt-4 text-sm leading-relaxed text-dim">{project.contribution}</p>
               </Reveal>
-
-              {/* CTA buttons */}
-              <Reveal delay={210}>
-                <div className="flex flex-col gap-3">
-                  {project.github !== "#" && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl border border-line bg-veil py-3 text-sm font-semibold text-dim transition-all hover:border-line-2 hover:text-ink"
-                    >
-                      <GithubIcon /> View on GitHub
-                    </a>
-                  )}
-                  {project.demo !== "#" && (
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber to-orange py-3 text-sm font-bold text-on-accent transition-all hover:shadow-lg hover:shadow-amber/30"
-                    >
-                      {project.demo.includes("itch.io") ? (
-                        <><ItchIcon /> Go to itch.io</>
-                      ) : project.kind === "video" ? (
-                        <><ExternalIcon /> Watch on YouTube</>
-                      ) : (
-                        <><ExternalIcon /> Live Demo</>
-                      )}
-                    </a>
-                  )}
-                  {project.docs && project.docs !== "#" && (
-                    <a
-                      href={project.docs}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl border border-line bg-veil py-3 text-sm font-semibold text-dim transition-all hover:border-line-2 hover:text-ink"
-                    >
-                      <FileText size={16} /> Documentation
-                    </a>
-                  )}
-                </div>
+              <Reveal delay={0.1} className="flex flex-col gap-3">
+                {isSet(project.demo) && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex min-h-12 items-center justify-center gap-2 rounded-full bg-amber px-5 text-sm font-semibold text-on-accent transition-transform active:scale-[0.97]"
+                  >
+                    {project.demo.includes("itch.io") ? (
+                      <>
+                        <ItchIcon /> Play on itch.io
+                      </>
+                    ) : project.kind === "video" ? (
+                      <>
+                        <PlayCircle size={17} aria-hidden /> Watch on YouTube
+                      </>
+                    ) : (
+                      <>
+                        <ArrowUpRight size={17} aria-hidden /> Live demo
+                      </>
+                    )}
+                  </a>
+                )}
+                {isSet(project.github) && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-line-2 bg-surface px-5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
+                  >
+                    <GithubIcon /> View on GitHub
+                  </a>
+                )}
+                {isSet(project.docs) && (
+                  <a
+                    href={project.docs}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-line-2 bg-surface px-5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
+                  >
+                    <FileText size={17} aria-hidden /> Documentation
+                  </a>
+                )}
               </Reveal>
-            </div>
+            </aside>
           </div>
 
-          {/* Extra project detail: results, highlights, timeline, technical deep-dive */}
           {(project.achievements || project.highlights || project.milestones || project.technicalDetails) && (
-            <div className="mt-16 space-y-10">
+            <div className="mt-20 space-y-14">
               {project.achievements && (
                 <Reveal>
-                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
-                    Results
-                  </p>
-                  <div className="grid gap-4 sm:grid-cols-3">
+                  <Eyebrow>Results</Eyebrow>
+                  <div className="mt-6 grid gap-4 sm:grid-cols-3">
                     {project.achievements.map((a) => (
-                      <div
-                        key={a.label}
-                        className="rounded-2xl border border-line bg-veil p-5 text-center"
-                      >
-                        <p className="text-2xl font-black text-accent-strong">{a.value}</p>
-                        <p className="mt-1 text-xs text-dim">{a.label}</p>
+                      <div key={a.label} className="rounded-3xl border border-line bg-surface p-6">
+                        <p className="text-3xl font-semibold tracking-tight text-accent-strong">{a.value}</p>
+                        <p className="mt-1 text-sm text-dim">{a.label}</p>
                       </div>
                     ))}
                   </div>
@@ -223,17 +184,14 @@ export default async function ProjectPage({
               )}
 
               {project.highlights && (
-                <Reveal delay={60}>
-                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
-                    Highlights
-                  </p>
-                  <ul className="grid gap-2.5 sm:grid-cols-2">
+                <Reveal>
+                  <Eyebrow>Highlights</Eyebrow>
+                  <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                     {project.highlights.map((h) => (
-                      <li
-                        key={h}
-                        className="flex items-start gap-2.5 rounded-xl border border-line bg-veil px-4 py-3 text-sm text-dim"
-                      >
-                        <Check size={16} className="mt-0.5 shrink-0 text-accent-strong" />
+                      <li key={h} className="flex items-start gap-3 rounded-2xl border border-line bg-surface p-4 text-sm leading-relaxed text-dim">
+                        <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent/15 text-accent-strong">
+                          <Check size={12} strokeWidth={3} aria-hidden />
+                        </span>
                         {h}
                       </li>
                     ))}
@@ -242,36 +200,32 @@ export default async function ProjectPage({
               )}
 
               {project.milestones && (
-                <Reveal delay={120}>
-                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
-                    Development Timeline
-                  </p>
-                  <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-veil">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-accent to-cyan transition-all duration-700"
-                      style={{
-                        width: `${Math.round(
-                          (project.milestones.filter((m) => m.done).length /
-                            project.milestones.length) *
-                            100
-                        )}%`,
-                      }}
-                    />
+                <Reveal>
+                  <div className="flex items-end justify-between gap-4">
+                    <Eyebrow>Development timeline</Eyebrow>
+                    <span className="font-mono text-sm text-dim">
+                      {milestonesDone}/{project.milestones.length} done
+                    </span>
                   </div>
-                  <ul className="space-y-2.5">
+                  <div
+                    className="mt-5 h-2 w-full overflow-hidden rounded-full bg-surface-2"
+                    role="progressbar"
+                    aria-label="Milestones completed"
+                    aria-valuenow={progress}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    <div className="h-full rounded-full bg-gradient-to-r from-accent to-amber" style={{ width: `${progress}%` }} />
+                  </div>
+                  <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                     {project.milestones.map((m) => (
-                      <li
-                        key={m.label}
-                        className="flex items-center gap-3 rounded-xl border border-line bg-veil px-4 py-3 text-sm"
-                      >
+                      <li key={m.label} className="flex items-center gap-3 rounded-2xl border border-line bg-surface p-4 text-sm">
                         {m.done ? (
-                          <CheckCircle2 size={16} className="shrink-0 text-accent-strong" />
+                          <CheckCircle2 size={18} className="shrink-0 text-accent-strong" aria-label="Done" />
                         ) : (
-                          <Circle size={16} className="shrink-0 text-dim" />
+                          <Circle size={18} className="shrink-0 text-dim" aria-label="Planned" />
                         )}
-                        <span className={m.done ? "text-dim" : "text-dim"}>
-                          {m.label}
-                        </span>
+                        <span className={m.done ? "text-ink" : "text-dim"}>{m.label}</span>
                       </li>
                     ))}
                   </ul>
@@ -279,47 +233,35 @@ export default async function ProjectPage({
               )}
 
               {project.technicalDetails && (
-                <Reveal delay={180}>
-                  <details className="group rounded-2xl border border-line bg-veil p-5">
-                    <summary className="flex cursor-pointer list-none items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-accent-strong/80">
-                      Technical Details
-                      <ChevronDown
-                        size={16}
-                        className="text-dim transition-transform duration-300 group-open:rotate-180"
-                      />
+                <Reveal>
+                  <details className="group rounded-3xl border border-line bg-surface p-6">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                      <Eyebrow>Technical details</Eyebrow>
+                      <ChevronDown size={18} className="text-dim transition-transform duration-300 group-open:rotate-180" aria-hidden />
                     </summary>
-                    <p className="mt-3 text-sm leading-relaxed text-dim">
-                      {project.technicalDetails}
-                    </p>
+                    <p className="mt-5 text-sm leading-relaxed text-dim sm:text-base">{project.technicalDetails}</p>
                   </details>
                 </Reveal>
               )}
             </div>
           )}
 
-          {/* Related projects */}
           {related.length > 0 && (
-            <div className="mt-24">
-              <Reveal>
-                <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-dim">
-                  More projects
-                </p>
-                <h2 className="mb-8 text-2xl font-black text-ink">
-                  You might also like
-                </h2>
-              </Reveal>
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <section className="mt-24">
+              <Eyebrow>More projects</Eyebrow>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">You might also like</h2>
+              <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {related.map((p, i) => (
-                  <Reveal key={p.slug} delay={i * 70}>
-                    <ProjectCard project={p} href={`/projects/${p.slug}`} />
+                  <Reveal key={p.slug} delay={i * 0.06}>
+                    <ProjectCard project={p} />
                   </Reveal>
                 ))}
               </div>
-            </div>
+            </section>
           )}
-        </div>
+        </Container>
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }
