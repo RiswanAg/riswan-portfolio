@@ -53,7 +53,11 @@ type Milestone = {
 // text-only (no image frame, no placeholder cards) until photos are added.
 // Once you drop photos into /public/journey/<folder>/{1,2,3}.jpg, remove the
 // folder name from this set to switch that panel back to the photo layout.
-const NO_PHOTOS_YET = new Set<string>(["award-6-covid-infographic"]);
+const NO_PHOTOS_YET = new Set<string>([
+  "award-6-covid-infographic",
+  "experience-5-kopi-saigon-internship",
+  "experience-6-norham-coffee-freelance",
+]);
 
 const KIND_META: Record<Kind, { label: string; color: string }> = {
   work: { label: "Experience", color: "#219EBC" },
@@ -78,6 +82,8 @@ const EXPERIENCE_FOLDERS = [
   "experience-2-game-jams",
   "experience-3-pencak-dice",
   "experience-4-msn-agrileap",
+  "experience-5-kopi-saigon-internship",
+  "experience-6-norham-coffee-freelance",
 ];
 
 const AWARD_FOLDERS = [
@@ -96,7 +102,7 @@ const galleryPaths = (folder: string): string[] => [
 ];
 
 function buildMilestones(): Milestone[] {
-  const expSort = [2025.1, 2024.9, 2026.5, 2026.6];
+  const expSort = [2025.1, 2024.9, 2026.5, 2026.6, 2026.95, 2026.9];
   const achSort = [2026.4, 2025.4, 2025.2, 2026.3, 2022.1, 2020.1];
 
   const work: Milestone[] = EXPERIENCES.map((e, i) => {
