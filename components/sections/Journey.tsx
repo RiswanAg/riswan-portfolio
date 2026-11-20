@@ -1,11 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   motion,
   AnimatePresence,
-} from "framer-motion";
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "motion/react";
 import {
   Briefcase,
   Trophy,
@@ -19,8 +22,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { EXPERIENCES, ACHIEVEMENTS, PROJECTS } from "@/lib/data";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { JourneyAlbum } from "@/components/ui/JourneyAlbum";
+import { Container, SectionHeader } from "@/components/site/section-header";
+import { PhotoStrip } from "@/components/home/photo-strip";
+import { cn } from "@/lib/utils";
 
 // ── Unified milestone model ───────────────────────────────────────────────────
 // Experience, Education and Awards collapse into one chronological photo story.
@@ -162,173 +166,140 @@ function buildMilestones(): Milestone[] {
   return [...work, ...awards].sort((a, b) => b.sort - a.sort);
 }
 
-function JourneyPanel({ m }: { m: Milestone }) {
-  const [open, setOpen] = useState(false);
-  const meta = KIND_META[m.kind];
-  const Icon = m.icon;
-  return (
-    <article className="mx-auto mb-10 w-full max-w-4xl overflow-hidden rounded-2xl border border-line bg-surface sm:mb-16">
-      <JourneyAlbum photos={m.gallery} title={m.subtitle || m.title} />
-      <div className="p-5 sm:p-8">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: "#03140F", background: meta.color }}>
-            <Icon size={13} aria-hidden />{m.highlight}
-          </span>
-          <span className="font-mono text-xs text-dim">{m.period} · {meta.label}</span>
-        </div>
-        <h3 className="mt-4 text-2xl font-bold leading-tight text-ink sm:text-3xl">{m.title}</h3>
-        {m.subtitle && <p className="mt-2 text-sm font-medium text-dim">{m.subtitle}</p>}
-        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ink sm:text-base">{m.summary}</p>
-        {open && <p id={`story-${m.key}`} className="mt-4 max-w-2xl border-t border-line pt-4 text-sm leading-relaxed text-dim">{m.description}</p>}
-        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
-          {m.description !== m.summary && (
-            <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls={`story-${m.key}`} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-dim hover:text-ink">
-              <Plus size={14} className={open ? "rotate-45" : ""} />
-              {open ? "Show less" : "The full story"}
-            </button>
-          )}
-          {m.link && <Link href={m.link.href} className="inline-flex min-h-11 items-center gap-2 text-xs font-bold text-accent-strong">{m.link.label}<ArrowUpRight size={15} /></Link>}
-        </div>
-      </div>
-    </article>
-  );
-}
+// ── Timeline row ─────────────────────────────────────────────────────────────
+// After the Aceternity UI "Timeline" (21st.dev/aceternity/timeline): a sticky
+// date column, a line that draws itself with scroll, and compact cards with a
+// three-photo strip instead of full-height albums.
 
-// ── Compact milestone (timeline row) ───────────────────────────────────────────
-// Everything that isn't a headline moment renders as a short scannable row
-// instead of a full-height cinematic panel, keeping the section a reasonable
-// scroll length so visitors actually reach the contact CTA.
+const KIND_STYLE: Record<Kind, { badge: string; dot: string }> = {
+  work: { badge: "bg-accent/12 text-accent-strong", dot: "border-accent/40 text-accent-strong" },
+  award: { badge: "bg-amber/15 text-amber-strong", dot: "border-amber/50 text-amber-strong" },
+};
 
 function TimelineItem({ m }: { m: Milestone }) {
   const [open, setOpen] = useState(false);
   const meta = KIND_META[m.kind];
+  const style = KIND_STYLE[m.kind];
   const Icon = m.icon;
+  const reduce = useReducedMotion();
+  const storyId = `story-${m.key}`;
 
   return (
-    <motion.li
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="relative pl-12"
-    >
-      <span
-        className="absolute left-0 top-0.5 flex h-8 w-8 items-center justify-center rounded-full border bg-surface"
-        style={{ borderColor: `${meta.color}55`, color: meta.color }}
+    <li className="relative grid gap-x-10 md:grid-cols-[10rem_1fr]">
+      <div className="mb-3 pl-14 md:sticky md:top-28 md:mb-0 md:self-start md:pl-0 md:pt-1.5 md:text-right">
+        <p className="font-mono text-sm text-ink">{m.period}</p>
+        <p className="mt-1 text-xs text-dim">{meta.label}</p>
+      </div>
+
+      <motion.article
+        initial={false}
+        whileInView={reduce ? undefined : { opacity: [0, 1], x: [16, 0] }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="relative pl-14"
       >
-        <Icon size={14} strokeWidth={2.2} />
-      </span>
-
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span className="font-mono text-xs tracking-[0.15em] text-dim">
-          {m.period}
-        </span>
         <span
-          className="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]"
-          style={{ color: "#03140F", background: meta.color }}
+          aria-hidden
+          className={cn(
+            "absolute left-0 top-0 grid h-9 w-9 place-items-center rounded-full border bg-canvas",
+            style.dot,
+          )}
         >
-          {m.highlight}
+          <Icon size={15} strokeWidth={2.2} />
         </span>
-      </div>
-      <h4 className="mt-1.5 text-lg font-bold leading-snug text-ink">{m.title}</h4>
-      {m.subtitle && (
-        <p className="mt-0.5 text-sm text-dim">{m.subtitle}</p>
-      )}
-      <p className="mt-1 max-w-xl text-sm leading-relaxed text-dim">
-        {m.summary}
-      </p>
 
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.p
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-xl overflow-hidden text-sm leading-relaxed text-dim"
-          >
-            <span className="mt-2 block">{m.description}</span>
-          </motion.p>
-        )}
-      </AnimatePresence>
+        <div className="rounded-3xl border border-line bg-surface p-5 shadow-soft sm:p-7">
+          <span className={cn("inline-flex rounded-full px-3 py-1 text-xs font-semibold", style.badge)}>
+            {m.highlight}
+          </span>
+          <h3 className="mt-4 text-xl font-semibold leading-snug tracking-tight text-ink sm:text-2xl">{m.title}</h3>
+          {m.subtitle && <p className="mt-1 text-sm font-medium text-dim">{m.subtitle}</p>}
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-dim">{m.summary}</p>
 
-      <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
-        {m.description !== m.summary && (
-          <button
-            onClick={() => setOpen((o) => !o)}
-            aria-expanded={open}
-            className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-dim transition-colors hover:text-ink"
-          >
-            <Plus
-              size={13}
-              className={`transition-transform duration-300 ${open ? "rotate-45" : ""}`}
-            />
-            {open ? "Show less" : "Full story"}
-          </button>
-        )}
-        {m.link && (
-          <Link
-            href={m.link.href}
-            className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors hover:brightness-125"
-            style={{ color: meta.color }}
-          >
-            {m.link.label}
-            <ArrowUpRight size={13} strokeWidth={2.6} />
-          </Link>
-        )}
-      </div>
-    </motion.li>
+          {m.hasPhotos && <PhotoStrip photos={m.gallery} title={m.subtitle || m.title} />}
+
+          <AnimatePresence initial={false}>
+            {open && (
+              <motion.div
+                id={storyId}
+                initial={reduce ? false : { height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <p className="mt-5 max-w-2xl border-t border-line pt-5 text-sm leading-relaxed text-dim sm:text-base">
+                  {m.description}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {(m.description !== m.summary || m.link) && (
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+              {m.description !== m.summary && (
+                <button
+                  type="button"
+                  onClick={() => setOpen((value) => !value)}
+                  aria-expanded={open}
+                  aria-controls={storyId}
+                  className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ink hover:text-accent-strong"
+                >
+                  <Plus size={15} className={cn("transition-transform duration-300", open && "rotate-45")} aria-hidden />
+                  {open ? "Show less" : "The full story"}
+                </button>
+              )}
+              {m.link && (
+                <Link
+                  href={m.link.href}
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-accent-strong hover:underline"
+                >
+                  {m.link.label}
+                  <ArrowUpRight size={15} aria-hidden />
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
+      </motion.article>
+    </li>
   );
 }
 
 // ── Section ───────────────────────────────────────────────────────────────────
 
-// Headline moments that earn the full-height cinematic photo treatment.
-// Everything else collapses into the compact timeline below them.
-const CINEMATIC_KEYS = new Set<string>([
-  "experience-4-msn-agrileap",
-  "experience-3-pencak-dice",
-  "award-1-itex-2026-silver",
-  "award-2-ftmk-sneakout-silver",
-  "experience-1-nextgen-digital-ninja",
-]);
-
 export function Journey() {
   const milestones = useMemo(() => buildMilestones(), []);
-  const cinematic = milestones.filter(
-    (m) => CINEMATIC_KEYS.has(m.key) && m.hasPhotos
-  );
-  const rest = milestones.filter(
-    (m) => !CINEMATIC_KEYS.has(m.key) || !m.hasPhotos
-  );
+  const list = useRef<HTMLOListElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: list, offset: ["start 75%", "end 55%"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   return (
-    <section id="experience" className="relative overflow-hidden px-0 py-24">
-      <div aria-hidden className="aurora -left-24 top-8 h-72 w-72 bg-amber/15" />
-      <div aria-hidden className="aurora -right-16 bottom-0 h-64 w-64 bg-accent/10" />
-
-      <div className="px-6">
-        <SectionHeading eyebrow="Where I've Been" title="My Journey" />
-      </div>
-
-      <div className="relative px-4 sm:px-6">
-        {cinematic.map((m) => (
-          <JourneyPanel key={m.kind + m.title} m={m} />
-        ))}
-      </div>
-
-      {rest.length > 0 && (
-        <div className="relative mx-auto mt-8 w-full max-w-3xl px-6">
-          <h3 className="mb-10 text-center font-mono text-xs uppercase tracking-[0.3em] text-dim">
-            More milestones
-          </h3>
-          <ul className="relative flex flex-col gap-10 before:absolute before:bottom-2 before:left-4 before:top-2 before:w-px before:bg-line">
-            {rest.map((m) => (
-              <TimelineItem key={m.kind + m.title} m={m} />
-            ))}
-          </ul>
-        </div>
-      )}
+    <section id="experience" className="py-24 sm:py-32">
+      <Container>
+        <SectionHeader
+          index="03"
+          eyebrow="Journey"
+          title={
+            <>
+              Experience, awards and <span className="text-accent-strong">the work behind them.</span>
+            </>
+          }
+        />
+        <ol ref={list} className="relative space-y-10 sm:space-y-14">
+          {/* The track and its scroll-drawn fill, aligned with the icon centres. */}
+          <span aria-hidden className="absolute bottom-0 left-[17px] top-2 w-px bg-line-2 md:left-[calc(10rem+2.5rem+17px)]" />
+          <motion.span
+            aria-hidden
+            className="absolute bottom-0 left-[17px] top-2 w-px origin-top bg-gradient-to-b from-accent via-cyan to-amber md:left-[calc(10rem+2.5rem+17px)]"
+            style={reduce ? { scaleY: 1 } : { scaleY: progress }}
+          />
+          {milestones.map((m) => (
+            <TimelineItem key={m.kind + m.title} m={m} />
+          ))}
+        </ol>
+      </Container>
     </section>
   );
 }

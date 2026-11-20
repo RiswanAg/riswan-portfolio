@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Space_Grotesk,
-  Caveat,
-  Barlow_Condensed,
-} from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "./portfolio.css";
-import "./cinematic.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,23 +9,6 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
-
-const caveat = Caveat({
-  variable: "--font-handwritten",
-  weight: "400",
-  subsets: ["latin"],
-});
-
-const display = Barlow_Condensed({
-  variable: "--font-display",
-  weight: ["600", "700"],
   subsets: ["latin"],
 });
 
@@ -118,7 +93,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${caveat.variable} ${display.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         {/* Apply the saved choice, falling back to system preference before paint. */}
@@ -133,7 +108,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-grain min-h-full flex flex-col bg-canvas">
+      <body className="flex min-h-full flex-col bg-canvas">
         {children}
       </body>
     </html>
