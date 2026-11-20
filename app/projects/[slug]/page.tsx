@@ -10,6 +10,7 @@ import { ProjectCard } from "@/components/ui/ProjectCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { Gallery } from "@/components/ui/Gallery";
 import { FileText, Check, CheckCircle2, Circle, ChevronDown } from "lucide-react";
+import { SITE_NAME, jsonLdScript, metaDescription, projectJsonLd } from "@/lib/site";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -23,15 +24,28 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = PROJECTS.find((p) => p.slug === slug);
   if (!project) return {};
+  const path = `/projects/${project.slug}`;
+  const title = project.title; // root template adds " | Riswan Hamua"
+  const description = metaDescription(project.description);
+  // og:image / twitter:image come from the opengraph-image.tsx and
+  // twitter-image.tsx files next to this page.
   return {
-    title: `${project.title} | Riswan Hamua`,
-    description: project.description,
+    title,
+    description,
+    keywords: [project.title, ...project.tech, "Riswan Hamua", "Portfolio"],
+    alternates: { canonical: path },
     openGraph: {
+      type: "article",
+      url: path,
+      siteName: SITE_NAME,
       title: `${project.title} | Riswan Hamua`,
-      description: project.description,
-      images: project.image ? [{ url: project.image }] : [],
+      description,
     },
-    alternates: { canonical: `/projects/${project.slug}` },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | Riswan Hamua`,
+      description,
+    },
   };
 }
 
@@ -79,6 +93,10 @@ export default async function ProjectPage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(projectJsonLd(project)) }}
+      />
       <Navbar />
       <main className="min-h-screen bg-canvas">
         <div className="mx-auto max-w-6xl px-6 pb-28 pt-28">
