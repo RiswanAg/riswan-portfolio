@@ -111,8 +111,9 @@ export function PortfolioHome() {
               <p>
                 I started with games and immersive projects, where I learned to
                 build responsive interfaces, connect systems and work through
-                difficult technical problems. I’m now taking that experience
-                into web development and AI engineering.
+                difficult technical problems. Now I put that to work on the web:
+                client sites, dashboards and ordering systems, with AI where it
+                genuinely helps.
               </p>
               <div className="about-disciplines">
                 <span>

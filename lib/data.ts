@@ -11,7 +11,7 @@ export const PROFILE = {
   ],
   tagline:
     "I build websites, interactive applications and AI tools, from the interface people use to the systems behind it.",
-  status: "Building for the web. Working with AI.",
+  status: "Web Development Intern at Kopi Saigon.",
   image: "/riswan-portrait.png",
   imageFallback: "/profile.svg",
   cv: "/cv.pdf",
@@ -30,7 +30,7 @@ export const ABOUT_HOME = {
   heading: "About Me",
   greeting: "Hello, I'm",
   bio:
-    "I'm a web developer and AI engineer studying Information Technology at UTeM. My focus is building useful web experiences and practical AI applications, with hands-on work in computer vision, machine learning pipelines and interactive software.",
+    "I'm a web developer and AI engineer, currently interning at Kopi Saigon while finishing my Information Technology degree at UTeM. I build websites, dashboards and QR ordering systems for real businesses, and practical AI tools, from computer vision and machine learning pipelines to conversational features.",
   quote: "Leveraging AI as a professional tool, not a replacement.",
 };
 
@@ -676,45 +676,50 @@ export type SkillGroup = { category: string; accent: string; skills: Skill[] };
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
+    category: "Web Development",
+    accent: "sky",
+    skills: [
+      { name: "JavaScript", logo: "/skills/javascript.svg", level: "Advanced" },
+      { name: "TypeScript", logo: "/skills/typescript.svg", level: "Proficient" },
+      { name: "React", logo: "/skills/react.svg", level: "Proficient" },
+      { name: "Next.js", logo: "/skills/nextdotjs.svg", level: "Proficient" },
+      { name: "Tailwind CSS", logo: "/skills/tailwindcss.svg", level: "Proficient" },
+      { name: "Three.js", logo: "/skills/threedotjs.svg", level: "Proficient" },
+      { name: "MySQL", logo: "/skills/mysql.png", level: "Familiar" },
+    ],
+  },
+  {
+    category: "AI & Machine Learning",
+    accent: "cyan",
+    skills: [
+      { name: "Python", logo: "/skills/phyton.png", level: "Proficient" },
+      { name: "OpenCV", logo: "/skills/opencv.svg", level: "Proficient" },
+      { name: "MediaPipe", logo: "/skills/mediapipe.svg", level: "Proficient" },
+      { name: "scikit-learn", logo: "/skills/scikitlearn.svg", level: "Proficient" },
+      { name: "Claude Code", logo: "/skills/claudecode.png", level: "Expert" },
+      { name: "Codex", logo: "/skills/codex.png", level: "Advanced" },
+    ],
+  },
+  {
     category: "Game Development",
     accent: "emerald",
     skills: [
       { name: "Unity", logo: "/skills/unity.png", level: "Expert" },
       { name: "Unreal Engine", logo: "/skills/unreal.png", level: "Proficient" },
-      { name: "Godot", logo: "/skills/godot.png", level: "Proficient" },
       { name: "C#", logo: "/skills/csharp.png", level: "Expert" },
       { name: "C++", logo: "/skills/cpp.png", level: "Expert" },
     ],
   },
   {
-    category: "Creative Tools",
+    category: "Tools & Creative",
     accent: "lime",
-    skills: [
-      { name: "Blender", logo: "/skills/blender.png", level: "Familiar" },
-      { name: "After Effects", logo: "/skills/aftereffects.png", level: "Familiar" },
-      { name: "Photoshop", logo: "/skills/photoshop.png", level: "Proficient" },
-      { name: "CapCut", logo: "/skills/capcut.png", level: "Proficient" },
-    ],
-  },
-  {
-    category: "AI Tools",
-    accent: "cyan",
-    skills: [
-      { name: "Claude Code", logo: "/skills/claudecode.png", level: "Expert" },
-      { name: "Codex", logo: "/skills/codex.png", level: "Advanced" },
-      { name: "NotebookLM", logo: "/skills/notebooklm.png", level: "Familiar" },
-      { name: "Higgsfield", logo: "/skills/higgsfield.png", level: "Familiar" },
-      { name: "Nano Banana", logo: "/skills/nanobanana-color.png", level: "Familiar" },
-    ],
-  },
-  {
-    category: "Development",
-    accent: "sky",
     skills: [
       { name: "Git", logo: "/skills/git.png", level: "Advanced" },
       { name: "GitHub", logo: "/skills/github.png", level: "Advanced" },
-      { name: "MySQL", logo: "/skills/mysql.png", level: "Familiar" },
-      { name: "Python", logo: "/skills/phyton.png", level: "Proficient" },
+      { name: "Photoshop", logo: "/skills/photoshop.png", level: "Proficient" },
+      { name: "After Effects", logo: "/skills/aftereffects.png", level: "Familiar" },
+      { name: "Blender", logo: "/skills/blender.png", level: "Familiar" },
+      { name: "CapCut", logo: "/skills/capcut.png", level: "Proficient" },
     ],
   },
 ];
@@ -876,6 +881,28 @@ export const EXPERIENCES: Experience[] = [
       "/journey/experience-4-msn-agrileap/3.jpg",
     ],
   },
+  {
+    period: "Sep 2026 – Present",
+    role: "Web Development Intern",
+    organisation: "Kopi Saigon · Industrial Training",
+    summary:
+      "Building the web side of a coffee business: its website, internal dashboards and QR ordering.",
+    highlight: "Industrial Training",
+    description:
+      "Industrial training placement at Kopi Saigon, where I work on the business's web presence and the systems behind it: the website, dashboards that give the team a view of day-to-day operations, and a QR ordering and POS flow that lets customers order straight from the table.",
+    tags: ["Next.js", "TypeScript", "Dashboards", "QR Ordering", "POS"],
+  },
+  {
+    period: "2026 – Present",
+    role: "Freelance Web Developer",
+    organisation: "Norham Coffee",
+    summary:
+      "Designing and building web systems for an independent coffee business.",
+    highlight: "Client Work",
+    description:
+      "Freelance client work for Norham Coffee, taking each piece from brief to a working build: a Next.js website, dashboards for the business and a QR ordering and POS flow, built around how a small café actually runs.",
+    tags: ["Next.js", "TypeScript", "Dashboards", "QR Ordering", "POS"],
+  },
 ];
 
 // ─── Education ───────────────────────────────────────────────────────────────
@@ -937,7 +964,7 @@ export const EDUCATION: Education[] = [
 // ─── Contact ──────────────────────────────────────────────────────────────
 
 export const CONTACT_INTRO =
-  "Open to web development and AI engineering opportunities. If you need a website, an interactive application or help bringing an AI idea into a working product, I'd like to hear about it.";
+  "Currently interning at Kopi Saigon and taking on freelance web projects. If you need a website, a dashboard or an ordering system, or help turning an AI idea into a working product, I'd like to hear about it.";
 
 export type ContactLink = {
   label: string;
@@ -969,24 +996,10 @@ export const CONTACTS: ContactLink[] = [
     logo: "/socials/linkedin.png",
   },
   {
-    label: "Instagram",
-    display: "@_kcng",
-    href: "https://www.instagram.com/_kcng/",
-    icon: "📸",
-    logo: "/socials/instagram.webp",
-  },
-  {
     label: "YouTube",
     display: "@tutung10",
     href: "https://youtube.com/@tutung10",
     icon: "▶️",
     logo: "/socials/youtube.png",
-  },
-  {
-    label: "TikTok",
-    display: "@_hiroyes",
-    href: "https://www.tiktok.com/@_hiroyes",
-    icon: "🎵",
-    logo: "/socials/tiktok.png",
   },
 ];

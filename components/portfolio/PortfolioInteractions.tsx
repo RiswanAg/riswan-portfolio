@@ -332,7 +332,7 @@ export function WorkArchive() {
       <TabsContent value="stack" className="pt-10">
         <div className="toolkit-grid">
           {[...SKILL_GROUPS].sort((a, b) => {
-            const order = ["Development", "AI Tools", "Game Development", "Creative Tools"];
+            const order = ["Web Development", "AI & Machine Learning", "Game Development", "Tools & Creative"];
             return order.indexOf(a.category) - order.indexOf(b.category);
           }).map((group) => (
             <div key={group.category}>
