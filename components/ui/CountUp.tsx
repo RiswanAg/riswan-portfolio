@@ -34,12 +34,7 @@ export function CountUp({
   );
 
   useEffect(() => {
-    if (!hasMatch) return;
-    if (reduceMotion) {
-      setDisplay(value);
-      return;
-    }
-    if (!inView) return;
+    if (!hasMatch || reduceMotion || !inView) return;
 
     const controls = animate(0, target, {
       duration,
@@ -47,11 +42,12 @@ export function CountUp({
       onUpdate: (v) => setDisplay(`${prefix}${v.toFixed(decimals)}${suffix}`),
     });
     return () => controls.stop();
-  }, [inView, reduceMotion, hasMatch, target, decimals, prefix, suffix, duration, value]);
+  }, [inView, reduceMotion, hasMatch, target, decimals, prefix, suffix, duration]);
 
   return (
     <span ref={ref} className={className}>
-      {display}
+      {/* Reduced motion: show the final value straight away, no roll-up. */}
+      {reduceMotion ? value : display}
     </span>
   );
 }
