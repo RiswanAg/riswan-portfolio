@@ -30,6 +30,7 @@
 
   --glow: rgb(33 158 188 / 0.18);
   --grid-line: rgb(2 48 71 / 0.06);
+  --contour: rgb(2 48 71 / 0.11);
   --shadow: 0 1px 2px rgb(2 48 71 / 0.06), 0 12px 32px -12px rgb(2 48 71 / 0.18);
 
   /* shadcn/ui primitives repoint to the semantic layer */
@@ -70,6 +71,7 @@
 
   --glow: rgb(43 179 211 / 0.22);
   --grid-line: rgb(142 202 230 / 0.06);
+  --contour: rgb(142 202 230 / 0.13);
   --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -16px rgb(0 0 0 / 0.6);
 }
 
@@ -110,29 +112,9 @@
 
   --shadow-soft: var(--shadow);
 
-  --animate-marquee: marquee var(--duration, 40s) linear infinite;
-  --animate-shimmer: shimmer 2.6s ease-in-out infinite;
   --animate-rise: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-spotlight: spotlight 2s ease 0.4s 1 both;
 
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(calc(-100% - var(--gap, 1rem)));
-    }
-  }
-  @keyframes shimmer {
-    0%,
-    100% {
-      background-position: 200% 0;
-    }
-    50% {
-      background-position: -100% 0;
-    }
-  }
-  /* Used for the hero headline. Plain CSS, so the text is visible and
+  /* Used for headers. Plain CSS, so the text is visible and
      animates even before (or without) JavaScript. */
   @keyframes rise {
     from {
@@ -142,16 +124,6 @@
     to {
       opacity: 1;
       transform: none;
-    }
-  }
-  @keyframes spotlight {
-    from {
-      opacity: 0;
-      transform: translate(-72%, -62%) scale(0.5);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -40%) scale(1);
     }
   }
 }
@@ -230,28 +202,24 @@ main :where(.grid) > * {
   mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 40%, transparent 100%);
 }
 
-/* Hero role line: never wider than its column. 0.48em is roughly one
-   character of Geist at this weight; --chars is the longest role's length. */
-.hero-role {
-  font-size: min(1em, calc((100vw - 2.5rem) / (var(--chars, 16) * 0.48)));
-}
-@media (min-width: 640px) {
-  .hero-role {
-    font-size: min(1em, calc((100vw - 4rem) / (var(--chars, 16) * 0.48)));
-  }
-}
-@media (min-width: 1024px) {
-  .hero-role {
-    font-size: min(1em, calc((min(100vw, 72rem) - 6.5rem) * 0.6 / (var(--chars, 16) * 0.48)));
-  }
+/* Topographic contour lines (public/textures/contours.webp is a seamless
+   white-on-transparent tile used as a mask, so the colour follows --contour
+   in both themes). Put it on an absolutely positioned, aria-hidden layer. */
+.contours {
+  background-color: var(--contour);
+  -webkit-mask-image: url("/textures/contours.webp");
+  mask-image: url("/textures/contours.webp");
+  -webkit-mask-size: 1100px;
+  mask-size: 1100px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  pointer-events: none;
 }
 
 /* Hide native scrollbars on swipeable tracks. */
-.journey-album-track,
 .no-scrollbar {
   scrollbar-width: none;
 }
-.journey-album-track::-webkit-scrollbar,
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -267,8 +235,5 @@ main :where(.grid) > * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-  .motion-safe-marquee {
-    animation: none !important;
   }
 }

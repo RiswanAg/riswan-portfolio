@@ -1,14 +1,4 @@
-"use client";
-
-import { useMemo, useRef, useState } from "react";
-import Link from "next/link";
-import {
-  motion,
-  AnimatePresence,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-} from "motion/react";
+import Image from "next/image";
 import {
   Briefcase,
   Trophy,
@@ -17,14 +7,15 @@ import {
   Star,
   Zap,
   PenTool,
-  Plus,
+  GraduationCap,
   ArrowUpRight,
   type LucideIcon,
 } from "lucide-react";
-import { EXPERIENCES, ACHIEVEMENTS, PROJECTS } from "@/lib/data";
-import { Container, SectionHeader } from "@/components/site/section-header";
-import { PhotoStrip } from "@/components/home/photo-strip";
+import { EXPERIENCES, ACHIEVEMENTS, PROJECTS, EDUCATION } from "@/lib/data";
+import { Reveal } from "@/components/motion/reveal";
+import { Container } from "@/components/site/section-header";
 import { cn } from "@/lib/utils";
+import { existingPublicFiles, publicFileExists } from "@/lib/public-assets";
 
 // ── Unified milestone model ───────────────────────────────────────────────────
 // Experience, Education and Awards collapse into one chronological photo story.
@@ -166,140 +157,164 @@ function buildMilestones(): Milestone[] {
   return [...work, ...awards].sort((a, b) => b.sort - a.sort);
 }
 
-// ── Timeline row ─────────────────────────────────────────────────────────────
-// After the Aceternity UI "Timeline" (21st.dev/aceternity/timeline): a sticky
-// date column, a line that draws itself with scroll, and compact cards with a
-// three-photo strip instead of full-height albums.
+// ── Shared exports ───────────────────────────────────────────────────────────
+// The home page reuses the milestone model: work items feed the Experience
+// timeline below, awards feed the portfolio "Awards" tab and the photo collage.
 
-const KIND_STYLE: Record<Kind, { badge: string; dot: string }> = {
-  work: { badge: "bg-accent/12 text-accent-strong", dot: "border-accent/40 text-accent-strong" },
-  award: { badge: "bg-amber/15 text-amber-strong", dot: "border-amber/50 text-amber-strong" },
+/** Every milestone, newest first. Photos are filtered to files that exist. */
+export const MILESTONES: Milestone[] = buildMilestones().map((m) => ({
+  ...m,
+  gallery: m.hasPhotos ? existingPublicFiles(m.gallery) : [],
+}));
+
+export type { Milestone };
+
+// ── Two-column timeline (Education | Experience) ────────────────────────────
+
+type TimelineEntry = {
+  key: string;
+  title: string;
+  subtitle: string;
+  period: string;
+  summary: string;
+  badges: string[];
+  logo?: string;
+  photo?: string;
+  icon: LucideIcon;
+  link?: { href: string; label: string };
 };
 
-function TimelineItem({ m }: { m: Milestone }) {
-  const [open, setOpen] = useState(false);
-  const meta = KIND_META[m.kind];
-  const style = KIND_STYLE[m.kind];
-  const Icon = m.icon;
-  const reduce = useReducedMotion();
-  const storyId = `story-${m.key}`;
-
+function TimelineColumn({
+  id,
+  title,
+  icon: Icon,
+  entries,
+  tone,
+}: {
+  id: string;
+  title: string;
+  icon: LucideIcon;
+  entries: TimelineEntry[];
+  tone: "accent" | "amber";
+}) {
   return (
-    <li className="relative grid gap-x-10 md:grid-cols-[10rem_1fr]">
-      <div className="mb-3 pl-14 md:sticky md:top-28 md:mb-0 md:self-start md:pl-0 md:pt-1.5 md:text-right">
-        <p className="font-mono text-sm text-ink">{m.period}</p>
-        <p className="mt-1 text-xs text-dim">{meta.label}</p>
-      </div>
-
-      <motion.article
-        initial={false}
-        whileInView={reduce ? undefined : { opacity: [0, 1], x: [16, 0] }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative pl-14"
-      >
+    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-28">
+      <Reveal className="flex items-center gap-3">
         <span
-          aria-hidden
           className={cn(
-            "absolute left-0 top-0 grid h-9 w-9 place-items-center rounded-full border bg-canvas",
-            style.dot,
+            "grid h-10 w-10 place-items-center rounded-xl",
+            tone === "accent" ? "bg-accent/15 text-accent" : "bg-amber/15 text-amber",
           )}
         >
-          <Icon size={15} strokeWidth={2.2} />
+          <Icon size={19} aria-hidden />
         </span>
+        <h3 id={`${id}-title`} className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          {title}
+        </h3>
+      </Reveal>
 
-        <div className="rounded-3xl border border-line bg-surface p-5 shadow-soft sm:p-7">
-          <span className={cn("inline-flex rounded-full px-3 py-1 text-xs font-semibold", style.badge)}>
-            {m.highlight}
-          </span>
-          <h3 className="mt-4 text-xl font-semibold leading-snug tracking-tight text-ink sm:text-2xl">{m.title}</h3>
-          {m.subtitle && <p className="mt-1 text-sm font-medium text-dim">{m.subtitle}</p>}
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-dim">{m.summary}</p>
-
-          {m.hasPhotos && <PhotoStrip photos={m.gallery} title={m.subtitle || m.title} />}
-
-          <AnimatePresence initial={false}>
-            {open && (
-              <motion.div
-                id={storyId}
-                initial={reduce ? false : { height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={reduce ? undefined : { height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="overflow-hidden"
+      <ol className="mt-8">
+        {entries.map((entry, index) => {
+          const last = index === entries.length - 1;
+          return (
+            <Reveal as="li" key={entry.key} delay={index * 0.09} className="relative pb-9 pl-12 last:pb-0">
+              {!last && <span aria-hidden className="absolute bottom-0 left-[15px] top-9 w-px bg-gradient-to-b from-line-2 to-line" />}
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border-2 bg-canvas font-mono text-xs font-bold",
+                  tone === "accent" ? "border-accent text-accent" : "border-amber text-amber",
+                )}
               >
-                <p className="mt-5 max-w-2xl border-t border-line pt-5 text-sm leading-relaxed text-dim sm:text-base">
-                  {m.description}
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                {index + 1}
+              </span>
 
-          {(m.description !== m.summary || m.link) && (
-            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
-              {m.description !== m.summary && (
-                <button
-                  type="button"
-                  onClick={() => setOpen((value) => !value)}
-                  aria-expanded={open}
-                  aria-controls={storyId}
-                  className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ink hover:text-accent-strong"
-                >
-                  <Plus size={15} className={cn("transition-transform duration-300", open && "rotate-45")} aria-hidden />
-                  {open ? "Show less" : "The full story"}
-                </button>
+              <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                <div className="flex min-w-0 items-center gap-3">
+                  {entry.logo ? (
+                    <span className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-lg bg-white p-1">
+                      <Image src={entry.logo} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
+                    </span>
+                  ) : entry.photo ? (
+                    <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg border border-line">
+                      <Image src={entry.photo} alt="" fill sizes="36px" className="object-cover" />
+                    </span>
+                  ) : (
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-line bg-surface text-dim">
+                      <entry.icon size={16} aria-hidden />
+                    </span>
+                  )}
+                  <p className="min-w-0 text-sm font-semibold text-ink">{entry.subtitle}</p>
+                </div>
+                <span className="shrink-0 rounded-full border border-line-2 bg-surface px-2.5 py-1 font-mono text-[11px] text-dim">
+                  {entry.period}
+                </span>
+              </div>
+
+              <h4 className="mt-3 text-lg font-bold leading-snug text-ink">{entry.title}</h4>
+              {entry.badges.length > 0 && (
+                <ul className="mt-2 flex flex-wrap gap-1.5">
+                  {entry.badges.map((badge) => (
+                    <li
+                      key={badge}
+                      className={cn(
+                        "rounded-md px-2 py-0.5 text-[11px] font-semibold",
+                        tone === "accent" ? "bg-accent/12 text-accent-strong" : "bg-amber/12 text-amber-strong",
+                      )}
+                    >
+                      {badge}
+                    </li>
+                  ))}
+                </ul>
               )}
-              {m.link && (
-                <Link
-                  href={m.link.href}
-                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-accent-strong hover:underline"
+              <p className="mt-2.5 text-sm leading-relaxed text-dim">{entry.summary}</p>
+              {entry.link && (
+                <a
+                  href={entry.link.href}
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong hover:underline"
                 >
-                  {m.link.label}
-                  <ArrowUpRight size={15} aria-hidden />
-                </Link>
+                  {entry.link.label}
+                  <ArrowUpRight size={14} aria-hidden />
+                </a>
               )}
-            </div>
-          )}
-        </div>
-      </motion.article>
-    </li>
+            </Reveal>
+          );
+        })}
+      </ol>
+    </section>
   );
 }
 
-// ── Section ───────────────────────────────────────────────────────────────────
-
 export function Journey() {
-  const milestones = useMemo(() => buildMilestones(), []);
-  const list = useRef<HTMLOListElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: list, offset: ["start 75%", "end 55%"] });
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+  const education: TimelineEntry[] = EDUCATION.map((e) => ({
+    key: e.institution,
+    title: e.qualification,
+    subtitle: e.institution,
+    period: e.period,
+    summary: e.summary,
+    badges: [e.grade, e.highlight].filter((badge, i, all): badge is string => Boolean(badge) && all.indexOf(badge) === i),
+    logo: publicFileExists(e.logo) ? e.logo : undefined,
+    icon: GraduationCap,
+  }));
+
+  const experience: TimelineEntry[] = MILESTONES.filter((m) => m.kind === "work").map((m) => ({
+    key: m.key,
+    title: m.title,
+    subtitle: m.subtitle,
+    period: m.period,
+    summary: m.summary,
+    badges: [m.highlight],
+    photo: m.gallery[0],
+    icon: m.icon,
+    link: m.link,
+  }));
 
   return (
-    <section id="experience" className="py-24 sm:py-32">
-      <Container>
-        <SectionHeader
-          index="03"
-          eyebrow="Journey"
-          title={
-            <>
-              Experience, awards and <span className="text-accent-strong">the work behind them.</span>
-            </>
-          }
-        />
-        <ol ref={list} className="relative space-y-10 sm:space-y-14">
-          {/* The track and its scroll-drawn fill, aligned with the icon centres. */}
-          <span aria-hidden className="absolute bottom-0 left-[17px] top-2 w-px bg-line-2 md:left-[calc(10rem+2.5rem+17px)]" />
-          <motion.span
-            aria-hidden
-            className="absolute bottom-0 left-[17px] top-2 w-px origin-top bg-gradient-to-b from-accent via-cyan to-amber md:left-[calc(10rem+2.5rem+17px)]"
-            style={reduce ? { scaleY: 1 } : { scaleY: progress }}
-          />
-          {milestones.map((m) => (
-            <TimelineItem key={m.kind + m.title} m={m} />
-          ))}
-        </ol>
+    <div id="experience" className="relative scroll-mt-24 py-20 sm:py-28">
+      <Container className="grid gap-16 lg:grid-cols-2 lg:gap-14">
+        <TimelineColumn id="education" title="Education" icon={GraduationCap} entries={education} tone="accent" />
+        <TimelineColumn id="experience-list" title="Experience" icon={Briefcase} entries={experience} tone="amber" />
       </Container>
-    </section>
+    </div>
   );
 }

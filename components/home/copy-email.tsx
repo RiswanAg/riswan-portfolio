@@ -31,7 +31,7 @@ export function CopyEmail({ email }: { email: string }) {
     <button
       type="button"
       onClick={copy}
-      className="inline-flex min-h-13 items-center gap-2 rounded-full border border-canvas/25 px-5 text-sm font-semibold transition-colors hover:bg-canvas/10 dark:border-line-2 dark:hover:bg-surface-2"
+      className="ml-auto inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line-2 px-3.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { NAV_LINKS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
-import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 export function Logo({ className }: { className?: string }) {
   return (
@@ -22,153 +20,99 @@ export function Logo({ className }: { className?: string }) {
   );
 }
 
-/** Highlights the nav link of the section currently in the middle of the viewport. */
-function useActiveSection(ids: string[], enabled: boolean) {
-  const [active, setActive] = useState<string | null>(null);
+/**
+ * The four stops of the home page. Labels come from NAV_LINKS when an entry
+ * exists for the section, so copy edits in lib/data.ts still apply.
+ */
+const STOPS = [
+  { id: "hero", fallback: "Home" },
+  { id: "about-home", fallback: "About" },
+  { id: "portfolio-showcase", fallback: "Portfolio" },
+  { id: "contact", fallback: "Contact" },
+].map((stop) => ({
+  id: stop.id,
+  label: NAV_LINKS.find((link) => link.id === stop.id)?.label ?? stop.fallback,
+}));
+
+/**
+ * Reads the page on every scroll frame:
+ * - `active`: the last stop whose section top has passed 35% of the viewport.
+ * - `overDark`: whether the bar sits over an element marked `data-nav="dark"`
+ *   (the cinematic dark half). The header then takes the `.dark` class so
+ *   every token inside it flips, whatever the site theme is.
+ */
+function useScrollState(enabled: boolean) {
+  const [state, setState] = useState({ active: "hero", overDark: true });
+  const { scrollY } = useScroll();
+
+  const read = () => {
+    const line = window.innerHeight * 0.35;
+    let active = STOPS[0].id;
+    for (const stop of STOPS) {
+      const element = document.getElementById(stop.id);
+      if (element && element.getBoundingClientRect().top <= line) active = stop.id;
+    }
+    const probe = 36;
+    const overDark = [...document.querySelectorAll<HTMLElement>('[data-nav="dark"]')].some((element) => {
+      const box = element.getBoundingClientRect();
+      return box.top <= probe && box.bottom >= probe;
+    });
+    setState((prev) => (prev.active === active && prev.overDark === overDark ? prev : { active, overDark }));
+  };
+
+  useMotionValueEvent(scrollY, "change", () => enabled && read());
   useEffect(() => {
     if (!enabled) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    ids.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-    return () => observer.disconnect();
-  }, [ids, enabled]);
-  return active;
-}
+    const frame = requestAnimationFrame(read);
+    return () => cancelAnimationFrame(frame);
+  }, [enabled]);
 
-const SECTION_IDS = NAV_LINKS.map((link) => link.id);
+  return { active: state.active, overDark: enabled && state.overDark };
+}
 
 export function SiteNav() {
   const pathname = usePathname();
   const onHome = pathname === "/";
-  const active = useActiveSection(SECTION_IDS, onHome);
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const menuButton = useRef<HTMLButtonElement>(null);
-  const firstLink = useRef<HTMLAnchorElement>(null);
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 24));
-
-  useEffect(() => {
-    if (!open) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    firstLink.current?.focus();
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    const button = menuButton.current;
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = previous;
-      document.removeEventListener("keydown", onKey);
-      button?.focus({ preventScroll: true });
-    };
-  }, [open]);
+  const { active, overDark } = useScrollState(onHome);
+  const reduce = useReducedMotion();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
-      <div
+    <header className={cn("pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:pt-5", overDark && "dark")}>
+      <nav
+        aria-label="Main"
         className={cn(
-          "mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 rounded-full border px-4 transition-[background-color,border-color,box-shadow] duration-300 sm:px-5",
-          scrolled || open || !onHome
-            ? "border-line bg-veil shadow-soft backdrop-blur-xl"
-            : "border-transparent bg-transparent",
+          "pointer-events-auto flex items-center gap-0.5 rounded-full border p-1 transition-[background-color,border-color,box-shadow] duration-300",
+          overDark
+            ? "border-white/10 bg-canvas/35 backdrop-blur-md"
+            : "border-line bg-veil shadow-soft backdrop-blur-xl",
         )}
       >
-        <Logo />
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-          {NAV_LINKS.map((link) => {
-            const isActive = onHome && active === link.id;
-            return (
-              <a
-                key={link.id}
-                href={link.href ?? `/#${link.id}`}
-                aria-current={isActive ? "true" : undefined}
-                className={cn(
-                  "relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
-                  isActive ? "text-ink" : "text-dim hover:text-ink",
-                )}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute inset-0 -z-10 rounded-full bg-surface-2"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
-                {link.label}
-              </a>
-            );
-          })}
-        </nav>
-        <div className="flex items-center gap-1.5">
-          <ThemeToggle />
-          <InteractiveHoverButton href="/#contact" variant="ink" className="hidden min-h-10 px-5 sm:inline-flex">
-            Let’s talk
-          </InteractiveHoverButton>
-          <button
-            ref={menuButton}
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="grid h-10 w-10 place-items-center rounded-full text-ink transition-colors hover:bg-surface-2 lg:hidden"
-          >
-            {open ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {open && (
-          <>
-            <motion.div
-              key="backdrop"
-              aria-hidden
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 -z-10 bg-canvas/70 backdrop-blur-sm lg:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-            <motion.nav
-              key="menu"
-              id="mobile-menu"
-              aria-label="Mobile"
-              className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-3xl border border-line bg-surface p-2 shadow-soft lg:hidden"
-              initial={{ opacity: 0, y: -12, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        {STOPS.map((stop) => {
+          const isActive = onHome && active === stop.id;
+          return (
+            <a
+              key={stop.id}
+              href={`/#${stop.id}`}
+              aria-current={isActive ? "true" : undefined}
+              className={cn(
+                "relative rounded-full px-3 py-2 text-[13px] font-semibold transition-colors sm:px-4 sm:text-sm",
+                isActive ? "text-on-accent" : "text-dim hover:text-ink",
+              )}
             >
-              {[...NAV_LINKS, { id: "contact", label: "Let’s talk", href: undefined }].map((link, index) => (
-                <motion.a
-                  key={link.id}
-                  ref={index === 0 ? firstLink : undefined}
-                  href={link.href ?? `/#${link.id}`}
-                  onClick={() => setOpen(false)}
-                  className="flex min-h-13 items-center justify-between rounded-2xl px-4 text-lg font-medium text-ink hover:bg-surface-2"
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.03 * index + 0.05 }}
-                >
-                  {link.label}
-                  <ArrowUpRight size={18} className="text-dim" />
-                </motion.a>
-              ))}
-            </motion.nav>
-          </>
-        )}
-      </AnimatePresence>
+              {isActive && (
+                <motion.span
+                  layoutId="nav-active"
+                  className="absolute inset-0 rounded-full bg-accent shadow-[0_6px_20px_-6px_var(--accent)]"
+                  transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34 }}
+                />
+              )}
+              <span className="relative">{stop.label}</span>
+            </a>
+          );
+        })}
+        <span aria-hidden className="mx-0.5 h-5 w-px bg-line-2" />
+        <ThemeToggle />
+      </nav>
     </header>
   );
 }
