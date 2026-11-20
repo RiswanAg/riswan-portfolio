@@ -1,0 +1,28 @@
+{
+	// Cloudflare Workers config for the OpenNext adapter.
+	// Build: npm run cf:build   Preview locally: npm run cf:preview   Deploy: npm run cf:deploy
+	// Full steps: docs/DEPLOY.md
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"main": ".open-next/worker.js",
+	"name": "riswan-portfolio",
+	"compatibility_date": "2026-11-18",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"services": [
+		{
+			// Self-reference binding; the service name must match "name" above.
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "riswan-portfolio"
+		}
+	],
+	"images": {
+		// next/image optimization through Cloudflare Images.
+		"binding": "IMAGES"
+	},
+	"observability": {
+		"enabled": true
+	}
+}

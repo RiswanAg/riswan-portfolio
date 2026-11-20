@@ -8,16 +8,29 @@ import { CONTACTS, PROFILE, type Project } from "@/lib/data";
 /**
  * Canonical origin, without a trailing slash.
  *
- * Order: an explicit `NEXT_PUBLIC_SITE_URL` (set this when a custom domain is
- * added), then Vercel's production domain for the project (set automatically
- * at build time on Vercel), then the current production URL.
+ * Order: an explicit `NEXT_PUBLIC_SITE_URL` (required on Cloudflare, where it
+ * must be set as a build variable), then Vercel's production domain (set
+ * automatically at build time on Vercel), then localhost for local work.
+ *
+ * Note: https://riswan-portfolio.vercel.app belongs to someone else, so it is
+ * deliberately not used as a fallback.
  */
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://riswan-portfolio.vercel.app")
+    : "http://localhost:3000")
 ).replace(/\/+$/, "");
+
+if (
+  process.env.NODE_ENV === "production" &&
+  SITE_URL.startsWith("http://localhost") &&
+  (process.env.WORKERS_CI || process.env.CI)
+) {
+  console.warn(
+    "[site] NEXT_PUBLIC_SITE_URL is not set: canonical URLs, the sitemap and social cards will point to localhost. Set it as a build variable.",
+  );
+}
 
 /** Preview deployments must not compete with production in search results. */
 export const IS_INDEXABLE = process.env.VERCEL_ENV !== "preview";

@@ -1,11 +1,11 @@
 // Shared renderer for the generated Open Graph / Twitter card images.
 // Only imported by `opengraph-image.tsx` / `twitter-image.tsx` routes, which
-// are prerendered at build time, so reading local assets here is fine.
+// may also run at request time (e.g. on Cloudflare Workers, which has no
+// filesystem), so the font and portrait are embedded via lib/og-assets.ts.
 
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { SITE_URL } from "@/lib/site";
+import { DISPLAY_FONT_BASE64, PORTRAIT_JPEG_BASE64 } from "@/lib/og-assets";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
@@ -20,18 +20,24 @@ const SKY = "#8ECAE6";
 const AMBER = "#FFB703";
 const ORANGE = "#FB8500";
 
-const asset = (name: string) => readFile(join(process.cwd(), "assets/og", name));
+function base64ToArrayBuffer(b64: string): ArrayBuffer {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes.buffer;
+}
 
 async function loadAssets() {
-  const [display, portrait] = await Promise.all([
-    asset("BarlowCondensed-Bold.ttf"),
-    asset("portrait.jpg"),
-  ]);
   return {
     fonts: [
-      { name: "Display", data: display, weight: 700 as const, style: "normal" as const },
+      {
+        name: "Display",
+        data: base64ToArrayBuffer(DISPLAY_FONT_BASE64),
+        weight: 700 as const,
+        style: "normal" as const,
+      },
     ],
-    portrait: `data:image/jpeg;base64,${portrait.toString("base64")}`,
+    portrait: `data:image/jpeg;base64,${PORTRAIT_JPEG_BASE64}`,
   };
 }
 

@@ -24,7 +24,7 @@ SUPABASE_URL=https://YOUR-PROJECT.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 ```
 
-On Vercel, add the same two variables under **Project → Settings → Environment Variables**, then redeploy.
+On Cloudflare, add the same two values as **Secrets** under **Worker → Settings → Variables and secrets**. They take effect on the next deploy. For local Workers previews (`npm run cf:preview`), put them in a `.dev.vars` file in the project root, which is git-ignored.
 
 The service role key stays on the server: only `app/api/guestbook/route.ts` reads it. Never rename it to `NEXT_PUBLIC_…`.
 

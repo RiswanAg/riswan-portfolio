@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Cloudflare (OpenNext / Wrangler) build output.
+    ".open-next/**",
+    ".wrangler/**",
+    "cloudflare-env.d.ts",
     // Vendored agent skills and tooling, not part of the site.
     ".agents/**",
     ".claude/**",

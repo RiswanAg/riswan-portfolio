@@ -2,7 +2,7 @@
 
 Personal portfolio of **Riswan Hamua**, web developer and AI engineer. It covers selected projects (web, AI/computer vision, VR and games), skills, education, awards and contact links.
 
-**Live:** [riswan-portfolio.vercel.app](https://riswan-portfolio.vercel.app)
+**Hosting:** Cloudflare Workers (see [`docs/DEPLOY.md`](docs/DEPLOY.md)).
 
 ## Tech stack
 
@@ -11,7 +11,7 @@ Personal portfolio of **Riswan Hamua**, web developer and AI engineer. It covers
 - [Framer Motion](https://motion.dev) for scroll and hover motion
 - [Spline](https://spline.design) 3D scene in the hero (desktop only, lazy-loaded)
 - Radix UI primitives and Lucide icons
-- Hosted on [Vercel](https://vercel.com)
+- Hosted on [Cloudflare Workers](https://workers.cloudflare.com) via [OpenNext](https://opennext.js.org/cloudflare)
 
 ## Getting started
 
@@ -61,11 +61,11 @@ Keep source images at most about 2560 px on the long side. `next/image` resizes 
 ## SEO
 
 - Metadata (title template, description, Open Graph, Twitter cards, canonical URLs) is set in `app/layout.tsx` and in `generateMetadata` on project pages.
-- The canonical origin comes from `lib/site.ts`, in this order: the `NEXT_PUBLIC_SITE_URL` env var, then Vercel's production domain (`VERCEL_PROJECT_PRODUCTION_URL`), then `https://riswan-portfolio.vercel.app`. If you add a custom domain, set `NEXT_PUBLIC_SITE_URL` in Vercel.
+- The canonical origin comes from `lib/site.ts`, in this order: the `NEXT_PUBLIC_SITE_URL` env var, then Vercel's production domain (`VERCEL_PROJECT_PRODUCTION_URL`), then `http://localhost:3000`. On Cloudflare, set `NEXT_PUBLIC_SITE_URL` as a build variable.
 - Vercel preview deployments are `noindex` and their robots.txt disallows everything, so only production is indexed.
-- Social cards are generated at build time with `next/og`, using the site palette and display font.
+- Social cards are generated with `next/og`, using the site palette and display font. The font and portrait are embedded in `lib/og-assets.ts` (regenerate with `node scripts/gen-og-assets.mjs`).
 - Structured data: `Person` + `WebSite` on every page, and `CreativeWork` + `BreadcrumbList` on project pages.
 
 ## Deployment
 
-The site deploys automatically through Vercel's GitHub integration: every push to `main` goes to production, and other branches get preview URLs. See [`docs/DEPLOY.md`](docs/DEPLOY.md) for the checklist.
+The site runs on Cloudflare Workers through the OpenNext adapter. Once the repo is connected in the Cloudflare dashboard, every push to `main` deploys to production. `npm run cf:preview` runs the Workers build locally. See [`docs/DEPLOY.md`](docs/DEPLOY.md) for setup and the checklist.
