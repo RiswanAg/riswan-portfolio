@@ -23,6 +23,10 @@ import {
   Hand,
   Footprints,
   FileText,
+  Coffee,
+  ChartColumn,
+  Globe,
+  Receipt,
   LucideIcon,
 } from "lucide-react";
 
@@ -37,6 +41,10 @@ const PROJECT_FALLBACK_ICONS: Record<string, LucideIcon> = {
   video: Video,
   hand: Hand,
   footprints: Footprints,
+  coffee: Coffee,
+  chart: ChartColumn,
+  globe: Globe,
+  receipt: Receipt,
 };
 
 const KIND_META: Record<ProjectKind, { label: string; icon: LucideIcon; dot: string }> = {
