@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Geist,
   Geist_Mono,
@@ -6,6 +6,17 @@ import {
   Caveat,
   Barlow_Condensed,
 } from "next/font/google";
+import { PROFILE } from "@/lib/data";
+import {
+  IS_INDEXABLE,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+  jsonLdScript,
+  siteJsonLd,
+} from "@/lib/site";
 import "./globals.css";
 import "./portfolio.css";
 import "./cinematic.css";
@@ -29,6 +40,8 @@ const caveat = Caveat({
   variable: "--font-handwritten",
   weight: "400",
   subsets: ["latin"],
+  // Decorative accent only: keep it off the critical preload path.
+  preload: false,
 });
 
 const display = Barlow_Condensed({
@@ -37,78 +50,59 @@ const display = Barlow_Condensed({
   subsets: ["latin"],
 });
 
-const BASE_URL = "https://riswanhamua.com";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
-  title: "Riswan Hamua | Web Developer & AI Engineer",
-  description:
-    "Riswan Hamua's portfolio: web development, AI engineering, computer vision and interactive applications. Explore selected projects and get in touch.",
-  keywords: [
-    "Riswan Hamua",
-    "Web Developer",
-    "AI Engineer",
-    "Web Development",
-    "Machine Learning",
-    "Computer Vision",
-    "Python Developer",
-    "Interactive Applications",
-    "Portfolio",
-  ],
-  authors: [{ name: "Riswan Hamua", url: BASE_URL }],
-  creator: "Riswan Hamua",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_TITLE,
+    template: `%s | ${PROFILE.name}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: SITE_KEYWORDS,
+  authors: [{ name: PROFILE.name, url: SITE_URL }],
+  creator: PROFILE.name,
+  publisher: PROFILE.name,
+  category: "portfolio",
+  alternates: {
+    canonical: "/",
+  },
+  // og:image / twitter:image come from app/opengraph-image.tsx and
+  // app/twitter-image.tsx (file conventions), so they are not repeated here.
   openGraph: {
     type: "website",
-    url: BASE_URL,
-    siteName: "Riswan Hamua Portfolio",
-    title: "Riswan Hamua | Web Developer & AI Engineer",
-    description:
-      "Web development, AI engineering and interactive applications by Riswan Hamua. Explore selected projects and get in touch.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Riswan Hamua Portfolio",
-      },
-    ],
+    locale: "en_US",
+    url: "/",
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Riswan Hamua | Web Developer & AI Engineer",
-    description:
-      "Web development, AI engineering and interactive applications by Riswan Hamua. Explore selected projects and get in touch.",
-    images: ["/og-image.png"],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
-  alternates: {
-    canonical: BASE_URL,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true },
-  },
+  robots: IS_INDEXABLE
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+      }
+    : { index: false, follow: false },
+  formatDetection: { telephone: false },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Riswan Hamua",
-  url: BASE_URL,
-  jobTitle: "Web Developer & AI Engineer",
-  alumniOf: "Universiti Teknikal Malaysia Melaka (UTeM)",
-  sameAs: [
-    "https://github.com/RiswanAg",
-    "https://www.linkedin.com/in/riswanhamua",
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#EAF1F6" },
+    { media: "(prefers-color-scheme: dark)", color: "#023047" },
   ],
-  knowsAbout: [
-    "Web Development",
-    "AI Engineering",
-    "Python",
-    "Machine Learning",
-    "Computer Vision",
-    "Interactive Applications",
-  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -130,7 +124,7 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(siteJsonLd()) }}
         />
       </head>
       <body className="bg-grain min-h-full flex flex-col bg-canvas">
