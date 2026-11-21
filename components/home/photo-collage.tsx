@@ -2,7 +2,8 @@
 
 import { useRef, useSyncExternalStore } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
+import { useSectionProgress } from "@/components/motion/use-section-progress";
 
 export type CollagePhoto = { src: string; caption: string };
 
@@ -59,14 +60,13 @@ export function PhotoCollage({ photos }: { photos: CollagePhoto[] }) {
   const desktop = useMediaQuery(DESKTOP);
   const slots = desktop ? DESKTOP_SLOTS : PHONE_SLOTS;
   const shown = photos.slice(0, slots.length);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const scrollYProgress = useSectionProgress(ref);
 
   if (shown.length === 0) return null;
 
   return (
     <section ref={ref} aria-labelledby="moments-title" className={reduce ? "relative" : "relative h-[230vh]"}>
       <div className={reduce ? "relative h-[110svh] overflow-hidden" : "sticky top-0 h-svh overflow-hidden"}>
-        <div aria-hidden className="contours absolute inset-0" />
         <h2
           id="moments-title"
           className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center text-[17vw] font-black uppercase leading-none tracking-tight text-ink/[0.07] md:text-[11vw]"

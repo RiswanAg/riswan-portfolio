@@ -31,6 +31,17 @@
   --glow: rgb(33 158 188 / 0.18);
   --grid-line: rgb(2 48 71 / 0.06);
   --contour: rgb(2 48 71 / 0.11);
+
+  /* Backdrop scene (components/site/backdrop.tsx) */
+  --bd-top: #f8fbfd;
+  --bd-bottom: #edf3f8;
+  --bd-glow-a: rgb(33 158 188 / 0.16);
+  --bd-glow-b: rgb(142 202 230 / 0.34);
+  --bd-glow-c: rgb(255 183 3 / 0.13);
+  --bd-glint: rgb(14 108 133 / 0.55);
+  --bd-vignette: rgb(255 255 255 / 0);
+  --bd-points: 0;
+  --bd-grain: 0.06;
   --shadow: 0 1px 2px rgb(2 48 71 / 0.06), 0 12px 32px -12px rgb(2 48 71 / 0.18);
 
   /* shadcn/ui primitives repoint to the semantic layer */
@@ -72,6 +83,16 @@
   --glow: rgb(43 179 211 / 0.22);
   --grid-line: rgb(142 202 230 / 0.06);
   --contour: rgb(142 202 230 / 0.13);
+
+  --bd-top: #011a29;
+  --bd-bottom: #01131f;
+  --bd-glow-a: rgb(33 158 188 / 0.28);
+  --bd-glow-b: rgb(142 202 230 / 0.11);
+  --bd-glow-c: rgb(255 183 3 / 0.09);
+  --bd-glint: rgb(142 202 230 / 0.8);
+  --bd-vignette: rgb(0 8 14 / 0.6);
+  --bd-points: 1;
+  --bd-grain: 0.09;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -16px rgb(0 0 0 / 0.6);
 }
 
@@ -214,6 +235,128 @@ main :where(.grid) > * {
   -webkit-mask-repeat: repeat;
   mask-repeat: repeat;
   pointer-events: none;
+}
+
+/* ── Backdrop scene ──────────────────────────────────────────────────────────
+   Layered, token-driven background used behind both halves of the home page
+   (components/site/backdrop.tsx). Everything here is decorative. */
+
+/* Pointer position and spotlight radius are typed so they can transition. */
+@property --mx {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: -1000px;
+}
+@property --my {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: -1000px;
+}
+@property --spot {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+.bd-base {
+  background: linear-gradient(to bottom, var(--bd-top), var(--bd-bottom));
+}
+
+/* Two slow, out-of-phase drifting light fields (an "aurora" on the map). */
+.bd-aurora {
+  position: absolute;
+  inset: -25%;
+  will-change: transform;
+}
+.bd-aurora-a {
+  background:
+    radial-gradient(38% 32% at 18% 28%, var(--bd-glow-a), transparent 70%),
+    radial-gradient(30% 26% at 78% 72%, var(--bd-glow-a), transparent 70%);
+  animation: bd-drift-a 34s ease-in-out infinite alternate;
+}
+.bd-aurora-b {
+  background:
+    radial-gradient(34% 30% at 70% 22%, var(--bd-glow-b), transparent 70%),
+    radial-gradient(28% 24% at 32% 80%, var(--bd-glow-c), transparent 70%);
+  animation: bd-drift-b 46s ease-in-out infinite alternate;
+}
+@keyframes bd-drift-a {
+  from { transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1); }
+  to { transform: translate3d(5%, 4%, 0) rotate(8deg) scale(1.12); }
+}
+@keyframes bd-drift-b {
+  from { transform: translate3d(4%, 3%, 0) rotate(0deg) scale(1.08); }
+  to { transform: translate3d(-5%, -4%, 0) rotate(-10deg) scale(0.96); }
+}
+
+/* Contour lines; --py is a slow scroll parallax offset set from JS. */
+.bd-contours,
+.bd-glint {
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+}
+.bd-contours {
+  background-color: var(--contour);
+  -webkit-mask-image: url("/textures/contours.webp");
+  mask-image: url("/textures/contours.webp");
+  -webkit-mask-size: 1100px;
+  mask-size: 1100px;
+  -webkit-mask-position: 0 var(--py, 0px);
+  mask-position: 0 var(--py, 0px);
+}
+/* The same lines in a brighter ink, visible only in a circle around the
+   pointer: a torch moving over the map. */
+.bd-glint {
+  background-color: var(--bd-glint);
+  -webkit-mask-image: url("/textures/contours.webp"), radial-gradient(circle var(--spot) at var(--mx) var(--my), #000 0%, transparent 100%);
+  mask-image: url("/textures/contours.webp"), radial-gradient(circle var(--spot) at var(--mx) var(--my), #000 0%, transparent 100%);
+  -webkit-mask-size: 1100px, 100% 100%;
+  mask-size: 1100px, 100% 100%;
+  -webkit-mask-position: 0 var(--py, 0px), 0 0;
+  mask-position: 0 var(--py, 0px), 0 0;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  transition: --mx 0.25s ease-out, --my 0.25s ease-out, --spot 0.45s ease;
+}
+/* A soft halo under the torch so the lit area reads even between lines. */
+.bd-halo {
+  background: radial-gradient(circle calc(var(--spot) * 1.1) at var(--mx) var(--my), var(--bd-glow-a), transparent 70%);
+  transition: --mx 0.25s ease-out, --my 0.25s ease-out, --spot 0.45s ease;
+}
+
+/* Survey points on the dark map; hidden in light mode via --bd-points. */
+.bd-points {
+  opacity: var(--bd-points);
+}
+.bd-point {
+  animation: bd-twinkle var(--t, 5s) ease-in-out var(--d, 0s) infinite;
+}
+@keyframes bd-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+.bd-vignette {
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, var(--bd-vignette) 100%);
+}
+
+/* Film grain keeps big gradients from banding. */
+.bd-grain {
+  opacity: var(--bd-grain);
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hero night sky: an aurora ribbon that slowly breathes. */
+.sky-aurora {
+  animation: sky-wave 18s ease-in-out infinite alternate;
+  transform-origin: 50% 50%;
+}
+@keyframes sky-wave {
+  from { transform: translate3d(-3%, 0, 0) skewY(-6deg) scaleY(1); opacity: 0.75; }
+  to { transform: translate3d(3%, -3%, 0) skewY(-2deg) scaleY(1.25); opacity: 1; }
 }
 
 /* Hide native scrollbars on swipeable tracks. */

@@ -13,7 +13,6 @@ export function Contact() {
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="relative scroll-mt-4 pb-24 pt-20 sm:pb-32">
-      <div aria-hidden className="contours absolute inset-0 -z-10" />
       <Container>
         <Reveal className="max-w-2xl">
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent-strong">Contact</p>
