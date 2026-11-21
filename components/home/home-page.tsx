@@ -2,6 +2,7 @@ import { CERTIFICATES, PROJECTS } from "@/lib/data";
 import { Journey, MILESTONES } from "@/components/sections/Journey";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteNav } from "@/components/site/site-nav";
+import { PageBackdrop } from "@/components/site/backdrop";
 import { existingPublicFiles, publicFileExists, publicImagesIn } from "@/lib/public-assets";
 import { AboutIntro } from "./about-intro";
 import { Contact } from "./contact";
@@ -93,12 +94,12 @@ export function HomePage() {
         Skip to content
       </a>
       <SiteNav />
-      <main id="main" className="flex-1">
+      <main id="main" className="relative isolate flex-1">
+        <PageBackdrop fadeOutId="portfolio-sweep" fallbackId="portfolio-showcase" />
         {/* Cinematic dark half: always navy, whatever the site theme. */}
-        <div data-nav="dark" className="dark relative bg-canvas text-ink">
+        <div data-nav="dark" className="dark relative text-ink">
           <HeroIntro photo={publicFileExists(HERO_PHOTO) ? HERO_PHOTO : null} />
-          <div id="about-home" className="relative isolate">
-            <div aria-hidden className="contours absolute inset-0 -z-10" />
+          <div id="about-home" className="relative">
             <AboutIntro />
             <Toolkit />
             <Journey />
@@ -109,7 +110,7 @@ export function HomePage() {
         <PortfolioTransition />
 
         {/* Light half: follows the site theme (light grey in light mode). */}
-        <div className="relative isolate">
+        <div className="relative">
           <PortfolioTabs cards={cards} />
           <PhotoCollage photos={collagePhotos()} />
           <Contact />

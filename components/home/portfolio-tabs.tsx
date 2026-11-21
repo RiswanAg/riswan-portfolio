@@ -60,7 +60,6 @@ export function PortfolioTabs({ cards }: { cards: Record<PortfolioTab, Portfolio
 
   return (
     <section id="portfolio-showcase" aria-labelledby="portfolio-title" className="relative scroll-mt-4 pb-16 pt-24 sm:pt-28">
-      <div aria-hidden className="contours absolute inset-0 -z-10" />
       <Container>
         <div className="relative text-center">
           <p aria-hidden className="pointer-events-none select-none text-[18vw] font-black leading-none tracking-tight text-ink/[0.06] sm:text-[9rem]">

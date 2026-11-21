@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useSyncExternalStore } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useTransform } from "motion/react";
+import { useSectionProgress } from "@/components/motion/use-section-progress";
 import { ArrowDownRight, FileText } from "lucide-react";
 import { ABOUT_HOME, PROFILE } from "@/lib/data";
 import { Container } from "@/components/site/section-header";
@@ -31,7 +32,7 @@ export function AboutIntro() {
   const reduce = useReducedMotion();
   const desktop = useMediaQuery(DESKTOP);
   const pinned = desktop && !reduce;
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const scrollYProgress = useSectionProgress(ref);
 
   const titleScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.42]);
   const titleY = useTransform(scrollYProgress, [0, 0.5], ["0vh", "-36vh"]);
